@@ -12,20 +12,14 @@ Season = 2024 : '2024-2025 Season'
 
 # Imports 
 
-import pandas as pd
-import math
-import numpy as np
 import euroleague_api
 from euroleague_api.shot_data import ShotData 
 from euroleague_api.EuroLeagueData import EuroLeagueData
 from euroleague_api.boxscore_data import BoxScoreData
 from euroleague_api.play_by_play_data import PlayByPlay 
-import random as rnd
-from collections import Counter
-import warnings
 
+import warnings
 warnings.filterwarnings('ignore')
-pd.set_option('display.max_columns', None)
 
 def get_euroleague_data(start_season: int, end_season: int):
 
