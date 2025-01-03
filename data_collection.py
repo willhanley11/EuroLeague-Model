@@ -5,7 +5,7 @@
 
 
 """
-Injests Euroleague/Eurocup play-by-play data, box score data, and shot location data.
+Injests Euroleague/Eurocup play-by-play data, box score data, and shot location data from euroleague_api package.
 'E' for Euroleague, 'U' for Eurocup. 
 Season = 2024 : '2024-2025 Season'
 """
@@ -39,15 +39,6 @@ def get_euroleague_data(start_season: int, end_season: int):
    boxscore_data = boxdata.get_player_boxscore_stats_multiple_seasons(start_season, end_season)
    
    return playbyplay_data, shot_data, boxscore_data
-
-def main():
-   start_season = 2022
-   end_season = 2024
-   
-   playbyplay_data, shot_data, boxscore_data = get_euroleague_data(start_season, end_season)
-   
-if __name__ == "__main__":
-   main()
 
 
 # In[ ]:
