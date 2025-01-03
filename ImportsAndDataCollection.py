@@ -10,7 +10,7 @@ Injests Euroleague/Eurocup play-by-play data, box score data, and shot location 
 Season = 2024 : '2024-2025 Season'
 """
 
-# Imports for entire project
+# Imports 
 
 import pandas as pd
 import math
