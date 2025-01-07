@@ -117,9 +117,7 @@ def run_multiple_games(team_a_matrix, team_b_matrix, num_games, simmedpossession
         results.append((team_a_metrics, team_b_metrics))
     
     return results, simmedpossessions
-
-
-print("18")
+    
 
 # take results of all games simulated to find derived means for each stat
 def analyze_results(results, simmedpossessions, team_a_name, team_b_name):
@@ -165,9 +163,9 @@ def analyze_results(results, simmedpossessions, team_a_name, team_b_name):
 
     return results_df
 
-def simulate_matchup(HomeTeam,AwayTeam,HFA, number_of_simulations, possessionAdjust):
-    team1O, team2O = calculate_transition_matrix_offense(teamsDF1, HomeTeam,AwayTeam, calcs=25000)
-    team1D, team2D, simmedpossessions = calculate_transition_matrix_defense(teamsDF1, HomeTeam,AwayTeam, calcs=25000)
+def simulate_matchup(home_team,away_team,HFA, number_of_simulations, possessionAdjust):
+    team1O, team2O = calculate_transition_matrix_offense(teamsDF1, home_team,away_team, calcs=25000)
+    team1D, team2D, simmedpossessions = calculate_transition_matrix_defense(teamsDF1, home_team,away_team, calcs=25000)
     team1 = team1O + team2D
     team2 = team2O + team1D
     team1 = team1 * (1 + (HFA * (homeODiff + awayDDiff)))
@@ -178,7 +176,6 @@ def simulate_matchup(HomeTeam,AwayTeam,HFA, number_of_simulations, possessionAdj
     AwayTeamMatrix = team2.div(row_sums2, axis=0).fillna(0)
     
     results, simmedpossessionsA = run_multiple_games(HomeTeamMatrix, AwayTeamMatrix, number_of_simulations, simmedpossessions + possessionAdjust)
-    box_score = analyze_results(results,simmedpossessionsA, HomeTeam, AwayTeam)
+    box_score = analyze_results(results,simmedpossessionsA, home_team, away_team)
 
     return box_score.round(3)
-
