@@ -2,6 +2,7 @@ Euroleague and Eurocup Basketball Player-Driven Game Simulator
 
 Barcelona @ Madrid 
 Simulated Team Statistics
+
 ![Simulated Team Stats](images/teamstats.png)
 
 Simulated Box Score
