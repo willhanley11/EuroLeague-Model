@@ -582,5 +582,5 @@ def individual_player_breakdown(cleaned_data, boxdata):
     OffensePlayerDataNEW1['Usage_RollingAvg'] = .2
     DefensePlayerDataNEW1['Usage_RollingAvg'] = .2
 
-    return OffensePlayerDataNEW1, DefensePlayerDataNEW1
+    return OffensePlayerDataNEW1, DefensePlayerDataNEW1, homeusage_for, awayusage_for, homeusage_against, awayusage_against
 
