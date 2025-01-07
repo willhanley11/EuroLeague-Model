@@ -1,10 +1,12 @@
+Euroleague and Eurocup Basketball Player-Driven Game Simulator
+
+Barcelona @ Madrid 
+Simulated Team Statistics
 ![Simulated Team Stats](images/teamstats.png)
 
-
+Simulated Box Score
 ![Simulated Box Score](images/boxscore.png)
 
-
-Euroleague and Eurocup Basketball Player-Driven Game Simulator
 
 Use euroleague_api to collect play by play, boxscore and shot location data.
 
