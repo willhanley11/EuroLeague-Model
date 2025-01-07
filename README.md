@@ -1,11 +1,12 @@
-Euroleague and Eurocup Basketball Player-Driven Game Simulator
+### **Euroleague and Eurocup Basketball Player-Driven Game Simulator**
 
-Barcelona @ Madrid - January 6 2025
+
+**Barcelona @ Madrid - January 6 2025**
 
 ![Simulated Team Stats](images/teamstats.png) ![Simulated Box Score](images/boxscore.png)
 
 
-Project Description:
+**Project Description:**
 
 Use euroleague_api to collect play by play, boxscore and shot location data.
 
