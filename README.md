@@ -1,6 +1,6 @@
 Euroleague and Eurocup Basketball Player-Driven Game Simulator
 
-Barcelona @ Madrid - January 6 2024
+Barcelona @ Madrid - January 6 2025
 Simulated Team Statistics
 
 ![Simulated Team Stats](images/teamstats.png)
