@@ -3,8 +3,19 @@
 
 # In[ ]:
 
-import math 
+import pandas as pd
+import math
+import numpy as np
+import euroleague_api
+from euroleague_api.shot_data import ShotData 
+from euroleague_api.EuroLeagueData import EuroLeagueData
+from euroleague_api.boxscore_data import BoxScoreData
+from euroleague_api.play_by_play_data import PlayByPlay 
+import random as rnd
 from collections import Counter
+import warnings
+warnings.filterwarnings('ignore')
+pd.set_option('display.max_columns', None)
 from data_collection import get_euroleague_data
 from data_cleaning import clean_playbyplay_data
 from individual_player_breakdown import individual_player_breakdown
