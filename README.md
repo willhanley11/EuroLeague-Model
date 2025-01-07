@@ -9,6 +9,7 @@ Simulated Box Score
 
 ![Simulated Box Score](images/boxscore.png)
 
+Project Description:
 
 Use euroleague_api to collect play by play, boxscore and shot location data.
 
