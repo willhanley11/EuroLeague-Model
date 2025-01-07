@@ -50,7 +50,10 @@ def main():
     home_team='MAD', # Madrid
     away_team='BAR', # Barcelona
     HFA=0.8, 
-    players_to_update=updated_players, 
+    players_to_update=[
+    {'Player': 'CAMPAZZO, FACUNDO', 'Action': 'remove'}, # Campazzo not expected to play
+    {'Player': 'TAVARES, WALTER', 'Team': 'MAD', 'PossessionCount': 35} # Tavares back after missing last 2 games
+], 
     number_of_simulations=15000, 
     possession_adjust=0,
     teamsDF=teamsDF,
