@@ -2,10 +2,8 @@
 
 
 **Example Euroleague Game: Barcelona @ Madrid - January 6 2025**
-updated_players = [
-        {'Player': 'CAMPAZZO, FACUNDO', 'Action': 'remove'}, 
-        {'Player': 'TAVARES, WALTER', 'Team': 'MAD', 'PossessionCount': 35}
-    ]
+
+updated_players = [{'Player': 'CAMPAZZO, FACUNDO', 'Action': 'remove'}, {'Player': 'TAVARES, WALTER', 'Team': 'MAD', 'PossessionCount': 35}]
 
 SimmedTeamStats, SimmedBoxScore = run_full_simuluation(
     home_team='MAD',
@@ -14,12 +12,7 @@ SimmedTeamStats, SimmedBoxScore = run_full_simuluation(
     players_to_update=updated_players, 
     number_of_simulations=10000, 
     possession_adjust=0,
-    teamsDF=teamsDF,
-    homeusage_for=homeusage_for,
-    awayusage_for=awayusage_for,
-    homeusage_against=homeusage_against,
-    awayusage_against=awayusage_against,
-)
+    teamsDF=teamsDF,homeusage_for=homeusage_for,awayusage_for=awayusage_for,homeusage_against=homeusage_against,awayusage_against=awayusage_against,)
 
 ![Simulated Team Stats](images/teamstats.png) ![Simulated Box Score](images/boxscore.png)
 
