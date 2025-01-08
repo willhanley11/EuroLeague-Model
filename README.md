@@ -1,7 +1,7 @@
 ### **Euroleague and Eurocup Basketball Player-Driven Game Simulator**
 
 
-**Barcelona @ Madrid - January 6 2025**
+**Example Game: Barcelona @ Madrid - January 6 2025**
 
 ![Simulated Team Stats](images/teamstats.png) ![Simulated Box Score](images/boxscore.png)
 
