@@ -1,7 +1,10 @@
 ### **Euroleague and Eurocup Basketball Player-Driven Game Simulator**
 
 
+
+
 **Example Euroleague Game: Barcelona @ Madrid - January 6 2025**
+
 
 updated_players = [{'Player': 'CAMPAZZO, FACUNDO', 'Action': 'remove'}, {'Player': 'TAVARES, WALTER', 'Team': 'MAD', 'PossessionCount': 35}]
 
