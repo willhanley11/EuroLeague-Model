@@ -23,7 +23,7 @@ Cleans and amplifies euroleague_api play-by-play data by:
     - Eliminates garbage time possessions
 
 
-Break play by play data into play specific datasets and aggregate events while each player is on the court
+Break play by play data into player specific datasets and aggregate events while each player is on the court
 Unique weighting system to determine players' impact on each possession 
     - (i.e player recieves more credit for offensive possession if they took the shot)
 Add in opponent offense/defense statistics for future calculations of elo ratings
