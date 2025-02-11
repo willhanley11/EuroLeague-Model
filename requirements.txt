@@ -1,9 +1,7 @@
-
-euroleague-api
+euroleague-api==0.0.16
 streamlit
 pandas
 numpy
-os
-pickle
 requests
 beautifulsoup4
+python-dotenv
