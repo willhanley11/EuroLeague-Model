@@ -1,3 +1,9 @@
+
+euroleague-api
+streamlit
 pandas
 numpy
-euroleague-api
+os
+pickle
+requests
+beautifulsoup4
