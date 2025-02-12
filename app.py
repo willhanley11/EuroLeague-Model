@@ -1726,7 +1726,11 @@ def main():
             padding: .5rem !important;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
             margin: 0 auto !important; /* Center the container */
+            margin-top: -45px !important;
         }
+
+
+
 
         /* Reset the default container padding */
         .main .block-container {
@@ -1778,6 +1782,44 @@ def main():
             height: 150px !important;
         }
     </style>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <style>
+    /* Reduce height of the top section/header */
+    [data-testid="stHeader"] {
+        height: 2.5rem !important;
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
+        background-color: white;
+    }
+
+    .logo-text {
+        position: fixed;
+        top: 0.5rem;
+        left: 24px;
+        font-family: "SF Pro Display", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        font-weight: 700;
+        font-size: 18px;
+        letter-spacing: 1.5px;
+        color: #1a1f36;
+        z-index: 999999;
+    }
+
+    [data-testid="stDecoration"] {
+        height: 2.5rem !important;
+    }
+
+    [data-testid="stAppViewContainer"] {
+        padding-top: 2rem !important;
+    }
+
+    section[data-testid="stSidebar"] {
+        top: 2rem !important;
+    }
+    </style>
+
+    <div class="logo-text">STRETCH 5 ANALYTICS</div>
     """, unsafe_allow_html=True)
 
     # Start fixed-width container
@@ -2090,7 +2132,6 @@ tr:hover {
        </style>
    """, unsafe_allow_html=True)
     
-
 
 
     
