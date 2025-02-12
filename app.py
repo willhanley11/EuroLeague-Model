@@ -1714,7 +1714,7 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
 
 
 def main():
-    st.set_page_config(layout="wide", page_icon="🏀", page_title="Stretch 5 Analytics")
+    st.set_page_config(layout="wide", page_icon="🏀", page_title="Eurolytics")
     
     st.markdown("""
     <style>
@@ -1819,7 +1819,7 @@ def main():
     }
     </style>
 
-    <div class="logo-text">STRETCH 5 ANALYTICS</div>
+    <div class="logo-text">EUROLYTICS</div>
     """, unsafe_allow_html=True)
 
     # Start fixed-width container
@@ -2127,7 +2127,7 @@ tr:hover {
 
        </style>
    """, unsafe_allow_html=True)
-    
+
 
 
     
