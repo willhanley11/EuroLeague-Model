@@ -1788,7 +1788,7 @@ def main():
     <style>
     /* Reduce height of the top section/header */
     [data-testid="stHeader"] {
-        height: 2.5rem !important;
+        height: 2.7rem !important;
         padding-top: 0.5rem !important;
         padding-bottom: 0.5rem !important;
         background-color: white;
@@ -1807,7 +1807,7 @@ def main():
     }
 
     [data-testid="stDecoration"] {
-        height: 2.5rem !important;
+        height: 2.7rem !important;
     }
 
     [data-testid="stAppViewContainer"] {
