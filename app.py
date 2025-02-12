@@ -2122,11 +2122,7 @@ tr:hover {
 
 
      
-       
-       /* Hide Streamlit branding */
-       #MainMenu, footer {
-           visibility: hidden;
-       }
+
 
 
        </style>
