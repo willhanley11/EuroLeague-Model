@@ -1729,12 +1729,6 @@ def main():
             margin-top: -45px !important;
         }
 
-#MainMenu {visibility: hidden;}
-        footer {visibility: hidden;}
-     
-        /* Hide Streamlit branding */
-        #MainMenu {visibility: hidden;}
-        footer {visibility: hidden;}
 
 
         /* Reset the default container padding */
