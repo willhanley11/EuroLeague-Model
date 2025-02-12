@@ -205,6 +205,12 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
    filtered_team_stats = team_stats[team_stats['Matchup'] == selected_matchup]
    filtered_player_statsTeam1 = player_statsTeam1[player_statsTeam1['Matchup'] == selected_matchup]
    filtered_player_statsTeam2 = player_statsTeam2[player_statsTeam2['Matchup'] == selected_matchup]
+   filtered_player_statsTeam1 = player_statsTeam1[player_statsTeam1['Matchup'] == selected_matchup].copy()
+   filtered_player_statsTeam2 = player_statsTeam2[player_statsTeam2['Matchup'] == selected_matchup].copy()
+
+# Rename the column in both DataFrames
+   filtered_player_statsTeam1 = filtered_player_statsTeam1.rename(columns={'3FGM': '3FG', '2FGM': '2FG', 'FTM':'FT'})
+   filtered_player_statsTeam2 = filtered_player_statsTeam2.rename(columns={'3FGM': '3FG', '2FGM': '2FG', 'FTM':'FT'})
 
    # Add state management for HCA and possessions
    if 'hca' not in st.session_state:
@@ -233,12 +239,12 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
            border-radius: 8px;
            box-shadow: 0 4px 20px rgba(100, 100, 100, 3.5);
            margin-bottom: 8px;
-           margin-top: 0px;
+           margin-top: -15px !important;
        }
 
        .logo-cell img {
-           width: 150px;
-           height: 150px;
+           width: 200px;
+           height: 200px;
            object-fit: contain;
        }
 
@@ -254,7 +260,7 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
 
        .team-name {
            font-weight: 700;
-           font-size: 16px;
+           font-size: 11px !important;
            font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
            color: rgba(0,0,0,0.9);
            white-space: nowrap;
@@ -265,8 +271,8 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
     background-color: white;
     border-radius: 16px;
     box-shadow: 0 4px 12px rgba(100, 100, 100, .5);
-    margin-top: 1px;
-    margin-left: -40px !important;
+    margin-top: -25px !important;
+    margin-left: -60px !important;
     border: 2px solid white !important; 
     overflow: hidden;
     text-align: center;
@@ -281,17 +287,14 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
     border-collapse: collapse;
     border-spacing: 0;
     box-shadow: 0 0 15px rgba(100, 100, 100, 1);
-
 }
 
 /* Enhanced Table header styles */
 .team-stats-euroleague-container th {
-
     color: #1a1f36;
     font-weight: 800;
-
-    font-size: 18px;
-    padding: 16px 10px;
+    font-size: 14px;
+    padding: 6px 4px;
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 0.8px;
@@ -301,35 +304,38 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
     z-index: 1;
 }
 
+/* Add hover effect for rows */
+.team-stats-euroleague-container tr:hover {
+    background: linear-gradient(145deg, #f8f9fa, #f1f3f5) !important;
+    transition: background 0.2s ease-in-out !important;
+}
+
+/* Preserve background for header row */
+.team-stats-euroleague-container thead tr:hover {
+    background: none !important;
+}
+
 /* Add darker borders for specific rows */
 .team-stats-euroleague-container tr:nth-child(1) {
-    border-top: 15px solid #e0e0e0 !important;
+    border-top: 8px solid #e0e0e0 !important;
 }
 
 .team-stats-euroleague-container tr:nth-child(2) {
-    border-top: 15px solid #e0e0e0;
+    border-top: 8px solid #e0e0e0;
 }
 
 .team-stats-euroleague-container tr:nth-child(6) {
-    border-top: 15px solid #e0e0e0;
+    border-top: 8px solid #e0e0e0;
 }
 
 .team-stats-euroleague-container tr:nth-child(9) {
-    border-top: 15px solid #e0e0e0;
+    border-top: 8px solid #e0e0e0;
 }
 
 /* Add a subtle line between header cells */
 .team-stats-euroleague-container th:not(:last-child) {
     border-right: 1px solid #e0e0e0;
 }
-
-
-
-/* Add a subtle line between header cells */
-.team-stats-euroleague-container th:not(:last-child) {
-    border-right: 1px solid #e0e0e0;
-}
-
 /* Highlighting styles */
 .highlight {
     background-color: #fff4b3;
@@ -340,13 +346,13 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
 .team-name {
     font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
     font-weight: 800;
-    font-size: 16px;
+    font-size: 12px;
     color: #1a1f36;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.1px;
 }
 
 
@@ -356,7 +362,7 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
    first_row = simulation_results_df[simulation_results_df['Matchup'] == selected_matchup].iloc[0]
    st.markdown('<div class="euroleague_tab">', unsafe_allow_html=True)
 
-   team_stats_area, spacing1, logo_area, spacing2, stats_area = st.columns([1.9, 0.2, 3, .1, 2.5])
+   team_stats_area, spacing1, logo_area,  stats_area = st.columns([1.4, 0.9, 4,  2.5])
    
    with team_stats_area:
        # Team Stats Table (Full Width)
@@ -435,9 +441,9 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
        <div class="team-stats-euroleague-container">
            <table style="width: 100%">
                <colgroup>
-                   <col style="width: 16%">
-                   <col style="width: 35%">
-                   <col style="width: 35%">
+                   <col style="width: 10%">
+                   <col style="width: 45%">
+                   <col style="width: 45%">
                </colgroup>
                <thead><tr>{}</tr></thead>
                <tbody>{}</tbody>
@@ -448,17 +454,17 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
        
        team_header = f"""<th>{team_stats_df.columns[0]}</th>
 <th>
-   <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
-       <div style="width: 50px; height: 50px; display: flex; align-items: center;">
-           <img src="{away_logo}" alt="Logo" style="width: 100%; height: 800px; object-fit: contain;">
+   <div style="display: flex; align-items: center; gap: 1px; justify-content: center;">
+       <div style="width: 40px; height: 40px; display: flex; align-items: center;">
+           <img src="{away_logo}" alt="Logo" style="width: 100%; height: 650px; object-fit: contain;">
        </div>
        <span>{team_stats_df.columns[1]}</span>
    </div>
 </th>
 <th>
-   <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
+   <div style="display: flex; align-items: center; gap: 1px; justify-content: center;">
        <div style="width: 40px; height: 40px; display: flex; align-items: center;">
-           <img src="{home_logo}" alt="Logo" style="width: 100%; height: 800px; object-fit: contain;">
+           <img src="{home_logo}" alt="Logo" style="width: 100%; height: 650px; object-fit: contain;">
        </div>
        <span>{team_stats_df.columns[2]}</span>
    </div>
@@ -485,11 +491,11 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
                "key-section" if 1 <= index <= 4 else ""
            ]))}">' +
            ''.join(
-               f'<td class="numeric" style="text-align: center; font-weight: 800">{value}</td>' 
+               f'<td class="numeric" style="text-align: center; font-weight: 1000; font-size: 12px;">{value}</td>' 
                if idx == 0
-               else f'<td class="numeric" style="text-align: center"><div style="margin-left: 0px;margin-right:-3px;"><span class="highlight" style="padding: 5px 5px; border-radius: 10px; background-color: {euroleague_team_colors[team_stats_df.columns[1]] if (idx == 1 and ((value > row[2] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[2] and row.iloc[0] in ["TO%", "TO"]))) else "transparent"}">{value:.1f}{"%" if str(row.iloc[0]).endswith("%") else ""}</span>{f"<img src=\'{away_logo}\' style=\'width: 30px; height: 30px; margin-left: 4px; vertical-align: middle;\'/>" if (idx == 1 and ((value > row[2] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[2] and row.iloc[0] in ["TO%", "TO"]))) else ""}</div></td>' 
+               else f'<td class="numeric" style="text-align: center"><div style="margin-left: -2px;font-size: 12px;margin-right:-5px;"><span class="highlight" style="padding: 3px 3px; border-radius: 4px; background-color: {euroleague_team_colors[team_stats_df.columns[1]] if (idx == 1 and ((value > row[2] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[2] and row.iloc[0] in ["TO%", "TO"]))) else "transparent"}">{value:.1f}{"%" if str(row.iloc[0]).endswith("%") else ""}</span>{f"<img src=\'{away_logo}\' style=\'width: 28px; height: 28px; margin-left: 2px; vertical-align: middle;\'/>" if (idx == 1 and ((value > row[2] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[2] and row.iloc[0] in ["TO%", "TO"]))) else ""}</div></td>' 
                if isinstance(value, (int, float)) and idx == 1
-               else f'<td class="numeric" style="text-align: center"><div style="margin-left: 0px;margin-right:-3px;"><span class="highlight" style="padding: 5px 5px; border-radius: 10px; background-color: {euroleague_team_colors[team_stats_df.columns[2]] if (idx == 2 and ((value > row[1] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[1] and row.iloc[0] in ["TO%", "TO"]))) else "transparent"}">{value:.1f}{"%" if str(row.iloc[0]).endswith("%") else ""}</span>{f"<img src=\'{home_logo}\' style=\'width: 30px; height: 30px; margin-left: 4px; vertical-align: middle;\'/>" if (idx == 2 and ((value > row[1] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[1] and row.iloc[0] in ["TO%", "TO"]))) else ""}</div></td>' 
+               else f'<td class="numeric" style="text-align: center"><div style="margin-left: -2px;font-size: 12px;margin-right:-5px;"><span class="highlight" style="padding: 3px 3px; border-radius: 4px; background-color: {euroleague_team_colors[team_stats_df.columns[2]] if (idx == 2 and ((value > row[1] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[1] and row.iloc[0] in ["TO%", "TO"]))) else "transparent"}">{value:.1f}{"%" if str(row.iloc[0]).endswith("%") else ""}</span>{f"<img src=\'{home_logo}\' style=\'width: 28px; height: 28px; margin-left: 2px; vertical-align: middle;\'/>" if (idx == 2 and ((value > row[1] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[1] and row.iloc[0] in ["TO%", "TO"]))) else ""}</div></td>' 
                if isinstance(value, (int, float)) and idx == 2
                else f'<td style="text-align: center">{value}</td>'
                for idx, (col, value) in enumerate(row.items())
@@ -521,11 +527,11 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
               st.markdown("""
               <div style='display: flex; justify-content: center; align-items: center;'>
                   <div style='background-color: white; 
-                            border-radius: 16px; 
-                            padding: 6px 10px; 
+                            border-radius: 8px; 
+                            padding: 3px 8px; 
                             box-shadow: 0 4px 12px rgba(100, 100, 100, .4);
-                            margin-top: 75px;'>
-                      <span style='font-size: 28px; color: #1a1f36; font-weight: 500;'>@</span>
+                            margin-top: 45px;'>
+                      <span style='font-size: 16px; color: #1a1f36; font-weight: 500;'>@</span>
                   </div>
               </div>
               """, unsafe_allow_html=True)
@@ -577,11 +583,11 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
 
            html_table += f'''
                <td>
-                   <div style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 0px; margin-left:0px;">
-                       <div style="width: 50px; height: 50px; display: flex; align-items: center;">
+                   <div style="display: flex; align-items: center; justify-content: center; gap: 1px; padding: 0px; margin-left:0px;">
+                       <div style="width: 40px; height: 40px; display: flex; align-items: center;">
                            <img src="{logo_to_use}" alt="Logo" style="width: 100%; height: auto; object-fit: contain;margin-left:0px;">
                        </div>
-                       <span style="font-size: 24px; font-weight: 800; color: rgba(0,0,0,0.7);">{team_name}</span>
+                       <span style="font-size: 14px; font-weight: 800; color: rgba(0,0,0,0.7);">{team_name}</span>
                    </div>
                </td>
            '''
@@ -617,281 +623,366 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
 # Create a second row of columns for player stats table
   # Create a second row of columns for player stats table
    # Create a second row of columns for player stats table
+   # Create a second row of columns for player stats table
    _, select_col, _ = st.columns([.001, .001, .001])  
-   
+  
    with select_col:
-       # Get team names from matchup data
-       first_row = simulation_results_df[simulation_results_df['Matchup'] == selected_matchup].iloc[0]
-       away_team = first_row['Away_Code']
-       home_team = first_row['Home_Code']
-       
-       # Style just the buttons and player-stats-specific table
-       st.markdown("""
-           <style>
-           div.stButton > button {
-               width: 100%;
-               background-color: #1a1f36;
-               border: 5px solid #d3d3d3;
-               color: white;
-               font-weight: 700;
-               border-radius: 8px;
-               position: relative;
-               top: -820px !important;
-               margin-left:-85px;
-               margin-right:-50px;
-           }
-           
-           div.stButton > button:hover {
-               border-color: #2d63e2;
-               color: #2d63e2;
-               background-color: rgba(45, 99, 226, 0.1);
-           }
-           div.stButton > button:focus {
-               box-shadow: none;
-               background-color: rgba(45, 99, 226, 0.1);
-               color: #2d63e2;
-               border-color: #2d63e2;
-           }
-           
-           /* Player Stats Table Specific Styles */
+      # Get team names from matchup data
+      first_row = simulation_results_df[simulation_results_df['Matchup'] == selected_matchup].iloc[0]
+      away_team = first_row['Away_Code']
+      home_team = first_row['Home_Code']
+      
+      # Unified CSS block
+      st.markdown("""
+          <style>
+          /* Button Styles */
+          /* Button container styling */
+div.stButton {
+   margin-top: -540px !important;
+   margin-left: -50px !important;  /* This moves buttons up */
+   position: relative !important;
+   z-index: 2 !important;  /* Ensure buttons stay on top */
+   padding: 0 !important;  /* Remove padding */
+   margin-bottom: -8px !important;  /* Reduce space between buttons */
+}
+
+/* Individual button styling */
+div.stButton > button {
+   width: 100%;
+   background-color: #1a1f36;
+   border: 3px solid #1a1f36;  /* Reduced border from 5px to 2px */
+   color: white;
+   font-weight: 700;
+   border-radius: 8px;
+   font-size: 6px !important;
+   padding: 3px 3px !important;  /* Reduced padding */
+   min-height: 20px !important;  /* Reduced height */
+   height: 20px !important;  /* Set explicit height */
+   line-height: 20px !important;  /* Match line height to height */
+}
+
+div.stButton > button:hover {
+   border-color: #2d63e2;
+   color: #2d63e2;
+   background-color: rgba(45, 99, 226, 0.1);
+}
+
+div.stButton > button:focus {
+   box-shadow: none;
+   background-color: rgba(45, 99, 226, 0.1);
+   color: #2d63e2;
+   border-color: #2d63e2;
+}
+
+/* Base Table Styles */
 .player-stats-container {
-    margin: 20px 0;
-    border-radius: 16px;
+    border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 0 15px rgba(100, 100, 100, .5);
-    margin-top: -810px !important;
-    margin-right: -52px !important;
-    overflow-x: auto;  /* Add horizontal scrollbar */
+    margin-top: -520px !important;
+}
+
+.player-stats-table {
+    font-size: 11px !important;
+    width: 100% !important;
+    table-layout: fixed !important;
+    border-spacing: 0 !important;  /* Added to ensure consistent spacing */
+    border-collapse: collapse !important;  /* Added to ensure consistent spacing */
+}
+
+/* Increased heights for headers */
+.player-stats-table th {
+    font-weight: 700 !important;
+    background-color: white !important;
+    font-size: 12px !important;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 20px !important;  /* Increased from 30px */
+    line-height: 5px !important;  /* Added to match height */
+    vertical-align: middle !important;
+}
+
+/* Increased heights for cells */
+.player-stats-table td {
+    padding: 8px 4px !important;  /* Increased top/bottom padding */
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    height: 35px !important;  /* Increased from 25px */
+    line-height: 15px !important;  /* Added to match height */
+    vertical-align: middle !important;
+}
+
+/* Add some subtle borders for better readability */
+.player-stats-table tr {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+/* All View Table Styles */
+.all-view.player-stats-container {
+    min-width: 310px !important;
+    width: 310px !important;
+    max-width: 310px !important;
+    overflow: hidden !important;  /* Prevent scrolling in All view */
+}
+
+.all-view.player-stats-container.left-table {
+    position: relative !important;
+    left: 30px !important;
+}
+
+.all-view.player-stats-container.right-table {
+    position: relative !important;
+    margin-left: 0px !important;
+}
+
+.all-view .player-stats-table td:first-child,
+.all-view .player-stats-table th:first-child {
+    width: 120px !important;
+    background: rgb(255, 255, 255) !important;  /* Pure white background */
+    border-right: 1px solid rgba(200, 200, 200, 0.4) !important;  /* Slightly more visible separator */
+    box-shadow: 1px 0 2px rgba(0, 0, 0, 0.05) !important;  /* Subtle shadow for depth */
+}
+
+/* Also ensure the text remains clearly visible */
+.player-stats-table td:first-child {
+    color: #1a1f36 !important;  /* Darker text color for better contrast */
+    font-weight: 700 !important;
+}
+
+/* Add hover effect for more metallic feel */
+.all-view .player-stats-table td:first-child:hover {
+    background: linear-gradient(145deg, #f5f5f5, #e8e8e8) !important;
 }
 
 
 
+/* Individual Team View Styles */
+.player-stats-container.single-team {
+    min-width: 620px !important;
+    width: 620px !important;
+    max-width: 620px !important;
+    margin-right: 0px !important;
+    overflow-x: scroll !important;
+}
 
+/* Individual view specific column widths */
+.single-team .player-stats-table {
+    min-width: 600px !important; /* Make table wider than container to enable scroll */
+}
 
+.single-team .player-stats-table td:first-child,
+.single-team .player-stats-table th:first-child {
+    width: 140px !important;
+    text-align: left !important;
+    padding-left: 8px !important;
+    position: sticky !important;
+    left: 0 !important;
+    background: white !important;
+    z-index: 1 !important;
+}
 
-           </style>
-       """, unsafe_allow_html=True)
-       
-       # Create three columns for the buttons
-       btn1, btn3, btn2 = st.columns([0.01, 0.01, 0.01])
-       
-       # Initialize session state for button selection if not exists
-       if 'selected_view' not in st.session_state:
-           st.session_state.selected_view = 'All'
-       
-       # Create the buttons
-       with btn1:
-           if st.button('All', key='game_view_btn'):
-               st.session_state.selected_view = 'All'
-       with btn2:
-           if st.button(home_team, key='home_team_btn'):
-               st.session_state.selected_view = 'Home'
-       with btn3:
-           if st.button(away_team, key='away_team_btn'):
-               st.session_state.selected_view = 'Away'
-       
-       view_options = {
-           'All': 'All',
-           'Home': 'team1',
-           'Away': 'team2'
-       }
-       
-       
-       selected_view = st.session_state.selected_view
+.single-team .player-stats-table td:not(:first-child),
+.single-team .player-stats-table th:not(:first-child) {
+    width: 50px !important;  /* Wider columns for individual view */
+}
+
+/* Custom scrollbar for individual team view */
+.player-stats-container.single-team::-webkit-scrollbar {
+    height: 8px !important;
+}
+
+.player-stats-container.single-team::-webkit-scrollbar-track {
+    background: #f1f1f1 !important;
+    border-radius: 4px !important;
+}
+
+.player-stats-container.single-team::-webkit-scrollbar-thumb {
+    background: #888 !important;
+    border-radius: 4px !important;
+}
+
+.player-stats-container.single-team::-webkit-scrollbar-thumb:hover {
+    background: #555 !important;
+}
+          </style>
+      """, unsafe_allow_html=True)
+      
+      # Create three columns for the buttons
+      btn1, btn3, btn2 = st.columns([0.01, 0.01, 0.01])
+      
+      # Initialize session state for button selection
+      if 'selected_view' not in st.session_state:
+          st.session_state.selected_view = 'All'
+      
+      # Create the buttons
+      with btn1:
+          if st.button('All', key='game_view_btn'):
+              st.session_state.selected_view = 'All'
+      with btn2:
+          if st.button(home_team, key='home_team_btn'):
+              st.session_state.selected_view = 'Home'
+      with btn3:
+          if st.button(away_team, key='away_team_btn'):
+              st.session_state.selected_view = 'Away'
+      
+      view_options = {
+          'All': 'All',
+          'Home': 'team1',
+          'Away': 'team2'
+      }
+      
+      selected_view = st.session_state.selected_view
 
    def create_player_stats_html(df, display_columns, team_code):
-    # Create color shades dictionary based on team base colors
-    team_color_shades = {
-    # Yellow shades (based on #ffed99)
-    'BER': ['#ffd966', '#ffe180', '#ffed99', '#fff4cc', '#fff7e0', '#fff9e6'],
-    'ULK': ['#ffd966', '#ffe180', '#ffed99', '#fff4cc', '#fff7e0', '#fff9e6'],
-    'TEL': ['#ffd966', '#ffe180', '#ffed99', '#fff4cc', '#fff7e0', '#fff9e6'],
-    
-    # Light navy/blue shades (based on #d6e4ff)
-    'IST': ['#adc8ff', '#c2d6ff', '#d6e4ff', '#e4edff', '#edf3ff', '#f2f5ff'],
-    'BAS': ['#adc8ff', '#c2d6ff', '#d6e4ff', '#e4edff', '#edf3ff', '#f2f5ff'],
-    'BAR': ['#adc8ff', '#c2d6ff', '#d6e4ff', '#e4edff', '#edf3ff', '#f2f5ff'],
-    'MAD': ['#adc8ff', '#c2d6ff', '#d6e4ff', '#e4edff', '#edf3ff', '#f2f5ff'],
-    
-    # Light red shades (based on #ffd6d9)
-    'MCO': ['#ffb3b9', '#ffc4c9', '#ffd6d9', '#ffe4e6', '#ffeff0', '#fff2f3'],
-    'RED': ['#ffb3b9', '#ffc4c9', '#ffd6d9', '#ffe4e6', '#ffeff0', '#fff2f3'],
-    'MIL': ['#ffb3b9', '#ffc4c9', '#ffd6d9', '#ffe4e6', '#ffeff0', '#fff2f3'],
-    'MUN': ['#ffb3b9', '#ffc4c9', '#ffd6d9', '#ffe4e6', '#ffeff0', '#fff2f3'],
-    'OLY': ['#ffb3b9', '#ffc4c9', '#ffd6d9', '#ffe4e6', '#ffeff0', '#fff2f3'],
-    
-    # Light green shades (based on #d6ffe0)
-    'PAN': ['#adffbd', '#c2ffd1', '#d6ffe0', '#e4ffe9', '#edfff1', '#f2fff5'],
-    'ZAL': ['#adffbd', '#c2ffd1', '#d6ffe0', '#e4ffe9', '#edfff1', '#f2fff5'],
-    
-    # Light gray shades (based on #e6e6e6)
-    'ASV': ['#cccccc', '#d9d9d9', '#e6e6e6', '#efefef', '#f3f3f3', '#f7f7f7'],
-    'PRS': ['#cccccc', '#d9d9d9', '#e6e6e6', '#efefef', '#f3f3f3', '#f7f7f7'],
-    'PAR': ['#cccccc', '#d9d9d9', '#e6e6e6', '#efefef', '#f3f3f3', '#f7f7f7'],
-    'VIR': ['#cccccc', '#d9d9d9', '#e6e6e6', '#efefef', '#f3f3f3', '#f7f7f7'],
-}
+      # Create color shades dictionary based on team base colors
+      team_color_shades = {
+          # Yellow shades (based on #ffed99)
+          'BER': ['#ffd966', '#ffe180', '#ffed99', '#fff4cc', '#fff7e0', '#fff9e6'],
+          'ULK': ['#ffd966', '#ffe180', '#ffed99', '#fff4cc', '#fff7e0', '#fff9e6'],
+          'TEL': ['#ffd966', '#ffe180', '#ffed99', '#fff4cc', '#fff7e0', '#fff9e6'],
+          
+          # Light navy/blue shades (based on #d6e4ff)
+          'IST': ['#adc8ff', '#c2d6ff', '#d6e4ff', '#e4edff', '#edf3ff', '#f2f5ff'],
+          'BAS': ['#adc8ff', '#c2d6ff', '#d6e4ff', '#e4edff', '#edf3ff', '#f2f5ff'],
+          'BAR': ['#adc8ff', '#c2d6ff', '#d6e4ff', '#e4edff', '#edf3ff', '#f2f5ff'],
+          'MAD': ['#adc8ff', '#c2d6ff', '#d6e4ff', '#e4edff', '#edf3ff', '#f2f5ff'],
+          
+          # Light red shades (based on #ffd6d9)
+          'MCO': ['#ffb3b9', '#ffc4c9', '#ffd6d9', '#ffe4e6', '#ffeff0', '#fff2f3'],
+          'RED': ['#ffb3b9', '#ffc4c9', '#ffd6d9', '#ffe4e6', '#ffeff0', '#fff2f3'],
+          'MIL': ['#ffb3b9', '#ffc4c9', '#ffd6d9', '#ffe4e6', '#ffeff0', '#fff2f3'],
+          'MUN': ['#ffb3b9', '#ffc4c9', '#ffd6d9', '#ffe4e6', '#ffeff0', '#fff2f3'],
+          'OLY': ['#ffb3b9', '#ffc4c9', '#ffd6d9', '#ffe4e6', '#ffeff0', '#fff2f3'],
+          
+          # Light green shades (based on #d6ffe0)
+          'PAN': ['#adffbd', '#c2ffd1', '#d6ffe0', '#e4ffe9', '#edfff1', '#f2fff5'],
+          'ZAL': ['#adffbd', '#c2ffd1', '#d6ffe0', '#e4ffe9', '#edfff1', '#f2fff5'],
+          
+          # Light gray shades (based on #e6e6e6)
+          'ASV': ['#cccccc', '#d9d9d9', '#e6e6e6', '#efefef', '#f3f3f3', '#f7f7f7'],
+          'PRS': ['#cccccc', '#d9d9d9', '#e6e6e6', '#efefef', '#f3f3f3', '#f7f7f7'],
+          'PAR': ['#cccccc', '#d9d9d9', '#e6e6e6', '#efefef', '#f3f3f3', '#f7f7f7'],
+          'VIR': ['#cccccc', '#d9d9d9', '#e6e6e6', '#efefef', '#f3f3f3', '#f7f7f7'],
+      }
 
-    # Convert lists to tuples for hashability
-    col_widths = {
-        # Columns for 'All' view
-        tuple([ 'Player', 'MIN', 'PTS', 'REB', '3FGM']): {
-            'Player': '34%',
-            'MIN': '11%',
-            'PTS': '11%',
-            'REB': '11%',
-            '3FGM': '11%'
-        },
-        # Columns for single team view
-        tuple(['Player', 'MIN', 'PTS', 'OREB', 'DREB', 'REB', 'TO', 
-               '2FGM', '2FGA', '2PT%', '3FGM', '3FGA', '3PT%', 'FTM', 'FTA', 'FT%']): {
-            'Player': '18%',
-            'MIN': '6%',
-            'PTS': '6%',
-            'OREB': '6%',
-            'DREB': '6%',
-            'REB': '6%',
-            'TO': '5%',
+      table_html = '<div class="player-stats-container">'
+      table_html += '<table class="player-stats-table">'
+      
+      table_html += '<thead><tr>'
+      for col in display_columns:
+          table_html += f'<th>{col}</th>'
+      table_html += '</tr></thead>'
+      
+      # Calculate rankings for each numeric column
+      numeric_columns = {}
+      for col in display_columns:
+          if col not in ['Team', 'Player', 'MIN']:
+              try:
+                  values = df[col].astype(float)
+                  sorted_values = sorted(values.unique(), reverse=True)
+                  rank_dict = {value: idx for idx, value in enumerate(sorted_values)}
+                  numeric_columns[col] = {
+                      'rank_dict': rank_dict,
+                      'total_ranks': len(sorted_values) - 1
+                  }
+              except:
+                  continue
+      
+      for _, row in df.iterrows():
+          table_html += '<tr>'
+          for col in display_columns:
+              value = row[col]
+              
+              if col in ['Team', 'Player']:
+                  table_html += f'<td style="color: #1a1f36; font-weight: 700;white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:0;">{value}</td>'
+              elif col in numeric_columns and not pd.isna(value):
+                  try:
+                      float_val = float(value)
+                      rank = numeric_columns[col]['rank_dict'].get(float_val, 0)
+                      
+                      team_shades = team_color_shades[team_code]
+                      base_color = team_shades[min(rank, len(team_shades)-1)]
+                      
+                      gradient_style = f"""
+                      background: linear-gradient(to bottom, 
+                          rgba(300, 300, 300, 1),
+                          {base_color}
+                      )
+                      """
+                      
+                      if col.endswith('%'):
+                          formatted_value = f"{float_val:.0f}%" if float_val >= 1 else f"{float_val * 100:.0f}%"
+                      else:
+                          formatted_value = f"{float_val:.1f}"
+                      
+                      table_html += f'<td style="color: #1a1f36; text-align: center; {gradient_style}">{formatted_value}</td>'
+                  except:
+                      table_html += f'<td>{value}</td>'
+              else:
+                  table_html += f'<td style="color: #1a1f36;text-align: center">{value}</td>'
+                  
+          table_html += '</tr>'
+      table_html += '</table></div>'
+      
+      return table_html
 
-            '2FGM': '6%',
-            '2FGA': '6%',
-            '2PT%': '6%',
-            '3FGM': '6%',
-            '3FGA': '6%',
-            '3PT%': '6%',
-            'FTM': '6%',
-            'FTA': '6%',
-            'FT%': '6%'
-        }
-    }
-
-    # Convert input display_columns to tuple
-    display_columns_tuple = tuple(display_columns)
-
-    # Get the appropriate column widths
-    current_widths = col_widths.get(display_columns_tuple, {})
-
-    table_html = '<div class="player-stats-container"  >'
-    table_html += '<table class="player-stats-table"  >'
-    
-    # Generate colgroup dynamically
-    table_html += '<colgroup>'
-    for col in display_columns:
-        width = current_widths.get(col, '0%')  # Default to 10% if not specified
-        table_html += f'<col style="width:{width};">'
-    table_html += '</colgroup>'
-
-    table_html += '<thead><tr>'
-    for col in display_columns:
-        table_html += f'<th style="font-size:14px; font-weight:700; text-align: center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{col}</th>'
-    table_html += '</tr></thead>'
-    
-    # Calculate rankings for each numeric column
-    numeric_columns = {}
-    for col in display_columns:
-        if col not in ['Team', 'Player', 'MIN']:
-            try:
-                values = df[col].astype(float)
-                sorted_values = sorted(values.unique(), reverse=True)
-                rank_dict = {value: idx for idx, value in enumerate(sorted_values)}
-                numeric_columns[col] = {
-                    'rank_dict': rank_dict,
-                    'total_ranks': len(sorted_values) - 1
-                }
-            except:
-                continue
-    
-    for _, row in df.iterrows():
-        table_html += '<tr>'
-        for col in display_columns:
-            value = row[col]
-            
-            if col in ['Team', 'Player']:
-                table_html += f'<td style="color: #1a1f36; font-weight: 700;white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:0;">{value}</td>'
-            elif col in numeric_columns and not pd.isna(value):
-                try:
-                    float_val = float(value)
-                    rank = numeric_columns[col]['rank_dict'].get(float_val, 0)
-                    
-                    # Get color based on rank
-                    team_shades = team_color_shades[team_code]
-                    base_color = team_shades[min(rank, len(team_shades)-1)]
-                    
-                    # Create a gradient background
-                    gradient_style = f"""
-                    background: linear-gradient(to bottom, 
-                        rgba(300, 300, 300, 1),
-                        {base_color}
-                    )
-                    """
-                    
-                    # Format the value
-                    if col.endswith('%'):
-                        formatted_value = f"{float_val:.0f}%" if float_val >= 1 else f"{float_val * 100:.0f}%"
-                    else:
-                        formatted_value = f"{float_val:.1f}"
-                    
-                    table_html += f'<td style="color: #1a1f36; text-align: center; {gradient_style}">{formatted_value}</td>'
-                except:
-                    table_html += f'<td>{value}</td>'
-            else:
-                table_html += f'<td style="color: #1a1f36;text-align: center">{value}</td>'
-                
-        table_html += '</tr>'
-    table_html += '</tbody></table></div>'
-    
-    return table_html
-
-   # Display tables based on selected view
+  # Display tables based on selected view
    if view_options[selected_view] == 'All':
-       # Original two-column layout
-       _, team2_stats_area, space, team1_stats_area = st.columns([3.9, 5.2, .5, 5.2])
-       
-       with team1_stats_area:
-           display_columns = ['Player', 'MIN', 'PTS', 'REB', '3FGM']
-           home_player_stats = filtered_player_statsTeam1[filtered_player_statsTeam1['Team'] == home_team]
-           
-           # Round numerical values
-           for col in ['MIN', 'PTS', 'REB', '3FGM']:
-               if col in home_player_stats.columns:
-                   home_player_stats[col] = home_player_stats[col].round(2)
-           
-           home_table_html = create_player_stats_html(home_player_stats[display_columns], display_columns, home_team)
-           st.markdown(home_table_html, unsafe_allow_html=True)
-       
-       with team2_stats_area:
-           away_player_stats = filtered_player_statsTeam2[filtered_player_statsTeam2['Team'] == away_team]
-           
-           # Round numerical values
-           for col in ['MIN', 'PTS', 'REB', '3FGM']:
-               if col in away_player_stats.columns:
-                   away_player_stats[col] = away_player_stats[col].round(2)
-           
-           away_table_html = create_player_stats_html(away_player_stats[display_columns], display_columns, away_team)
-           st.markdown(away_table_html, unsafe_allow_html=True)
+      # Original two-column layout
+      _, team2_stats_area, team1_stats_area = st.columns([3.8, 5.2, 5.2])
+      
+      with team1_stats_area:
+          display_columns = ['Player', 'MIN', 'PTS', 'REB', '3FG']
+          home_player_stats = filtered_player_statsTeam1[filtered_player_statsTeam1['Team'] == home_team]
+          
+          # Round numerical values
+          for col in ['MIN', 'PTS', 'REB', '3FG']:
+              if col in home_player_stats.columns:
+                  home_player_stats[col] = home_player_stats[col].round(2)
+          
+          home_table_html = create_player_stats_html(home_player_stats[display_columns], display_columns, home_team)
+          home_table_html = home_table_html.replace('class="player-stats-container"', 'class="player-stats-container all-view left-table"')
+          st.markdown(home_table_html, unsafe_allow_html=True)
+      
+      with team2_stats_area:
+          away_player_stats = filtered_player_statsTeam2[filtered_player_statsTeam2['Team'] == away_team]
+          
+          # Round numerical values
+          for col in ['MIN', 'PTS', 'REB', '3FG']:
+              if col in away_player_stats.columns:
+                  away_player_stats[col] = away_player_stats[col].round(2)
+          
+          away_table_html = create_player_stats_html(away_player_stats[display_columns], display_columns, away_team)
+          away_table_html = away_table_html.replace('class="player-stats-container"', 'class="player-stats-container all-view right-table"')
+          st.markdown(away_table_html, unsafe_allow_html=True)
 
    else:
-       # Single team view
-       _, single_team_area, _ = st.columns([3.9, 10.42, 0.01])
-       
-       with single_team_area:
-           display_columns = ['Player', 'MIN', 'PTS', 'OREB', 'DREB', 'REB', 'TO', 
-                            '2FGM', '2FGA', '2PT%', '3FGM', '3FGA', '3PT%', 'FTM', 'FTA', 'FT%']
-           
-           if view_options[selected_view] == 'team1':
-               selected_data = filtered_player_statsTeam1[filtered_player_statsTeam1['Team'] == home_team]
-           else:
-               selected_data = filtered_player_statsTeam2[filtered_player_statsTeam2['Team'] == away_team]
-           
-           # Round numerical values
-           numerical_cols = ['MIN', 'PTS', 'OREB', 'DREB', 'REB', 'TO', '2FGM', '2FGA', '2PT%',
-                           '3FGM', '3FGA', '3PT%', 'FTM', 'FTA', 'FT%']
-           for col in numerical_cols:
-               if col in selected_data.columns:
-                   selected_data[col] = selected_data[col].round(2)
-           
-           team_code = home_team if view_options[selected_view] == 'team1' else away_team
-           table_html = create_player_stats_html(selected_data[display_columns], display_columns, team_code)
-           st.markdown(table_html, unsafe_allow_html=True)
+      # Single team view
+      _, single_team_area = st.columns([3.8, 10.42])
+      
+      with single_team_area:
+          display_columns = ['Player', 'MIN', 'PTS', 'OREB', 'DREB', 'REB', 'TO', 
+                          '2FG', '2FGA', '2PT%', '3FG', '3FGA', '3PT%', 'FT', 'FTA', 'FT%']
+          
+          if view_options[selected_view] == 'team1':
+              selected_data = filtered_player_statsTeam1[filtered_player_statsTeam1['Team'] == home_team]
+          else:
+              selected_data = filtered_player_statsTeam2[filtered_player_statsTeam2['Team'] == away_team]
+          
+          # Round numerical values
+          numerical_cols = ['MIN', 'PTS', 'OREB', 'DREB', 'REB', 'TO', '2FGM', '2FGA', '2PT%',
+                          '3FG', '3FGA', '3PT%', 'FTM', 'FTA', 'FT%']
+          for col in numerical_cols:
+              if col in selected_data.columns:
+                  selected_data[col] = selected_data[col].round(2)
+          
+          team_code = home_team if view_options[selected_view] == 'team1' else away_team
+          table_html = create_player_stats_html(selected_data[display_columns], display_columns, team_code)
+          table_html = table_html.replace('class="player-stats-container"', 'class="player-stats-container single-team"')
+          st.markdown(table_html, unsafe_allow_html=True)
 
 
 
@@ -932,6 +1023,7 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
        return
    
    matchup_data = simulation_results_df_eurocup[simulation_results_df_eurocup['Matchup'] == selected_matchup].iloc[0]
+   
    home_logo = matchup_data['Home_Logo']
    away_logo = matchup_data['Away_Logo']
    home_team = matchup_data['Home_Team']
@@ -939,7 +1031,7 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
    home_code2 = matchup_data['Home_Code']
    away_code2 = matchup_data['Away_Code']
    
-# Main team colors dictionary
+   # Define team colors dictionary 
    eurocup_team_colors = {
     'LIE': '#8b1538',  # Lietkabelis
     'ARI': '#ffd700',  # Aris
@@ -1017,6 +1109,12 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
    filtered_team_stats = team_stats[team_stats['Matchup'] == selected_matchup]
    filtered_player_statsTeam1 = player_statsTeam1[player_statsTeam1['Matchup'] == selected_matchup]
    filtered_player_statsTeam2 = player_statsTeam2[player_statsTeam2['Matchup'] == selected_matchup]
+   filtered_player_statsTeam1 = player_statsTeam1[player_statsTeam1['Matchup'] == selected_matchup].copy()
+   filtered_player_statsTeam2 = player_statsTeam2[player_statsTeam2['Matchup'] == selected_matchup].copy()
+
+# Rename the column in both DataFrames
+   filtered_player_statsTeam1 = filtered_player_statsTeam1.rename(columns={'3FGM': '3FG', '2FGM': '2FG', 'FTM':'FT'})
+   filtered_player_statsTeam2 = filtered_player_statsTeam2.rename(columns={'3FGM': '3FG', '2FGM': '2FG', 'FTM':'FT'})
 
    # Add state management for HCA and possessions
    if 'hca' not in st.session_state:
@@ -1045,12 +1143,12 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
            border-radius: 8px;
            box-shadow: 0 4px 20px rgba(100, 100, 100, 3.5);
            margin-bottom: 8px;
-           margin-top: 0px;
+           margin-top: -15px !important;
        }
 
        .logo-cell img {
-           width: 150px;
-           height: 150px;
+           width: 200px;
+           height: 200px;
            object-fit: contain;
        }
 
@@ -1066,7 +1164,7 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
 
        .team-name {
            font-weight: 700;
-           font-size: 16px;
+           font-size: 11px !important;
            font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
            color: rgba(0,0,0,0.9);
            white-space: nowrap;
@@ -1077,12 +1175,12 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
     background-color: white;
     border-radius: 16px;
     box-shadow: 0 4px 12px rgba(100, 100, 100, .5);
-    margin-top: 12px !important;
-    margin-left: -40px !important;
-    border: 5px solid white; 
+    margin-top: -25px !important;
+    margin-left: -60px !important;
+    border: 2px solid white !important; 
     overflow: hidden;
     text-align: center;
-    border: 2px solid white !important;
+    border:none;
     border-collapse: collapse;
     border-radius: 16px;
     overflow: hidden;
@@ -1093,17 +1191,14 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
     border-collapse: collapse;
     border-spacing: 0;
     box-shadow: 0 0 15px rgba(100, 100, 100, 1);
-
 }
 
 /* Enhanced Table header styles */
 .team-stats-eurocup-container th {
-
     color: #1a1f36;
     font-weight: 800;
-
-    font-size: 18px;
-    padding: 16px 10px;
+    font-size: 14px;
+    padding: 6px 4px;
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 0.8px;
@@ -1113,35 +1208,38 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
     z-index: 1;
 }
 
+/* Add hover effect for rows */
+.team-stats-eurocup-container tr:hover {
+    background: linear-gradient(145deg, #f8f9fa, #f1f3f5) !important;
+    transition: background 0.2s ease-in-out !important;
+}
+
+/* Preserve background for header row */
+.team-stats-eurocup-container thead tr:hover {
+    background: none !important;
+}
+
 /* Add darker borders for specific rows */
 .team-stats-eurocup-container tr:nth-child(1) {
-    border-top: 15px solid #e0e0e0 !important;
+    border-top: 8px solid #e0e0e0 !important;
 }
 
 .team-stats-eurocup-container tr:nth-child(2) {
-    border-top: 15px solid #e0e0e0;
+    border-top: 8px solid #e0e0e0;
 }
 
 .team-stats-eurocup-container tr:nth-child(6) {
-    border-top: 15px solid #e0e0e0;
+    border-top: 8px solid #e0e0e0;
 }
 
 .team-stats-eurocup-container tr:nth-child(9) {
-    border-top: 15px solid #e0e0e0;
+    border-top: 8px solid #e0e0e0;
 }
 
 /* Add a subtle line between header cells */
 .team-stats-eurocup-container th:not(:last-child) {
     border-right: 1px solid #e0e0e0;
 }
-
-
-
-/* Add a subtle line between header cells */
-.team-stats-eurocup-container th:not(:last-child) {
-    border-right: 1px solid #e0e0e0;
-}
-
 /* Highlighting styles */
 .highlight {
     background-color: #fff4b3;
@@ -1152,23 +1250,23 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
 .team-name {
     font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
     font-weight: 800;
-    font-size: 16px;
+    font-size: 12px;
     color: #1a1f36;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.1px;
 }
-
 
 
        </style>
    """, unsafe_allow_html=True)
    
    first_row = simulation_results_df_eurocup[simulation_results_df_eurocup['Matchup'] == selected_matchup].iloc[0]
-   
-   team_stats_area, spacing1, logo_area, spacing2, stats_area = st.columns([1.9, 0.2, 3, .1, 2.5])
+   st.markdown('<div class="eurocup_tab">', unsafe_allow_html=True)
+
+   team_stats_area, spacing1, logo_area,  stats_area = st.columns([1.4, 0.9, 4,  2.5])
    
    with team_stats_area:
        # Team Stats Table (Full Width)
@@ -1204,62 +1302,73 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
        cols[1], cols[2] = cols[2], cols[1]  # Swap the columns
        team_stats_df = team_stats_df[cols]
        # Convert team colors to RGB format for CSS variables
+       
 
-       unique_id = f"eurocup-stats-{home_code2}-{away_code2}"
+       # Convert team colors to RGB format for CSS variables
+       home_code = home_code2
+       away_code = away_code2
 
-    # Create the CSS variables with a very specific selector
+    # Explicitly create RGB values using EuroCup team colors
+       local_team_colors = dict(eurocup_team_colors)
+
+    # Use local_team_colors instead of euroleague_team_colors
+       away_team_color = local_team_colors.get(away_code2, '#f0f0f0')
+       home_team_color = local_team_colors.get(home_code2, '#f0f0f0')
+
+    # Create the CSS variables
        team_css = f"""
-<style>
-    .team-stats-eurocup-container th:nth-child(1) {{
-        background: linear-gradient(to bottom, #ffffff, #f5f5f7) !important;
-    }}
+    <style>
+        .team-stats-eurocup-container th:nth-child(1) {{
+            background: linear-gradient(to bottom, #ffffff, #f5f5f7);
+        }}
 
-    .team-stats-eurocup-container th:nth-child(2) {{
-        background: linear-gradient(to bottom, 
-            rgba(255, 255, 255, 0.4),
-            {eurocup_team_colors.get(away_code2, '#f0f0f0')}
-        ) !important;
-    }}
+        .team-stats-eurocup-container th:nth-child(2) {{
+            background: linear-gradient(to bottom, 
+                rgba(255, 255, 255, 0.7),
+                {away_team_color}
+            ) !important;
+        }}
 
-    .team-stats-eurocup-container th:nth-child(3) {{
-        background: linear-gradient(to bottom,
-            rgba(255, 255, 255, 0.4),
-            {eurocup_team_colors.get(home_code2, '#f0f0f0')}
-        ) !important;
-    }}
-    </style>
-    """
+        .team-stats-eurocup-container th:nth-child(3) {{
+            background: linear-gradient(to bottom,
+                rgba(255, 255, 255, 0.7),
+                {home_team_color}
+            ) !important;
+        }}
+       </style>
+       """
 
-    # Apply the CSS
+       # Apply the CSS
        st.markdown(team_css, unsafe_allow_html=True)
-
+       # Convert team colors to RGB format for CSS variables
        team_html = """
        <div class="team-stats-eurocup-container">
            <table style="width: 100%">
                <colgroup>
-                   <col style="width: 16%">
-                   <col style="width: 35%">
-                   <col style="width: 35%">
+                   <col style="width: 10%">
+                   <col style="width: 45%">
+                   <col style="width: 45%">
                </colgroup>
                <thead><tr>{}</tr></thead>
                <tbody>{}</tbody>
            </table>
        </div>
        """
+
        
        team_header = f"""<th>{team_stats_df.columns[0]}</th>
 <th>
-   <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
-       <div style="width: 50px; height: 50px; display: flex; align-items: center;">
-           <img src="{away_logo}" alt="Logo" style="width: 100%; height: auto; object-fit: contain;">
+   <div style="display: flex; align-items: center; gap: 1px; justify-content: center;">
+       <div style="width: 40px; height: 40px; display: flex; align-items: center;">
+           <img src="{away_logo}" alt="Logo" style="width: 100%; height: 650px; object-fit: contain;">
        </div>
        <span>{team_stats_df.columns[1]}</span>
    </div>
 </th>
 <th>
-   <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
+   <div style="display: flex; align-items: center; gap: 1px; justify-content: center;">
        <div style="width: 40px; height: 40px; display: flex; align-items: center;">
-           <img src="{home_logo}" alt="Logo" style="width: 100%; height: auto; object-fit: contain;">
+           <img src="{home_logo}" alt="Logo" style="width: 100%; height: 650px; object-fit: contain;">
        </div>
        <span>{team_stats_df.columns[2]}</span>
    </div>
@@ -1286,11 +1395,11 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
                "key-section" if 1 <= index <= 4 else ""
            ]))}">' +
            ''.join(
-               f'<td class="numeric" style="text-align: center; font-weight: 800">{value}</td>' 
+               f'<td class="numeric" style="text-align: center; font-weight: 1000; font-size: 12px;">{value}</td>' 
                if idx == 0
-               else f'<td class="numeric" style="text-align: center"><div style="margin-left: 0px;margin-right:-3px;"><span class="highlight" style="padding: 5px 5px; border-radius: 10px; background-color: {eurocup_team_colors_light[team_stats_df.columns[1]] if (idx == 1 and ((value > row[2] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[2] and row.iloc[0] in ["TO%", "TO"]))) else "transparent"}">{value:.1f}{"%" if str(row.iloc[0]).endswith("%") else ""}</span>{f"<img src=\'{away_logo}\' style=\'width: 30px; height: 30px; margin-left: 4px; vertical-align: middle;\'/>" if (idx == 1 and ((value > row[2] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[2] and row.iloc[0] in ["TO%", "TO"]))) else ""}</div></td>' 
+               else f'<td class="numeric" style="text-align: center"><div style="margin-left: -2px;font-size: 12px;margin-right:-5px;"><span class="highlight" style="padding: 3px 3px; border-radius: 4px; background-color: {eurocup_team_colors_light[team_stats_df.columns[1]] if (idx == 1 and ((value > row[2] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[2] and row.iloc[0] in ["TO%", "TO"]))) else "transparent"}">{value:.1f}{"%" if str(row.iloc[0]).endswith("%") else ""}</span>{f"<img src=\'{away_logo}\' style=\'width: 28px; height: 28px; margin-left: 2px; vertical-align: middle;\'/>" if (idx == 1 and ((value > row[2] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[2] and row.iloc[0] in ["TO%", "TO"]))) else ""}</div></td>' 
                if isinstance(value, (int, float)) and idx == 1
-               else f'<td class="numeric" style="text-align: center"><div style="margin-left: 0px;margin-right:-3px;"><span class="highlight" style="padding: 5px 5px; border-radius: 10px; background-color: {eurocup_team_colors_light[team_stats_df.columns[2]] if (idx == 2 and ((value > row[1] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[1] and row.iloc[0] in ["TO%", "TO"]))) else "transparent"}">{value:.1f}{"%" if str(row.iloc[0]).endswith("%") else ""}</span>{f"<img src=\'{home_logo}\' style=\'width: 30px; height: 30px; margin-left: 4px; vertical-align: middle;\'/>" if (idx == 2 and ((value > row[1] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[1] and row.iloc[0] in ["TO%", "TO"]))) else ""}</div></td>' 
+               else f'<td class="numeric" style="text-align: center"><div style="margin-left: -2px;font-size: 12px;margin-right:-5px;"><span class="highlight" style="padding: 3px 3px; border-radius: 4px; background-color: {eurocup_team_colors_light[team_stats_df.columns[2]] if (idx == 2 and ((value > row[1] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[1] and row.iloc[0] in ["TO%", "TO"]))) else "transparent"}">{value:.1f}{"%" if str(row.iloc[0]).endswith("%") else ""}</span>{f"<img src=\'{home_logo}\' style=\'width: 28px; height: 28px; margin-left: 2px; vertical-align: middle;\'/>" if (idx == 2 and ((value > row[1] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[1] and row.iloc[0] in ["TO%", "TO"]))) else ""}</div></td>' 
                if isinstance(value, (int, float)) and idx == 2
                else f'<td style="text-align: center">{value}</td>'
                for idx, (col, value) in enumerate(row.items())
@@ -1308,7 +1417,7 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
           with away_logo_col:
               st.markdown(
                   f"""
-                  <div class="logo-cell" style="background-color: {eurocup_team_colors[away_code2]}; margin-top: 12px;">
+                  <div class="logo-cell" style="background-color: {eurocup_team_colors[away_code2]}">
                       <img src="{away_logo}" alt="{away_team} Logo">
                   </div>
                   <div class="team-name-box">
@@ -1322,11 +1431,11 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
               st.markdown("""
               <div style='display: flex; justify-content: center; align-items: center;'>
                   <div style='background-color: white; 
-                            border-radius: 16px; 
-                            padding: 6px 10px; 
+                            border-radius: 8px; 
+                            padding: 3px 8px; 
                             box-shadow: 0 4px 12px rgba(100, 100, 100, .4);
-                            margin-top: 85px;'>
-                      <span style='font-size: 28px; color: #1a1f36; font-weight: 500;'>@</span>
+                            margin-top: 45px;'>
+                      <span style='font-size: 16px; color: #1a1f36; font-weight: 500;'>@</span>
                   </div>
               </div>
               """, unsafe_allow_html=True)
@@ -1334,7 +1443,7 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
           with home_logo_col:
               st.markdown(
                   f"""
-                  <div class="logo-cell" style="background-color: {eurocup_team_colors[home_code2]}; margin-top:12px;">
+                  <div class="logo-cell" style="background-color: {eurocup_team_colors[home_code2]}">
                       <img src="{home_logo}" alt="{home_team} Logo">
                   </div>
                   <div class="team-name-box">
@@ -1360,7 +1469,7 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
                <thead>
                    <tr>
                        <th>Team</th>
-       """
+"""
        for col in summary_stats_df.columns:
            html_table += f"<th>{col}</th>"
        
@@ -1378,11 +1487,11 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
 
            html_table += f'''
                <td>
-                   <div style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 0px; margin-left:0px;">
-                       <div style="width: 50px; height: 50px; display: flex; align-items: center;">
+                   <div style="display: flex; align-items: center; justify-content: center; gap: 1px; padding: 0px; margin-left:0px;">
+                       <div style="width: 40px; height: 40px; display: flex; align-items: center;">
                            <img src="{logo_to_use}" alt="Logo" style="width: 100%; height: auto; object-fit: contain;margin-left:0px;">
                        </div>
-                       <span style="font-size: 24px; font-weight: 800; color: rgba(0,0,0,0.7);">{team_name}</span>
+                       <span style="font-size: 14px; font-weight: 800; color: rgba(0,0,0,0.7);">{team_name}</span>
                    </div>
                </td>
            '''
@@ -1418,80 +1527,222 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
 # Create a second row of columns for player stats table
   # Create a second row of columns for player stats table
    # Create a second row of columns for player stats table
+   # Create a second row of columns for player stats table
    _, select_col, _ = st.columns([.001, .001, .001])  
-   
-   with select_col:
-       # Get team names from matchup data
-       first_row = simulation_results_df_eurocup[simulation_results_df_eurocup['Matchup'] == selected_matchup].iloc[0]
-       away_team = first_row['Away_Code']
-       home_team = first_row['Home_Code']
-       
-       # Style just the buttons and player-stats-specific table
-       st.markdown("""
-           <style>
-           div.stButton > button {
-               width: 80%;
-               background-color: #1a1f36;
-               border: 5px solid #d3d3d3;
-               color: white;
-               font-weight: 700;
-               border-radius: 8px;
-               position: relative;
-               top: -810px !important;
-
-           }
-           
-           div.stButton > button:hover {
-               border-color: #2d63e2;
-               color: #2d63e2;
-               background-color: rgba(45, 99, 226, 0.1);
-           }
-           div.stButton > button:focus {
-               box-shadow: none;
-               background-color: rgba(45, 99, 226, 0.1);
-               color: #2d63e2;
-               border-color: #2d63e2;
-           }
-        
-
-
-
-
-
   
-           </style>
-       """, unsafe_allow_html=True)
-       
-       # Create three columns for the buttons
-       btn1_eurocup, btn3_eurocup, btn2_eurocup = st.columns([0.01, 0.01, 0.01])
-       
-       # Initialize session state for button selection if not exists
-       if 'selected_view' not in st.session_state:
-           st.session_state.selected_view = 'All'
-       
-       # Create the buttons
-       with btn1_eurocup:
-           if st.button('All', key='game_view_btn_eurocup'):
-               st.session_state.selected_view = 'All'
-       with btn2_eurocup:
-           if st.button(home_team, key='home_team_btn_eurocup'):
-               st.session_state.selected_view = 'Home'
-       with btn3_eurocup:
-           if st.button(away_team, key='away_team_btn_eurocup'):
-               st.session_state.selected_view = 'Away'
-       
-       view_options = {
-           'All': 'All',
-           'Home': 'team1',
-           'Away': 'team2'
-       }
-       
-       
-       selected_view = st.session_state.selected_view
+   with select_col:
+      # Get team names from matchup data
+      first_row = simulation_results_df_eurocup[simulation_results_df_eurocup['Matchup'] == selected_matchup].iloc[0]
+      away_team = first_row['Away_Code']
+      home_team = first_row['Home_Code']
+      
+      # Unified CSS block
+      st.markdown("""
+          <style>
+          /* Button Styles */
+          /* Button container styling */
+div.stButton {
+   margin-top: -540px !important;
+   margin-left: -50px !important;  /* This moves buttons up */
+   position: relative !important;
+   z-index: 2 !important;  /* Ensure buttons stay on top */
+   padding: 0 !important;  /* Remove padding */
+   margin-bottom: -8px !important;  /* Reduce space between buttons */
+}
 
-   def create_player_stats_html_eurocup(df, display_columns, team_code):
-    # Create color shades dictionary based on team base colors
-    team_color_shades = {
+/* Individual button styling */
+div.stButton > button {
+   width: 100%;
+   background-color: #1a1f36;
+   border: 3px solid #1a1f36;  /* Reduced border from 5px to 2px */
+   color: white;
+   font-weight: 700;
+   border-radius: 8px;
+   font-size: 6px !important;
+   padding: 3px 3px !important;  /* Reduced padding */
+   min-height: 20px !important;  /* Reduced height */
+   height: 20px !important;  /* Set explicit height */
+   line-height: 20px !important;  /* Match line height to height */
+}
+
+div.stButton > button:hover {
+   border-color: #2d63e2;
+   color: #2d63e2;
+   background-color: rgba(45, 99, 226, 0.1);
+}
+
+div.stButton > button:focus {
+   box-shadow: none;
+   background-color: rgba(45, 99, 226, 0.1);
+   color: #2d63e2;
+   border-color: #2d63e2;
+}
+
+/* Base Table Styles */
+.player-stats-container {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(100, 100, 100, .5);
+    margin-top: -520px !important;
+}
+
+.player-stats-table {
+    font-size: 11px !important;
+    width: 100% !important;
+    table-layout: fixed !important;
+    border-spacing: 0 !important;  /* Added to ensure consistent spacing */
+    border-collapse: collapse !important;  /* Added to ensure consistent spacing */
+}
+
+/* Increased heights for headers */
+.player-stats-table th {
+    font-weight: 700 !important;
+    background-color: white !important;
+    font-size: 12px !important;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 20px !important;  /* Increased from 30px */
+    line-height: 5px !important;  /* Added to match height */
+    vertical-align: middle !important;
+}
+
+/* Increased heights for cells */
+.player-stats-table td {
+    padding: 8px 4px !important;  /* Increased top/bottom padding */
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    height: 35px !important;  /* Increased from 25px */
+    line-height: 15px !important;  /* Added to match height */
+    vertical-align: middle !important;
+}
+
+/* Add some subtle borders for better readability */
+.player-stats-table tr {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+/* All View Table Styles */
+.all-view.player-stats-container {
+    min-width: 310px !important;
+    width: 310px !important;
+    max-width: 310px !important;
+    overflow: hidden !important;  /* Prevent scrolling in All view */
+}
+
+.all-view.player-stats-container.left-table {
+    position: relative !important;
+    left: 30px !important;
+}
+
+.all-view.player-stats-container.right-table {
+    position: relative !important;
+    margin-left: 0px !important;
+}
+
+.all-view .player-stats-table td:first-child,
+.all-view .player-stats-table th:first-child {
+    width: 120px !important;
+    background: rgb(255, 255, 255) !important;  /* Pure white background */
+    border-right: 1px solid rgba(200, 200, 200, 0.4) !important;  /* Slightly more visible separator */
+    box-shadow: 1px 0 2px rgba(0, 0, 0, 0.05) !important;  /* Subtle shadow for depth */
+}
+
+/* Also ensure the text remains clearly visible */
+.player-stats-table td:first-child {
+    color: #1a1f36 !important;  /* Darker text color for better contrast */
+    font-weight: 700 !important;
+}
+
+/* Add hover effect for more metallic feel */
+.all-view .player-stats-table td:first-child:hover {
+    background: linear-gradient(145deg, #f5f5f5, #e8e8e8) !important;
+}
+
+
+
+/* Individual Team View Styles */
+.player-stats-container.single-team {
+    min-width: 620px !important;
+    width: 620px !important;
+    max-width: 620px !important;
+    margin-right: 0px !important;
+    overflow-x: scroll !important;
+}
+
+/* Individual view specific column widths */
+.single-team .player-stats-table {
+    min-width: 600px !important; /* Make table wider than container to enable scroll */
+}
+
+.single-team .player-stats-table td:first-child,
+.single-team .player-stats-table th:first-child {
+    width: 140px !important;
+    text-align: left !important;
+    padding-left: 8px !important;
+    position: sticky !important;
+    left: 0 !important;
+    background: white !important;
+    z-index: 1 !important;
+}
+
+.single-team .player-stats-table td:not(:first-child),
+.single-team .player-stats-table th:not(:first-child) {
+    width: 50px !important;  /* Wider columns for individual view */
+}
+
+/* Custom scrollbar for individual team view */
+.player-stats-container.single-team::-webkit-scrollbar {
+    height: 8px !important;
+}
+
+.player-stats-container.single-team::-webkit-scrollbar-track {
+    background: #f1f1f1 !important;
+    border-radius: 4px !important;
+}
+
+.player-stats-container.single-team::-webkit-scrollbar-thumb {
+    background: #888 !important;
+    border-radius: 4px !important;
+}
+
+.player-stats-container.single-team::-webkit-scrollbar-thumb:hover {
+    background: #555 !important;
+}
+          </style>
+      """, unsafe_allow_html=True)
+      
+      # Create three columns for the buttons
+      btn1_eurocup, btn3_eurocup, btn2_eurocup = st.columns([0.01, 0.01, 0.01])
+      
+      # Initialize session state for button selection
+      if 'selected_view' not in st.session_state:
+          st.session_state.selected_view = 'All'
+      
+      # Create the buttons
+      with btn1_eurocup:
+          if st.button('All', key='game_view_btn_eurocup'):
+              st.session_state.selected_view = 'All'
+      with btn2_eurocup:
+          if st.button(home_team, key='home_team_btn_eurocup'):
+              st.session_state.selected_view = 'Home'
+      with btn3_eurocup:
+          if st.button(away_team, key='away_team_btn_eurocup'):
+              st.session_state.selected_view = 'Away'
+      
+      view_options = {
+          'All': 'All',
+          'Home': 'team1',
+          'Away': 'team2'
+      }
+      
+      selected_view = st.session_state.selected_view
+
+   def create_player_stats_html(df, display_columns, team_code):
+      # Create color shades dictionary based on team base colors
+      team_color_shades = {
     # Burgundy shades
     'LIE': ['#cc99a8', '#d6adb8', '#e0c1c8', '#ebd5d9', '#f5e9eb', '#ffeaef'],
     
@@ -1533,170 +1784,125 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
     
     # Turquoise shades
     'WOL': ['#99e6e0', '#b3ebe7', '#ccf0ee', '#e6f5f4', '#f0faf9', '#f5fffd']
-}
+      }
 
-    # Convert lists to tuples for hashability
-    col_widths = {
-        # Columns for 'All' view
-        tuple([ 'Player', 'MIN', 'PTS', 'REB', '3FGM']): {
-            'Player': '34%',
-            'MIN': '11%',
-            'PTS': '11%',
-            'REB': '11%',
-            '3FGM': '11%'
-        },
-        # Columns for single team view
-        tuple(['Player', 'MIN', 'PTS', 'OREB', 'DREB', 'REB', 'TO', 
-               '2FGA', '2FGM', '2PT%', '3FGM', '3FGA', '3PT%', 'FTM', 'FTA', 'FT%']): {
-            'Player': '18%',
-            'MIN': '6%',
-            'PTS': '6%',
-            'OREB': '6%',
-            'DREB': '6%',
-            'REB': '6%',
-            'TO': '6%',
-            '2FGA': '6%',
-            '2FGM': '6%',
-            '2PT%': '6%',
-            '3FGM': '6%',
-            '3FGA': '6%',
-            '3PT%': '6%',
-            'FTM': '6%',
-            'FTA': '6%',
-            'FT%': '6%'
-        }
-    }
+      table_html = '<div class="player-stats-container">'
+      table_html += '<table class="player-stats-table">'
+      
+      table_html += '<thead><tr>'
+      for col in display_columns:
+          table_html += f'<th>{col}</th>'
+      table_html += '</tr></thead>'
+      
+      # Calculate rankings for each numeric column
+      numeric_columns = {}
+      for col in display_columns:
+          if col not in ['Team', 'Player', 'MIN']:
+              try:
+                  values = df[col].astype(float)
+                  sorted_values = sorted(values.unique(), reverse=True)
+                  rank_dict = {value: idx for idx, value in enumerate(sorted_values)}
+                  numeric_columns[col] = {
+                      'rank_dict': rank_dict,
+                      'total_ranks': len(sorted_values) - 1
+                  }
+              except:
+                  continue
+      
+      for _, row in df.iterrows():
+          table_html += '<tr>'
+          for col in display_columns:
+              value = row[col]
+              
+              if col in ['Team', 'Player']:
+                  table_html += f'<td style="color: #1a1f36; font-weight: 700;white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:0;">{value}</td>'
+              elif col in numeric_columns and not pd.isna(value):
+                  try:
+                      float_val = float(value)
+                      rank = numeric_columns[col]['rank_dict'].get(float_val, 0)
+                      
+                      team_shades = team_color_shades[team_code]
+                      base_color = team_shades[min(rank, len(team_shades)-1)]
+                      
+                      gradient_style = f"""
+                      background: linear-gradient(to bottom, 
+                          rgba(300, 300, 300, 1),
+                          {base_color}
+                      )
+                      """
+                      
+                      if col.endswith('%'):
+                          formatted_value = f"{float_val:.0f}%" if float_val >= 1 else f"{float_val * 100:.0f}%"
+                      else:
+                          formatted_value = f"{float_val:.1f}"
+                      
+                      table_html += f'<td style="color: #1a1f36; text-align: center; {gradient_style}">{formatted_value}</td>'
+                  except:
+                      table_html += f'<td>{value}</td>'
+              else:
+                  table_html += f'<td style="color: #1a1f36;text-align: center">{value}</td>'
+                  
+          table_html += '</tr>'
+      table_html += '</table></div>'
+      
+      return table_html
 
-    # Convert input display_columns to tuple
-    display_columns_tuple = tuple(display_columns)
-
-    # Get the appropriate column widths
-    current_widths = col_widths.get(display_columns_tuple, {})
-
-    table_html = '<div class="player-stats-container"   >'
-    table_html += '<table class="player-stats-table">'
-    
-    # Generate colgroup dynamically
-    table_html += '<colgroup>'
-    for col in display_columns:
-        width = current_widths.get(col, '0%')  # Default to 10% if not specified
-        table_html += f'<col style="width:{width};">'
-    table_html += '</colgroup>'
-
-    table_html += '<thead><tr>'
-    for col in display_columns:
-        table_html += f'<th style="font-size:14px; font-weight:700; text-align: center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{col}</th>'
-    table_html += '</tr></thead>'
-    
-    # Calculate rankings for each numeric column
-    numeric_columns = {}
-    for col in display_columns:
-        if col not in ['Team', 'Player', 'MIN']:
-            try:
-                values = df[col].astype(float)
-                sorted_values = sorted(values.unique(), reverse=True)
-                rank_dict = {value: idx for idx, value in enumerate(sorted_values)}
-                numeric_columns[col] = {
-                    'rank_dict': rank_dict,
-                    'total_ranks': len(sorted_values) - 1
-                }
-            except:
-                continue
-    
-    for _, row in df.iterrows():
-        table_html += '<tr>'
-        for col in display_columns:
-            value = row[col]
-            
-            if col in ['Team', 'Player']:
-                table_html += f'<td style="color: #1a1f36; font-weight: 700;white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:0;">{value}</td>'
-            elif col in numeric_columns and not pd.isna(value):
-                try:
-                    float_val = float(value)
-                    rank = numeric_columns[col]['rank_dict'].get(float_val, 0)
-                    
-                    # Get color based on rank
-                    team_shades = team_color_shades[team_code]
-                    base_color = team_shades[min(rank, len(team_shades)-1)]
-                    
-                    # Create a gradient background
-                    gradient_style = f"""
-                    background: linear-gradient(to bottom, 
-                        rgba(300, 300, 300, 1),
-                        {base_color}
-                    )
-                    """
-                    
-                    # Format the value
-                    if col.endswith('%'):
-                        formatted_value = f"{float_val:.0f}%" if float_val >= 1 else f"{float_val * 100:.0f}%"
-                    else:
-                        formatted_value = f"{float_val:.1f}"
-                    
-                    table_html += f'<td style="color: #1a1f36; text-align: center; {gradient_style}">{formatted_value}</td>'
-                except:
-                    table_html += f'<td>{value}</td>'
-            else:
-                table_html += f'<td style="color: #1a1f36;text-align: center">{value}</td>'
-                
-        table_html += '</tr>'
-    table_html += '</tbody></table></div>'
-    
-    return table_html
-
-
-
-   # Display tables based on selected view
+  # Display tables based on selected view
    if view_options[selected_view] == 'All':
-       # Original two-column layout
-       _, team2_stats_area, space, team1_stats_area = st.columns([3.9, 5.2, .5, 5.2])
-       
-       with team1_stats_area:
-           display_columns = ['Player', 'MIN', 'PTS', 'REB', '3FGM']
-           home_player_stats = filtered_player_statsTeam1[filtered_player_statsTeam1['Team'] == home_team]
-           
-           # Round numerical values
-           for col in ['MIN', 'PTS', 'REB', '3FGM']:
-               if col in home_player_stats.columns:
-                   home_player_stats[col] = home_player_stats[col].round(1)
-           
-           home_table_html = create_player_stats_html_eurocup(home_player_stats[display_columns], display_columns, home_team)
-           st.markdown(home_table_html, unsafe_allow_html=True)
-       
-       with team2_stats_area:
-           away_player_stats = filtered_player_statsTeam2[filtered_player_statsTeam2['Team'] == away_team]
-           
-           # Round numerical values
-           for col in ['MIN', 'PTS', 'REB', '3FGM']:
-               if col in away_player_stats.columns:
-                   away_player_stats[col] = away_player_stats[col].round(1)
-           
-           away_table_html = create_player_stats_html_eurocup(away_player_stats[display_columns], display_columns, away_team)
-           st.markdown(away_table_html, unsafe_allow_html=True)
+      # Original two-column layout
+      _, team2_stats_area, team1_stats_area = st.columns([3.8, 5.2, 5.2])
+      
+      with team1_stats_area:
+          display_columns = ['Player', 'MIN', 'PTS', 'REB', '3FG']
+          home_player_stats = filtered_player_statsTeam1[filtered_player_statsTeam1['Team'] == home_team]
+          
+          # Round numerical values
+          for col in ['MIN', 'PTS', 'REB', '3FG']:
+              if col in home_player_stats.columns:
+                  home_player_stats[col] = home_player_stats[col].round(2)
+          
+          home_table_html = create_player_stats_html(home_player_stats[display_columns], display_columns, home_team)
+          home_table_html = home_table_html.replace('class="player-stats-container"', 'class="player-stats-container all-view left-table"')
+          st.markdown(home_table_html, unsafe_allow_html=True)
+      
+      with team2_stats_area:
+          away_player_stats = filtered_player_statsTeam2[filtered_player_statsTeam2['Team'] == away_team]
+          
+          # Round numerical values
+          for col in ['MIN', 'PTS', 'REB', '3FG']:
+              if col in away_player_stats.columns:
+                  away_player_stats[col] = away_player_stats[col].round(2)
+          
+          away_table_html = create_player_stats_html(away_player_stats[display_columns], display_columns, away_team)
+          away_table_html = away_table_html.replace('class="player-stats-container"', 'class="player-stats-container all-view right-table"')
+          st.markdown(away_table_html, unsafe_allow_html=True)
 
    else:
-       # Single team view
-       _, single_team_area, _ = st.columns([3.9, 10.42, 0.01])
-       
-       with single_team_area:
-           display_columns = ['Player', 'MIN', 'PTS', 'OREB', 'DREB', 'REB', 'TO', 
-                            '2FGA', '2FGM', '2PT%', '3FGM', '3FGA', '3PT%', 'FTM', 'FTA', 'FT%']
-           
-           if view_options[selected_view] == 'team1':
-               selected_data = filtered_player_statsTeam1[filtered_player_statsTeam1['Team'] == home_team]
-           else:
-               selected_data = filtered_player_statsTeam2[filtered_player_statsTeam2['Team'] == away_team]
-           
-           # Round numerical values
-           numerical_cols = ['MIN', 'PTS', 'OREB', 'DREB', 'REB', 'TO', '2FGA', '2FGM', '2PT%',
-                           '3FGM', '3FGA', '3PT%', 'FTM', 'FTA', 'FT%']
-           for col in numerical_cols:
-               if col in selected_data.columns:
-                   selected_data[col] = selected_data[col].round(1)
-           
-           team_code = home_team if view_options[selected_view] == 'team1' else away_team
-           table_html = create_player_stats_html_eurocup(selected_data[display_columns], display_columns, team_code)
-           st.markdown(table_html, unsafe_allow_html=True)
+      # Single team view
+      _, single_team_area = st.columns([3.8, 10.42])
+      
+      with single_team_area:
+          display_columns = ['Player', 'MIN', 'PTS', 'OREB', 'DREB', 'REB', 'TO', 
+                          '2FG', '2FGA', '2PT%', '3FG', '3FGA', '3PT%', 'FT', 'FTA', 'FT%']
+          
+          if view_options[selected_view] == 'team1':
+              selected_data = filtered_player_statsTeam1[filtered_player_statsTeam1['Team'] == home_team]
+          else:
+              selected_data = filtered_player_statsTeam2[filtered_player_statsTeam2['Team'] == away_team]
+          
+          # Round numerical values
+          numerical_cols = ['MIN', 'PTS', 'OREB', 'DREB', 'REB', 'TO', '2FGM', '2FGA', '2PT%',
+                          '3FG', '3FGA', '3PT%', 'FTM', 'FTA', 'FT%']
+          for col in numerical_cols:
+              if col in selected_data.columns:
+                  selected_data[col] = selected_data[col].round(2)
+          
+          team_code = home_team if view_options[selected_view] == 'team1' else away_team
+          table_html = create_player_stats_html(selected_data[display_columns], display_columns, team_code)
+          table_html = table_html.replace('class="player-stats-container"', 'class="player-stats-container single-team"')
+          st.markdown(table_html, unsafe_allow_html=True)
+
+
 
 
 
@@ -1720,13 +1926,13 @@ def main():
     <style>
         /* Target the main app container */
         [data-testid="stAppViewContainer"] {
-            max-width: 1450px !important;
-            min-width: 1450px !important;
+            max-width: 950px !important;
+            min-width: 950px !important;
             background: #f0f0f0 !important;
             padding: .5rem !important;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
             margin: 0 auto !important; /* Center the container */
-            margin-top: -45px !important;
+            margin-top: -60px !important;
         }
 
 
@@ -1746,15 +1952,16 @@ def main():
         /* Ensure elements stay within width */
         .stTabs [data-baseweb="tab-list"] {
             max-width: 100% !important;
-            margin-left: 20px !important;
-            margin-right: 20px !important;
-            margin-top: -75px;
+            margin-left: -62px !important;
+            margin-right: -40px !important;
+            margin-top: -80px;
         }
 
         /* Fix select box width */
         [data-testid="stSelectbox"] {
-            max-width: calc(100% - 2rem) !important;
+            max-width: 350px !important;
             margin: 0 auto !important;
+            margin-left:-10px;
         }
 
         /* Adjust column containers */
@@ -1764,21 +1971,22 @@ def main():
 
         /* Team stats container */
         .team-stats-euroleague-container {
-            width: 350px !important;
+            width: 250px !important;
             margin: 0 !important;
         }
 /* Team stats container */
         .team-stats-eurocup-container {
-            width: 350px !important;
+            width: 250px !important;
             margin: 0 !important;
         }
+
 
 
 
         /* Logo sizing */
         .logo-cell img {
-            max-width: 150px !important;
-            height: 150px !important;
+            max-width: 100px !important;
+            height: 100px !important;
         }
     </style>
     """, unsafe_allow_html=True)
@@ -1836,9 +2044,9 @@ def main():
        <style>
 .stTabs [data-baseweb="tab-list"] [data-baseweb="tab"] *,
     .stTabs [data-baseweb="tab-list"] [role="tab"] * {
-        font-size: 18px !important;
+        font-size: 11px !important;
         font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif !important;
-        font-weight: 700 !important;
+        font-weight: 800 !important;
 
     }
 
@@ -1850,7 +2058,7 @@ def main():
         text-transform: uppercase;
     letter-spacing: 0.8px;
     font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-        min-height: 40px !important;
+        min-height: 25px !important;
     }
 
     /* Selected tab styling */
@@ -1867,19 +2075,7 @@ text-transform: uppercase;
     /* Tab list container */
 
 
-    /* Leave other buttons unchanged by using specific button selectors */
-    div.stButton > button {
-        width: 80%;
-        background-color: #1a1f36;
-        border: 5px solid #d3d3d3;
-        color: white;
-        font-weight: 700;
-        border-radius: 8px;
-        position: relative;
-        top: -720px;
-        margin-left:-85px;
-        margin-right:-50px;
-    }
+
        /* Global styles */
   
 
@@ -1893,15 +2089,15 @@ text-transform: uppercase;
 	   margin-right:-70px;
            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
            position: sticky;
-           border-radius: 16px;
-           font-size: 25px;
+           border-radius: 8px;
+           font-size: 12px;
        }
 
        .stTabs [data-baseweb="tab"] {
            padding: 12px 24px;
            color: #1a1f36;
            font-weight: 500;
-           font-size: 25px;
+           font-size: 12px;
            border-radius: 8px;
            transition: all 0.2s ease;
            background: transparent;
@@ -1919,12 +2115,12 @@ text-transform: uppercase;
 
     .summary-stats-euroleague table,
     .summary-stats-eurocup table {
-        width: 450px !important;
+
         border-collapse: collapse;
-        border-radius: 18px;
+        border-radius: 16px;
         overflow: hidden;
         border: 2px solid white !important;
-        margin-top: 32px;
+        margin-top: 5px;
         background-color: #1a1f36;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
@@ -1939,7 +2135,7 @@ text-transform: uppercase;
         background-color: #1a1f36 !important;  /* Force dark background */
         padding: 8px;
         text-align: center;
-        font-size:24px;
+        font-size:20px;
         vertical-align: middle;
         color: #ffffff;
         border: 1px solid rgba(255, 255, 255, 0.2);
@@ -1951,7 +2147,7 @@ text-transform: uppercase;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 1px;
-        font-size: 14px;
+        font-size: 10px;
         text-align: center;
         border-bottom: 2px solid rgba(255, 255, 255, 0.3);
         color: #ffffff;
@@ -1977,153 +2173,58 @@ text-transform: uppercase;
 
     .summary-stats-euroleague td span,
     .summary-stats-eurocup td span {
-        font-size: 20px;
+        font-size: 14px;
         font-weight: 600;
         color: #ffffff !important;
         vertical-align: middle;
     }
-    /* Specific margin for Eurocup */
-    .summary-stats-eurocup table {
-        margin-top: 50px !important;  /* 10px more than the default */
-    }
+    
  
 
 
        
-       /* Styled Select Box */
 .stSelectbox > div[data-baseweb="select"] > div[key="simulate-select-matchup"] > div,
 div[data-baseweb="select"] {
-    margin-top: -15px;
-    margin-left: -5px;
+    margin-top: -28px;
+    margin-left: -15px;
     font-weight: 700;
-    border: 3px solid white !important; /* Light gray border */
+    border: 3px solid white !important;
     border-radius: 8px;
-    padding: 0;
+    padding: 2px 8px; /* Increased top/bottom padding slightly */
+    height: 31px; /* Increased height slightly */
+    min-height: 31px !important;
     background-color: white !important;
-    color: #4A70C1 ; /* Dark gray text */
-    font-size: 16px;
+    color: #4A70C1;
+    font-size: 12px;
     transition: all 0.2s ease-in-out;
-    box-shadow: 0px 2px 8px rgba(100, 100, 100, 0.4); /* Subtle shadow */
+    box-shadow: 0px 2px 8px rgba(100, 100, 100, 0.4);
+    display: flex;
+    align-items: center; /* Center text vertically */
 }
 
-/* Hover Effect */
-div[data-baseweb="select"]:hover {
-    border-color: #D1D5DB !important; /* Slightly darker gray */
-    background-color: #FAFAFA;
-}
-button:hover, 
-input:hover, 
-select:hover, 
-div[data-baseweb="select"]:hover, 
-.stButton > button:hover, 
-.stSelectbox > div > div[data-baseweb="select"]:hover {
-    border-color: #D1D5DB !important;
-    background-color: #FAFAFA;
-    transition: all 0.2s ease;
+/* Target the inner select button */
+.stSelectbox > div[data-baseweb="select"] > div {
+    height: 22px !important;
+    min-height: 22px !important;
+    display: flex;
+    align-items: center;
 }
 
-/* Focus Effect */
-div[data-baseweb="select"]:focus-within {
-    border-color: #6366F1 !important; /* Soft Indigo */
-    box-shadow: 0 0 8px rgba(99, 102, 241, 0.3); /* Soft glow */
-}
 
-/* Dropdown Menu Styling */
-div[data-baseweb="popover"] {
-    border-radius: 8px;
-    border: 1px solid #E5E7EB;
-    background-color: #FFFFFF;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-}
 
-/* Dropdown Item */
-div[data-baseweb="option"] {
-    padding: 12px 16px;
-    font-size: 16px;
-    color: #111827;
-    transition: background-color 0.2s ease-in-out;
-}
 
-/* Hover effect for dropdown item */
-div[data-baseweb="option"]:hover {
-    background-color: #F3F4F6;
-}
+
+
+
+
+
+
+
+
 
 
        
-       div[data-baseweb="select"]:hover {
-           box-shadow: 0 4px 12px rgba(100, 100, 100, .3);
-       }
-       
-       
-      /* Table styling */
-.table-container {
-    background-color: white;
-    border-radius: 8px;
-    margin: 24px 0;    /* Kept original margin */
-    padding: 20px 10px;     /* Kept original padding */
-    overflow: hidden;
-    text-align:center;
-}
-
-table {
-    background-color: white;
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-}
-
-th {
-    background: #f5f5f7;
-    color: #1a1f36;
-    font-weight: 600;
-    font-size: 14px;
-    padding: 10px;     /* Kept original padding */
-    text-align: center;
-    border-bottom: 1px solid #e0e0e0;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-td {
-    padding: 16px 16px;  /* Kept original padding */
-    font-size: 16px;
-    font-weight: 400;
-    color: #424770;
-    border-bottom: 1px solid #f0f0f0;
-    text-align: left;
-    line-height: 3;
-}
-
-tr:nth-child(even) {
-    background-color: #fafafa;
-}
-
-tr:hover {
-    background-color: #f8f9ff;
-    transition: background-color 0.2s ease;
-}
-
-@media screen and (max-width: 768px) {
-    .table-container {
-        padding: 8px;
-    }
     
-    th, td {
-        padding: 12px 8px;
-        font-size: 13px;
-    }
-}
-
-       
-
-       
-
-
-     
-
-
-
        </style>
    """, unsafe_allow_html=True)
 
@@ -2149,17 +2250,17 @@ tr:hover {
     
     with sport_tabs[0]:
         # Create three columns for the controls
-        col0, col1, col2 = st.columns([.4, 2.5, 2])
+        col0, col1, col2 = st.columns([.3, 2.8, 2.6])
         
         with col0:
             # Get the maximum round value from the entire dataset
             max_round = simulation_results_df['Round'].max()
             st.markdown(
                 f"""
-                <div style="background-color: white; border-radius: 8px; padding: 6px 6px; margin-left:-40px;
-                    margin-top: 15px; box-shadow: 0 4px 12px rgba(100, 100, 100, .4);
+                <div style="background-color: white; border-radius: 8px; padding: 6px 6px; margin-left:-60px;
+                    margin-top: 0px; box-shadow: 0 4px 12px rgba(100, 100, 100, .4);
                     display: flex; justify-content: center; align-items: center;">
-                    <div style="text-align: center;font-weight: 700;  font-size: 18px;">{max_round}</div>
+                    <div style="text-align: center;font-weight: 700;  font-size: 12px;">{max_round}</div>
                 </div>
                 """,
                 unsafe_allow_html=True
@@ -2180,11 +2281,11 @@ tr:hover {
             
             st.markdown(
                 f"""
-                <div style="background-color: white; border-radius: 8px; padding: 8px 8px; 
-                    margin-top: 15px; box-shadow: 0 4px 6px rgba(100, 100, 100, .4);margin-right:-45px;
+                <div style="background-color: white; border-radius: 8px; padding: 5px 8px; 
+                    margin-top: 0px; box-shadow: 0 4px 6px rgba(100, 100, 100, .4);margin-right:-50px; margin-left:-27px;
                     display: flex; justify-content: center; align-items: center; gap: 30px;">
-                    <div style="text-align: center; font-weight: 700;  font-size: 16px; font-color: #1a4fca;">{time_value}</div>
-                    <div style="text-align: center; font-weight: 700;  font-size: 16px; font-color: #1a4fca;">{arena_value}</div>
+                    <div style="text-align: center; font-weight: 700;  font-size: 12px; font-color: #1a4fca;">{time_value}</div>
+                    <div style="text-align: center; font-weight: 700;  font-size: 12px; font-color: #1a4fca;">{arena_value}</div>
                 </div>
                 """,
                 unsafe_allow_html=True
@@ -2197,7 +2298,7 @@ tr:hover {
     with sport_tabs[1]:
         with sport_tabs[1]:
             # Create three columns for the controls
-            col0, col1, col2 = st.columns([.4,2.5,2])
+            col0, col1, col2 = st.columns([.3,2.8,2.6])
             
             # Load EuroCup data
             team_stats_eurocup, player_statsTeam1_eurocup, player_statsTeam2_eurocup = create_sample_data_eurocup()
@@ -2221,18 +2322,18 @@ tr:hover {
                 st.session_state['simulation_results_df_eurocup'] = simulation_results_df_eurocup
             
             with col0:
-                # Get the maximum round value from the EuroCup dataset
-                max_round_eurocup = simulation_results_df_eurocup['Round'].max()
+            # Get the maximum round value from the entire dataset
+                max_round = simulation_results_df['Round'].max()
                 st.markdown(
-                    f"""
-                    <div style="background-color: white; border-radius: 8px; padding: 6px 6px; 
-                        margin-top: 15px; box-shadow: 0 4px 12px rgba(100, 100, 100, .4);margin-left: -40px;
-                        display: flex; justify-content: center; align-items: center;">
-                        <div style="text-align: center;font-weight: 700;  font-size: 18px;">{max_round_eurocup}</div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
+                f"""
+                <div style="background-color: white; border-radius: 8px; padding: 6px 6px; margin-left:-60px;
+                    margin-top: 0px; box-shadow: 0 4px 12px rgba(100, 100, 100, .4);
+                    display: flex; justify-content: center; align-items: center;">
+                    <div style="text-align: center;font-weight: 700;  font-size: 12px;">{max_round}</div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
             
             with col1:
                 selected_matchup_eurocup = st.selectbox(
@@ -2248,16 +2349,16 @@ tr:hover {
                 arena_value_eurocup = matchup_data_eurocup.get('Arena', 'N/A')
                 
                 st.markdown(
-                    f"""
-                    <div style="background-color: white; border-radius: 8px; padding: 8px 8px; 
-                        margin-top: 15px; box-shadow: 0 4px 6px rgba(100, 100, 100, .4);margin-right:-45px;
-                        display: flex; justify-content: center; align-items: center; gap: 30px;">
-                        <div style="text-align: center; font-weight: 700;  font-size: 16px; font-color: #1a4fca;">{time_value_eurocup}</div>
-                        <div style="text-align: center; font-weight: 700;  font-size: 16px; font-color: #1a4fca;">{arena_value_eurocup}</div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
+                f"""
+                <div style="background-color: white; border-radius: 8px; padding: 5px 8px; 
+                    margin-top: 0px; box-shadow: 0 4px 6px rgba(100, 100, 100, .4);margin-right:-50px; margin-left:-27px;
+                    display: flex; justify-content: center; align-items: center; gap: 30px;">
+                    <div style="text-align: center; font-weight: 700;  font-size: 12px; font-color: #1a4fca;">{time_value}</div>
+                    <div style="text-align: center; font-weight: 700;  font-size: 12px; font-color: #1a4fca;">{arena_value}</div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
             
             render_stats_tables_eurocup(selected_matchup_eurocup, matchups_eurocup, simulation_results_df_eurocup, "simulate")
     
