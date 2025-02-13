@@ -418,7 +418,7 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
         .team-stats-euroleague-container th:nth-child(1) {{
             background: linear-gradient(to bottom, 
         rgb(255, 255, 255), 
-        rgb(245, 245, 247)
+        rgb(245, 245, 247);
         }}
 
         .team-stats-euroleague-container th:nth-child(2) {{
@@ -1332,7 +1332,7 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
         .team-stats-eurocup-container th:nth-child(1) {{
             background: linear-gradient(to bottom, 
         rgb(255, 255, 255), 
-        rgb(245, 245, 247)
+        rgb(245, 245, 247);
         }}
 
         .team-stats-eurocup-container th:nth-child(2) {{
