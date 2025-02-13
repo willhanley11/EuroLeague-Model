@@ -534,7 +534,7 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
                             padding: 3px 8px; 
                             box-shadow: 0 4px 12px rgba(100, 100, 100, .4);
                             margin-top: 45px;'>
-                      <span style='font-size: 16px; color: #1a1f36; font-weight: 500;'>@</span>
+                      <span style='font-size: 16px; color: #1a1f36; font-weight: 800;'>@</span>
                   </div>
               </div>
               """, unsafe_allow_html=True)
@@ -1448,7 +1448,7 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
                             padding: 3px 8px; 
                             box-shadow: 0 4px 12px rgba(100, 100, 100, .4);
                             margin-top: 45px;'>
-                      <span style='font-size: 16px; color: #1a1f36; font-weight: 500;'>@</span>
+                      <span style='font-size: 16px; color: #1a1f36; font-weight: 800;'>@</span>
                   </div>
               </div>
               """, unsafe_allow_html=True)
