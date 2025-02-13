@@ -684,8 +684,8 @@ div.stButton > button:focus {
 
 .player-stats-table {
     font-size: 11px !important;
-    width: 100% !important;
-    table-layout: fixed !important;
+
+
     border-spacing: 0 !important;  /* Added to ensure consistent spacing */
     border-collapse: collapse !important;  /* Added to ensure consistent spacing */
 }
@@ -761,16 +761,17 @@ div.stButton > button:focus {
 
 /* Individual Team View Styles */
 .player-stats-container.single-team {
-    min-width: 620px !important;
-    width: 620px !important;
-    max-width: 620px !important;
+    min-width: 1020px !important;
+    width: 1020px !important;
+    max-width: 1020px !important;
     margin-right: 0px !important;
     overflow-x: scroll !important;
 }
 
 /* Individual view specific column widths */
 .single-team .player-stats-table {
-    min-width: 600px !important; /* Make table wider than container to enable scroll */
+    min-width: 800px !important; /* Make table wider than container to enable scroll */
+    table-layout: fixed !important;
 }
 
 .single-team .player-stats-table td:first-child,
@@ -784,10 +785,15 @@ div.stButton > button:focus {
     z-index: 1 !important;
 }
 
-.single-team .player-stats-table td:not(:first-child),
-.single-team .player-stats-table th:not(:first-child) {
-    width: 70px !important;  /* Wider columns for individual view */
+/* More specific selector with increased specificity */
+.single-team.player-stats-container .player-stats-table td:not(:first-child),
+.single-team.player-stats-container .player-stats-table th:not(:first-child) {
+    width: 57px !important;
+    min-width: 57px !important;
+    max-width: 57px !important;
+    flex: 0 0 57px !important;
 }
+
 
 /* Custom scrollbar for individual team view */
 .player-stats-container.single-team::-webkit-scrollbar {
@@ -1952,8 +1958,6 @@ def main():
         /* Ensure elements stay within width */
         .stTabs [data-baseweb="tab-list"] {
             max-width: 100% !important;
-            margin-left: -62px !important;
-            margin-right: -40px !important;
             margin-top: -80px;
         }
 
@@ -2085,8 +2089,6 @@ text-transform: uppercase;
            gap: 0;
            background: white;
            padding: 4px;
-	   margin-left: -70px;
-	   margin-right:-70px;
            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
            position: sticky;
            border-radius: 8px;
