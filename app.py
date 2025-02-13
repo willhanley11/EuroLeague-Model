@@ -2197,16 +2197,16 @@ div[data-baseweb="select"] {
     margin-top: -28px;
     margin-left: -15px;
     font-weight: 700;
-    border: 2px solid #E0E7FF; /* Softer border color */
-    border-radius: 10px; /* Slightly more rounded corners */
+    border: 2px solid rgb(224, 231, 255); /* Softer border color */
+    border-radius: 10px;
     padding: 2px 8px;
     height: 31px;
     min-height: 31px !important;
-    background-color: #F5F7FF !important; /* Soft, light blue background */
-    color: #3B82F6; /* More vibrant blue text */
+    background-color: rgb(245, 247, 255) !important; /* Soft, light blue background */
+    color: rgb(59, 130, 246); /* More vibrant blue text */
     font-size: 12px;
     transition: all 0.2s ease-in-out;
-    box-shadow: 0px 1px 4px rgba(45, 99, 226, 0.2); /* Softer shadow */
+    box-shadow: 0px 1px 4px rgba(45, 99, 226, 0.2);
     display: flex;
     align-items: center;
 }
@@ -2309,7 +2309,7 @@ div[data-baseweb="select"]:hover {
                 f"""
                 <div style="background-color: white; border-radius: 8px; padding: 6px 6px; margin-left:-60px;
                     margin-top: 0px; box-shadow: 0 4px 12px rgba(100, 100, 100, .4);
-                    display: flex; justify-content: center; align-items: center;">
+                    display: flex; justify-content: center; align-items: center; font-color: black !important;">
                     <div style="text-align: center;font-weight: 700;  font-size: 12px;">{max_round}</div>
                 </div>
                 """,
@@ -2331,11 +2331,11 @@ div[data-baseweb="select"]:hover {
             
             st.markdown(
                 f"""
-                <div style="background-color: rgb(255, 255, 255) !important; border-radius: 8px; padding: 5px 8px; 
+                <div style="background-color: white; border-radius: 8px; padding: 5px 8px; 
                     margin-top: 0px; box-shadow: 0 4px 6px rgba(100, 100, 100, .4);margin-right:-50px; margin-left:-27px;
-                    display: flex; justify-content: center; align-items: center; gap: 30px;">
-                    <div style="text-align: center; font-weight: 700;  font-size: 12px; color: rgb(26, 31, 54) !important;">{time_value}</div>
-                    <div style="text-align: center; font-weight: 700;  font-size: 12px; color: rgb(26, 31, 54) !important;">{arena_value}</div>
+                    display: flex; justify-content: center; align-items: center; gap: 30px; font-color: black !important;">
+                    <div style="text-align: center; font-weight: 700;  font-size: 12px; font-color: #1a4fca;">{time_value}</div>
+                    <div style="text-align: center; font-weight: 700;  font-size: 12px; font-color: #1a4fca;">{arena_value}</div>
                 </div>
                 """,
                 unsafe_allow_html=True
@@ -2378,7 +2378,7 @@ div[data-baseweb="select"]:hover {
                 f"""
                 <div style="background-color: white; border-radius: 8px; padding: 6px 6px; margin-left:-60px;
                     margin-top: 0px; box-shadow: 0 4px 12px rgba(100, 100, 100, .4);
-                    display: flex; justify-content: center; align-items: center;">
+                    display: flex; justify-content: center; align-items: center; font-color: black !important;">
                     <div style="text-align: center;font-weight: 700;  font-size: 12px;">{max_round}</div>
                 </div>
                 """,
@@ -2402,9 +2402,9 @@ div[data-baseweb="select"]:hover {
                 f"""
                 <div style="background-color: white; border-radius: 8px; padding: 5px 8px; 
                     margin-top: 0px; box-shadow: 0 4px 6px rgba(100, 100, 100, .4);margin-right:-50px; margin-left:-27px;
-                    display: flex; justify-content: center; align-items: center; gap: 30px;">
-                    <div style="text-align: center; font-weight: 700;  font-size: 12px; font-color: #1a4fca;">{time_value}</div>
-                    <div style="text-align: center; font-weight: 700;  font-size: 12px; font-color: #1a4fca;">{arena_value}</div>
+                    display: flex; justify-content: center; align-items: center; gap: 30px; font-color: black !important;">
+                    <div style="text-align: center; font-weight: 700;  font-size: 12px; font-color: #1a4fca;">{time_value_eurocup}</div>
+                    <div style="text-align: center; font-weight: 700;  font-size: 12px; font-color: #1a4fca;">{arena_value_eurocup}</div>
                 </div>
                 """,
                 unsafe_allow_html=True
