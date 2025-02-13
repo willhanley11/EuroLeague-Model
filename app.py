@@ -2306,15 +2306,32 @@ div[data-baseweb="select"]:hover {
             # Get the maximum round value from the entire dataset
             max_round = simulation_results_df['Round'].max()
             st.markdown(
-                f"""
-                <div style="background-color: white; border-radius: 8px; padding: 6px 6px; margin-left:-60px;
-                    margin-top: 0px; box-shadow: 0 4px 12px rgba(100, 100, 100, .4);
-                    display: flex; justify-content: center; align-items: center; font-color: black !important;">
-                    <div style="text-align: center;font-weight: 700;  font-size: 12px;">{max_round}</div>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+    f"""
+    <div style="
+        background-color: white; 
+        -webkit-background-color: white;
+        background: white;
+        -webkit-background: white;
+        border-radius: 8px; 
+        padding: 6px 6px; 
+        margin-left:-60px;
+        margin-top: 0px; 
+        box-shadow: 0 4px 12px rgba(100, 100, 100, 0.4);
+        color: rgb(26, 31, 54);
+        display: flex; 
+        justify-content: center; 
+        align-items: center;
+        position: relative;
+        z-index: 10;">
+        <div style="
+            text-align: center; 
+            font-weight: 700;  
+            font-size: 12px; 
+            color: rgb(26, 31, 54);">{max_round}</div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
         
         with col1:
             selected_matchup = st.selectbox(
@@ -2330,16 +2347,37 @@ div[data-baseweb="select"]:hover {
             arena_value = matchup_data.get('Arena', 'N/A')
             
             st.markdown(
-                f"""
-                <div style="background-color: white; border-radius: 8px; padding: 5px 8px; 
-                    margin-top: 0px; box-shadow: 0 4px 6px rgba(100, 100, 100, .4);margin-right:-50px; margin-left:-27px;
-                    display: flex; justify-content: center; align-items: center; gap: 30px; font-color: black !important;">
-                    <div style="text-align: center; font-weight: 700;  font-size: 12px; font-color: #1a4fca;">{time_value}</div>
-                    <div style="text-align: center; font-weight: 700;  font-size: 12px; font-color: #1a4fca;">{arena_value}</div>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+    f"""
+    <div style="
+        background-color: white; 
+        -webkit-background-color: white;
+        background: white;
+        -webkit-background: white;
+        border-radius: 8px; 
+        padding: 5px 8px; 
+        margin-top: 0px; 
+        box-shadow: 0 4px 6px rgba(100, 100, 100, 0.4);
+        margin-right:-50px; 
+        margin-left:-27px;
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 30px; 
+        color: black !important;">
+        <div style="
+            text-align: center; 
+            font-weight: 700;  
+            font-size: 12px; 
+            color: rgb(26, 31, 54);">{time_value}</div>
+        <div style="
+            text-align: center; 
+            font-weight: 700;  
+            font-size: 12px; 
+            color: rgb(26, 31, 54);">{arena_value}</div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
         
         render_stats_tables_euroleague(selected_matchup, matchups, "simulate")
         
@@ -2373,17 +2411,34 @@ div[data-baseweb="select"]:hover {
             
             with col0:
             # Get the maximum round value from the entire dataset
-                max_round = simulation_results_df['Round'].max()
+                max_round = simulation_results_df_eurocup['Round'].max()
                 st.markdown(
-                f"""
-                <div style="background-color: white; border-radius: 8px; padding: 6px 6px; margin-left:-60px;
-                    margin-top: 0px; box-shadow: 0 4px 12px rgba(100, 100, 100, .4);
-                    display: flex; justify-content: center; align-items: center; font-color: black !important;">
-                    <div style="text-align: center;font-weight: 700;  font-size: 12px;">{max_round}</div>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+    f"""
+    <div style="
+        background-color: white; 
+        -webkit-background-color: white;
+        background: white;
+        -webkit-background: white;
+        border-radius: 8px; 
+        padding: 6px 6px; 
+        margin-left:-60px;
+        margin-top: 0px; 
+        box-shadow: 0 4px 12px rgba(100, 100, 100, 0.4);
+        color: rgb(26, 31, 54);
+        display: flex; 
+        justify-content: center; 
+        align-items: center;
+        position: relative;
+        z-index: 10;">
+        <div style="
+            text-align: center; 
+            font-weight: 700;  
+            font-size: 12px; 
+            color: rgb(26, 31, 54);">{max_round}</div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
             
             with col1:
                 selected_matchup_eurocup = st.selectbox(
@@ -2399,16 +2454,37 @@ div[data-baseweb="select"]:hover {
                 arena_value_eurocup = matchup_data_eurocup.get('Arena', 'N/A')
                 
                 st.markdown(
-                f"""
-                <div style="background-color: white; border-radius: 8px; padding: 5px 8px; 
-                    margin-top: 0px; box-shadow: 0 4px 6px rgba(100, 100, 100, .4);margin-right:-50px; margin-left:-27px;
-                    display: flex; justify-content: center; align-items: center; gap: 30px; font-color: black !important;">
-                    <div style="text-align: center; font-weight: 700;  font-size: 12px; font-color: #1a4fca;">{time_value_eurocup}</div>
-                    <div style="text-align: center; font-weight: 700;  font-size: 12px; font-color: #1a4fca;">{arena_value_eurocup}</div>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+    f"""
+    <div style="
+        background-color: white; 
+        -webkit-background-color: white;
+        background: white;
+        -webkit-background: white;
+        border-radius: 8px; 
+        padding: 5px 8px; 
+        margin-top: 0px; 
+        box-shadow: 0 4px 6px rgba(100, 100, 100, 0.4);
+        margin-right:-50px; 
+        margin-left:-27px;
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 30px; 
+        color: black !important;">
+        <div style="
+            text-align: center; 
+            font-weight: 700;  
+            font-size: 12px; 
+            color: rgb(26, 31, 54);">{time_value_eurocup}</div>
+        <div style="
+            text-align: center; 
+            font-weight: 700;  
+            font-size: 12px; 
+            color: rgb(26, 31, 54);">{arena_value_eurocup}</div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
             
             render_stats_tables_eurocup(selected_matchup_eurocup, matchups_eurocup, simulation_results_df_eurocup, "simulate")
     
