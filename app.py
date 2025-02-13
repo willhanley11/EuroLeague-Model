@@ -262,7 +262,7 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
            font-weight: 700;
            font-size: 11px !important;
            font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-           color: rgba(0,0,0,0.9);
+           color: rgba(26, 31, 54, 0.9);
            white-space: nowrap;
            overflow: hidden;
            text-overflow: ellipsis;
@@ -270,6 +270,7 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
 .team-stats-euroleague-container {
     background-color: white;
     border-radius: 16px;
+    color: rgb(26, 31, 54) !important;
     box-shadow: 0 4px 12px rgba(100, 100, 100, .5);
     margin-top: -25px !important;
     margin-left: -60px !important;
@@ -291,7 +292,7 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
 
 /* Enhanced Table header styles */
 .team-stats-euroleague-container th {
-    color: #1a1f36;
+    color: rgb(26, 31, 54) !important; 
     font-weight: 800;
     font-size: 14px;
     padding: 6px 4px;
@@ -415,7 +416,9 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
        team_css = f"""
     <style>
         .team-stats-euroleague-container th:nth-child(1) {{
-            background: linear-gradient(to bottom, #ffffff, #f5f5f7);
+            background: linear-gradient(to bottom, 
+        rgb(255, 255, 255), 
+        rgb(245, 245, 247)
         }}
 
         .team-stats-euroleague-container th:nth-child(2) {{
@@ -693,7 +696,8 @@ div.stButton > button:focus {
 /* Increased heights for headers */
 .player-stats-table th {
     font-weight: 700 !important;
-    background-color: white !important;
+    color: rgb(26, 31, 54); /* Consistent dark text color */
+    background-color: rgb(255, 255, 255) !important;
     font-size: 12px !important;
     text-align: center;
     white-space: nowrap;
@@ -1180,6 +1184,7 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
 .team-stats-eurocup-container {
     background-color: white;
     border-radius: 16px;
+    color: rgb(26, 31, 54);
     box-shadow: 0 4px 12px rgba(100, 100, 100, .5);
     margin-top: -25px !important;
     margin-left: -60px !important;
@@ -1201,7 +1206,7 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
 
 /* Enhanced Table header styles */
 .team-stats-eurocup-container th {
-    color: #1a1f36;
+    color: rgb(26, 31, 54); 
     font-weight: 800;
     font-size: 14px;
     padding: 6px 4px;
@@ -1325,7 +1330,9 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
        team_css = f"""
     <style>
         .team-stats-eurocup-container th:nth-child(1) {{
-            background: linear-gradient(to bottom, #ffffff, #f5f5f7);
+            background: linear-gradient(to bottom, 
+        rgb(255, 255, 255), 
+        rgb(245, 245, 247)
         }}
 
         .team-stats-eurocup-container th:nth-child(2) {{
@@ -2324,11 +2331,11 @@ div[data-baseweb="select"]:hover {
             
             st.markdown(
                 f"""
-                <div style="background-color: white; border-radius: 8px; padding: 5px 8px; 
+                <div style="background-color: rgb(255, 255, 255) !important; border-radius: 8px; padding: 5px 8px; 
                     margin-top: 0px; box-shadow: 0 4px 6px rgba(100, 100, 100, .4);margin-right:-50px; margin-left:-27px;
                     display: flex; justify-content: center; align-items: center; gap: 30px;">
-                    <div style="text-align: center; font-weight: 700;  font-size: 12px; font-color: #1a4fca;">{time_value}</div>
-                    <div style="text-align: center; font-weight: 700;  font-size: 12px; font-color: #1a4fca;">{arena_value}</div>
+                    <div style="text-align: center; font-weight: 700;  font-size: 12px; color: rgb(26, 31, 54) !important;">{time_value}</div>
+                    <div style="text-align: center; font-weight: 700;  font-size: 12px; color: rgb(26, 31, 54) !important;">{arena_value}</div>
                 </div>
                 """,
                 unsafe_allow_html=True
