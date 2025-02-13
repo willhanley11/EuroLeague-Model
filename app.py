@@ -2188,43 +2188,84 @@ div[data-baseweb="select"] {
     margin-top: -28px;
     margin-left: -15px;
     font-weight: 700;
-    border: 3px solid white !important;
-    border-radius: 8px;
-    padding: 2px 8px; /* Increased top/bottom padding slightly */
-    height: 31px; /* Increased height slightly */
+    border: 2px solid #E0E7FF; /* Softer border color */
+    border-radius: 10px; /* Slightly more rounded corners */
+    padding: 2px 8px;
+    height: 31px;
     min-height: 31px !important;
-    background-color: white !important;
-    color: #4A70C1;
+    background-color: #F5F7FF !important; /* Soft, light blue background */
+    color: #3B82F6; /* More vibrant blue text */
     font-size: 12px;
     transition: all 0.2s ease-in-out;
-    box-shadow: 0px 2px 8px rgba(100, 100, 100, 0.4);
-    display: flex;
-    align-items: center; /* Center text vertically */
-}
-
-/* Target the inner select button */
-.stSelectbox > div[data-baseweb="select"] > div {
-    height: 22px !important;
-    min-height: 22px !important;
+    box-shadow: 0px 1px 4px rgba(45, 99, 226, 0.2); /* Softer shadow */
     display: flex;
     align-items: center;
 }
 
+/* Target the inner select button */
+.stSelectbox > div[data-baseweb="select"] > div {
+    height: 20px !important;
+    min-height: 20px !important;
+    display: flex;
+    align-items: center;
+}
 
+/* Target the value container */
+.stSelectbox [data-baseweb="select"] [data-testid="stMarkdownContainer"] {
+    line-height: 1.2;
+    padding-top: 0;
+    padding-bottom: 0;
+    display: flex;
+    align-items: center;
+}
 
+/* Hover Effect */
+div[data-baseweb="select"]:hover {
+    border-color: #A5B4FC !important; /* Soft indigo border on hover */
+    background-color: #EEF2FF !important; /* Lighter blue background on hover */
+}
 
+button:hover, 
+input:hover, 
+select:hover, 
+div[data-baseweb="select"]:hover, 
+.stButton > button:hover, 
+.stSelectbox > div > div[data-baseweb="select"]:hover {
+    border-color: #A5B4FC !important;
+    background-color: #EEF2FF !important;
+    transition: all 0.2s ease;
+}
 
+/* Focus Effect */
+div[data-baseweb="select"]:focus-within {
+    border-color: #6366F1 !important;
+    box-shadow: 0 0 8px rgba(99, 102, 241, 0.3);
+}
 
+/* Dropdown Menu Styling */
+div[data-baseweb="popover"] {
+    border-radius: 10px;
+    border: 1px solid #E5E7EB;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
 
+/* Dropdown Item - Smaller Font */
+div[data-baseweb="option"] {
+    padding: 8px 12px; /* Slightly reduced padding */
+    font-size: 10px !important; /* Smaller font size */
+    color: #1F2937; /* Darker text color */
+    transition: background-color 0.2s ease-in-out;
+}
 
+/* Hover effect for dropdown item */
+div[data-baseweb="option"]:hover {
+    background-color: #F3F4F6;
+}
 
-
-
-
-
-
-       
-    
+div[data-baseweb="select"]:hover {
+    box-shadow: 0 4px 12px rgba(45, 99, 226, 0.2);
+}    
        </style>
    """, unsafe_allow_html=True)
 
