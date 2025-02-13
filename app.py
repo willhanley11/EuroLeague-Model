@@ -786,7 +786,7 @@ div.stButton > button:focus {
 
 .single-team .player-stats-table td:not(:first-child),
 .single-team .player-stats-table th:not(:first-child) {
-    width: 60px !important;  /* Wider columns for individual view */
+    width: 70px !important;  /* Wider columns for individual view */
 }
 
 /* Custom scrollbar for individual team view */
