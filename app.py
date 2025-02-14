@@ -1939,14 +1939,15 @@ def main():
     <style>
         /* Target the main app container */
         [data-testid="stAppViewContainer"] {
-            max-width: 950px !important;
-            min-width: 950px !important;
-            background: #f0f0f0 !important;
-            padding: .5rem !important;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
-            margin: 0 auto !important; /* Center the container */
-            margin-top: -60px !important;
-        }
+    max-width: 950px !important;
+    min-width: 950px !important;
+    background: #f0f0f0 !important;
+    padding: .5rem !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    margin: 0 auto !important;
+    margin-top: -130px !important; /* Adjusted from -60px */
+}
+
 
 
 
@@ -1963,11 +1964,62 @@ def main():
         }
 
         /* Ensure elements stay within width */
-        .stTabs [data-baseweb="tab-list"] {
-            max-width: 100% !important;
-            margin-top: -80px;
-        }
+        /* Adjust the tab list margin and add padding */
+/* General Tab Styling */
+[data-baseweb="tab-list"] {
+    background: white !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+    border-radius: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    margin-left: -75px !important; /* Reduced left margin */
+    margin-top:-10px !important;
+    padding: 0px !important;
+    height: 28px !important;
+    gap: 0px !important; /* Minimal gap between tabs */
+}
 
+[data-baseweb="tab-list"] [role="tab"] {
+    transition: all 0.2s ease-out !important;
+    text-align: center !important;
+    border-radius: 6px !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    padding: 2px 10px !important; /* Reduced horizontal padding */
+    margin: 0 !important; /* Removed margins between tabs */
+    color: #6b7280 !important;
+    background: transparent !important;
+    height: 26px !important;
+    line-height: 26px !important;
+    letter-spacing: 0.4px !important;
+    text-transform: uppercase !important;
+}
+
+/* Active and Hover States */
+[data-baseweb="tab-list"] [role="tab"][aria-selected="true"] {
+    color: #1f2937 !important;
+    background: rgba(59, 130, 246, 0.2) !important;
+    font-weight: 700 !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+}
+
+[data-baseweb="tab-list"] [role="tab"]:hover:not([aria-selected="true"]) {
+    background: rgba(59, 130, 246, 0.04) !important;
+    color: #1f2937 !important;
+}
+
+/* Smooth Transitions */
+[role="tab"] {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Container Adjustments */
+.stTabs {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+}
         /* Fix select box width */
         [data-testid="stSelectbox"] {
             max-width: 350px !important;
@@ -2053,74 +2105,7 @@ def main():
 
     st.markdown("""
        <style>
-.stTabs [data-baseweb="tab-list"] [data-baseweb="tab"] *,
-    .stTabs [data-baseweb="tab-list"] [role="tab"] * {
-        font-size: 11px !important;
-        font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif !important;
-        font-weight: 800 !important;
 
-    }
-
-    /* Tab container and sizing */
-    .stTabs [data-baseweb="tab-list"] [data-baseweb="tab"],
-    .stTabs [data-baseweb="tab-list"] [role="tab"] {
-        padding: 0px 48px !important;
-        height: auto !important;
-        text-transform: uppercase;
-    letter-spacing: 0.8px;
-    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-        min-height: 25px !important;
-    }
-
-    /* Selected tab styling */
-    .stTabs [data-baseweb="tab-list"] [data-baseweb="tab"][aria-selected="true"] {
-        color: #2d63e2 !important;
-        background: rgba(45, 99, 226, 0.12) !important;
-        font-weight: 800 !important;
-        box-shadow: 0 2px 8px rgba(45, 99, 226, 0.15) !important;
-text-transform: uppercase;
-    letter-spacing: 0.8px;
-    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-    }
-
-    /* Tab list container */
-
-
-
-       /* Global styles */
-  
-
-
-       /* Tab styling */
-       .stTabs [data-baseweb="tab-list"] {
-           gap: 0;
-           background: white;
-           padding: 4px;
-           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-           position: sticky;
-           border-radius: 8px;
-           font-size: 12px;
-       }
-
-       .stTabs [data-baseweb="tab"] {
-           padding: 12px 24px;
-           color: #1a1f36;
-           font-weight: 500;
-           font-size: 12px;
-           border-radius: 8px;
-           transition: all 0.2s ease;
-           background: transparent;
-       }
-
-       .stTabs [data-baseweb="tab"][aria-selected="true"] {
-           color: #2d63e2;
-           background: rgba(45, 99, 226, 0.1);
-           font-weight: 600;
-       }
-
-       .stTabs [data-baseweb="tab"]:hover {
-           background: rgba(0, 0, 0, 0.05);
-       }
 
     .summary-stats-euroleague table,
     .summary-stats-eurocup table {
@@ -2284,54 +2269,62 @@ div[data-baseweb="select"]:hover {
     sport_tabs = st.tabs(["Euroleague", "EuroCup"])
     
     st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
-    
-    team_stats, player_statsTeam1, player_statsTeam2 = create_sample_data_euroleague()
-    if 'team_stats' not in st.session_state:
-        st.session_state['team_stats'] = team_stats
-    if 'player_statsTeam1' not in st.session_state:
-        st.session_state['player_statsTeam1'] = player_statsTeam1
-    if 'player_statsTeam2' not in st.session_state:
-        st.session_state['player_statsTeam2'] = player_statsTeam2
 
-    matchups = team_stats['Matchup'].unique().tolist()
-    
-    if 'simulation_results_df' not in st.session_state:
-        st.session_state['simulation_results_df'] = simulation_results_df
-    
     with sport_tabs[0]:
+    # Create second layer of tabs for Euroleague
+        euroleague_subtabs = st.tabs(["Round Summary", "Games"])
+    
+    with euroleague_subtabs[0]:
+        # Round Summary tab content (empty for now)
+        pass
+    
+    with euroleague_subtabs[1]:
+        # Games tab content - moved from original Euroleague tab
         # Create three columns for the controls
         col0, col1, col2 = st.columns([.3, 2.8, 2.6])
+        team_stats, player_statsTeam1, player_statsTeam2 = create_sample_data_euroleague()
+        if 'team_stats' not in st.session_state:
+            st.session_state['team_stats'] = team_stats
+        if 'player_statsTeam1' not in st.session_state:
+            st.session_state['player_statsTeam1'] = player_statsTeam1
+        if 'player_statsTeam2' not in st.session_state:
+            st.session_state['player_statsTeam2'] = player_statsTeam2
+
+        matchups = team_stats['Matchup'].unique().tolist()
+    
+        if 'simulation_results_df' not in st.session_state:
+            st.session_state['simulation_results_df'] = simulation_results_df
         
         with col0:
             # Get the maximum round value from the entire dataset
             max_round = simulation_results_df['Round'].max()
             st.markdown(
-    f"""
-    <div style="
-        background-color: white; 
-        -webkit-background-color: white;
-        background: white;
-        -webkit-background: white;
-        border-radius: 8px; 
-        padding: 6px 6px; 
-        margin-left:-60px;
-        margin-top: 0px; 
-        box-shadow: 0 4px 12px rgba(100, 100, 100, 0.4);
-        color: rgb(26, 31, 54);
-        display: flex; 
-        justify-content: center; 
-        align-items: center;
-        position: relative;
-        z-index: 10;">
-        <div style="
-            text-align: center; 
-            font-weight: 700;  
-            font-size: 12px; 
-            color: rgb(26, 31, 54);">{max_round}</div>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+                f"""
+                <div style="
+                    background-color: white; 
+                    -webkit-background-color: white;
+                    background: white;
+                    -webkit-background: white;
+                    border-radius: 8px; 
+                    padding: 6px 6px; 
+                    margin-left:-60px;
+                    margin-top: 0px !important; 
+                    box-shadow: 0 4px 12px rgba(100, 100, 100, 0.4);
+                    color: rgb(26, 31, 54);
+                    display: flex; 
+                    justify-content: center; 
+                    align-items: center;
+                    position: relative;
+                    z-index: 10;">
+                    <div style="
+                        text-align: center; 
+                        font-weight: 700;  
+                        font-size: 12px; 
+                        color: rgb(26, 31, 54);">{max_round}</div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
         
         with col1:
             selected_matchup = st.selectbox(
@@ -2347,146 +2340,152 @@ div[data-baseweb="select"]:hover {
             arena_value = matchup_data.get('Arena', 'N/A')
             
             st.markdown(
-    f"""
-    <div style="
-        background-color: white; 
-        -webkit-background-color: white;
-        background: white;
-        -webkit-background: white;
-        border-radius: 8px; 
-        padding: 5px 8px; 
-        margin-top: 0px; 
-        box-shadow: 0 4px 6px rgba(100, 100, 100, 0.4);
-        margin-right:-50px; 
-        margin-left:-27px;
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        gap: 30px; 
-        color: black !important;">
-        <div style="
-            text-align: center; 
-            font-weight: 700;  
-            font-size: 12px; 
-            color: rgb(26, 31, 54);">{time_value}</div>
-        <div style="
-            text-align: center; 
-            font-weight: 700;  
-            font-size: 12px; 
-            color: rgb(26, 31, 54);">{arena_value}</div>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+                f"""
+                <div style="
+                    background-color: white; 
+                    -webkit-background-color: white;
+                    background: white;
+                    -webkit-background: white;
+                    border-radius: 8px; 
+                    padding: 5px 8px; 
+                    margin-top: 0px; 
+                    box-shadow: 0 4px 6px rgba(100, 100, 100, 0.4);
+                    margin-right:-50px; 
+                    margin-left:-27px;
+                    display: flex; 
+                    justify-content: center; 
+                    align-items: center; 
+                    gap: 30px; 
+                    color: black !important;">
+                    <div style="
+                        text-align: center; 
+                        font-weight: 700;  
+                        font-size: 12px; 
+                        color: rgb(26, 31, 54);">{time_value}</div>
+                    <div style="
+                        text-align: center; 
+                        font-weight: 700;  
+                        font-size: 12px; 
+                        color: rgb(26, 31, 54);">{arena_value}</div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
         
         render_stats_tables_euroleague(selected_matchup, matchups, "simulate")
-        
 
-    
     with sport_tabs[1]:
-        with sport_tabs[1]:
-            # Create three columns for the controls
-            col0, col1, col2 = st.columns([.3,2.8,2.6])
-            
-            # Load EuroCup data
-            team_stats_eurocup, player_statsTeam1_eurocup, player_statsTeam2_eurocup = create_sample_data_eurocup()
-            if 'team_stats_eurocup' not in st.session_state:
-                st.session_state['team_stats_eurocup'] = team_stats_eurocup
-            if 'player_statsTeam1_eurocup' not in st.session_state:
-                st.session_state['player_statsTeam1_eurocup'] = player_statsTeam1_eurocup
-            if 'player_statsTeam2_eurocup' not in st.session_state:
-                st.session_state['player_statsTeam2_eurocup'] = player_statsTeam2_eurocup
+    # Create second layer of tabs for EuroCup
+        eurocup_subtabs = st.tabs(["Round Summary", "Games"])
+    
+    with eurocup_subtabs[0]:
+        # Round Summary tab content (empty for now)
+        pass
+    
+    with eurocup_subtabs[1]:
+        # Games tab content - moved from original EuroCup tab
+        # Create three columns for the controls
+        col0, col1, col2 = st.columns([.3,2.8,2.6])
+        
+        # Load EuroCup data
+        team_stats_eurocup, player_statsTeam1_eurocup, player_statsTeam2_eurocup = create_sample_data_eurocup()
+        if 'team_stats_eurocup' not in st.session_state:
+            st.session_state['team_stats_eurocup'] = team_stats_eurocup
+        if 'player_statsTeam1_eurocup' not in st.session_state:
+            st.session_state['player_statsTeam1_eurocup'] = player_statsTeam1_eurocup
+        if 'player_statsTeam2_eurocup' not in st.session_state:
+            st.session_state['player_statsTeam2_eurocup'] = player_statsTeam2_eurocup
 
-            # Get EuroCup matchups
-            matchups_eurocup = team_stats_eurocup['Matchup'].unique().tolist()
+        # Get EuroCup matchups
+        matchups_eurocup = team_stats_eurocup['Matchup'].unique().tolist()
 
-            # Load EuroCup simulation results
-            script_dir = os.path.dirname(os.path.abspath(__file__))
-            pickle_path_eurocup = os.path.join(script_dir, 'data', 'eurocup_simulations.pkl')
-            with open(pickle_path_eurocup, 'rb') as f:
-                simulation_results_df_eurocup = pickle.load(f)
-            
-            if 'simulation_results_df_eurocup' not in st.session_state:
-                st.session_state['simulation_results_df_eurocup'] = simulation_results_df_eurocup
-            
-            with col0:
+        # Load EuroCup simulation results
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        pickle_path_eurocup = os.path.join(script_dir, 'data', 'eurocup_simulations.pkl')
+        with open(pickle_path_eurocup, 'rb') as f:
+            simulation_results_df_eurocup = pickle.load(f)
+        
+        if 'simulation_results_df_eurocup' not in st.session_state:
+            st.session_state['simulation_results_df_eurocup'] = simulation_results_df_eurocup
+        
+        with col0:
             # Get the maximum round value from the entire dataset
-                max_round = simulation_results_df_eurocup['Round'].max()
-                st.markdown(
-    f"""
-    <div style="
-        background-color: white; 
-        -webkit-background-color: white;
-        background: white;
-        -webkit-background: white;
-        border-radius: 8px; 
-        padding: 6px 6px; 
-        margin-left:-60px;
-        margin-top: 0px; 
-        box-shadow: 0 4px 12px rgba(100, 100, 100, 0.4);
-        color: rgb(26, 31, 54);
-        display: flex; 
-        justify-content: center; 
-        align-items: center;
-        position: relative;
-        z-index: 10;">
-        <div style="
-            text-align: center; 
-            font-weight: 700;  
-            font-size: 12px; 
-            color: rgb(26, 31, 54);">{max_round}</div>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+            max_round = simulation_results_df_eurocup['Round'].max()
+            st.markdown(
+                f"""
+                <div style="
+                    background-color: white; 
+                    -webkit-background-color: white;
+                    background: white;
+                    -webkit-background: white;
+                    border-radius: 8px; 
+                    padding: 6px 6px; 
+                    margin-left:-60px;
+                    margin-top: 0px; 
+                    box-shadow: 0 4px 12px rgba(100, 100, 100, 0.4);
+                    color: rgb(26, 31, 54);
+                    display: flex; 
+                    justify-content: center; 
+                    align-items: center;
+                    position: relative;
+                    z-index: 10;">
+                    <div style="
+                        text-align: center; 
+                        font-weight: 700;  
+                        font-size: 12px; 
+                        color: rgb(26, 31, 54);">{max_round}</div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+        
+        with col1:
+            selected_matchup_eurocup = st.selectbox(
+                'Select Matchup',
+                matchups_eurocup,
+                key='simulate_matchup_select_eurocup',
+                label_visibility='hidden'
+            )
+        
+        with col2:
+            matchup_data_eurocup = simulation_results_df_eurocup[simulation_results_df_eurocup['Matchup'] == selected_matchup_eurocup].iloc[0]
+            time_value_eurocup = matchup_data_eurocup.get('Time', 'N/A')
+            arena_value_eurocup = matchup_data_eurocup.get('Arena', 'N/A')
             
-            with col1:
-                selected_matchup_eurocup = st.selectbox(
-                    'Select Matchup',
-                    matchups_eurocup,
-                    key='simulate_matchup_select_eurocup',
-                    label_visibility='hidden'
-                )
-            
-            with col2:
-                matchup_data_eurocup = simulation_results_df_eurocup[simulation_results_df_eurocup['Matchup'] == selected_matchup_eurocup].iloc[0]
-                time_value_eurocup = matchup_data_eurocup.get('Time', 'N/A')
-                arena_value_eurocup = matchup_data_eurocup.get('Arena', 'N/A')
-                
-                st.markdown(
-    f"""
-    <div style="
-        background-color: white; 
-        -webkit-background-color: white;
-        background: white;
-        -webkit-background: white;
-        border-radius: 8px; 
-        padding: 5px 8px; 
-        margin-top: 0px; 
-        box-shadow: 0 4px 6px rgba(100, 100, 100, 0.4);
-        margin-right:-50px; 
-        margin-left:-27px;
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        gap: 30px; 
-        color: black !important;">
-        <div style="
-            text-align: center; 
-            font-weight: 700;  
-            font-size: 12px; 
-            color: rgb(26, 31, 54);">{time_value_eurocup}</div>
-        <div style="
-            text-align: center; 
-            font-weight: 700;  
-            font-size: 12px; 
-            color: rgb(26, 31, 54);">{arena_value_eurocup}</div>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-            
-            render_stats_tables_eurocup(selected_matchup_eurocup, matchups_eurocup, simulation_results_df_eurocup, "simulate")
+            st.markdown(
+                f"""
+                <div style="
+                    background-color: white; 
+                    -webkit-background-color: white;
+                    background: white;
+                    -webkit-background: white;
+                    border-radius: 8px; 
+                    padding: 5px 8px; 
+                    margin-top: 0px; 
+                    box-shadow: 0 4px 6px rgba(100, 100, 100, 0.4);
+                    margin-right:-50px; 
+                    margin-left:-27px;
+                    display: flex; 
+                    justify-content: center; 
+                    align-items: center; 
+                    gap: 30px; 
+                    color: black !important;">
+                    <div style="
+                        text-align: center; 
+                        font-weight: 700;  
+                        font-size: 12px; 
+                        color: rgb(26, 31, 54);">{time_value_eurocup}</div>
+                    <div style="
+                        text-align: center; 
+                        font-weight: 700;  
+                        font-size: 12px; 
+                        color: rgb(26, 31, 54);">{arena_value_eurocup}</div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+        
+        render_stats_tables_eurocup(selected_matchup_eurocup, matchups_eurocup, simulation_results_df_eurocup, "simulate")
     
     st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
