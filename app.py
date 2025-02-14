@@ -2272,13 +2272,13 @@ div[data-baseweb="select"]:hover {
 
     with sport_tabs[0]:
     # Create second layer of tabs for Euroleague
-        euroleague_subtabs = st.tabs(["Round Summary", "Games"])
+        euroleague_subtabs = st.tabs(["Games", "Round Summary"])
     
-    with euroleague_subtabs[0]:
+    with euroleague_subtabs[1]:
         # Round Summary tab content (empty for now)
         pass
     
-    with euroleague_subtabs[1]:
+    with euroleague_subtabs[0]:
         # Games tab content - moved from original Euroleague tab
         # Create three columns for the controls
         col0, col1, col2 = st.columns([.3, 2.8, 2.6])
@@ -2376,13 +2376,13 @@ div[data-baseweb="select"]:hover {
 
     with sport_tabs[1]:
     # Create second layer of tabs for EuroCup
-        eurocup_subtabs = st.tabs(["Round Summary", "Games"])
+        eurocup_subtabs = st.tabs(["Games", "Round Summary"])
     
-    with eurocup_subtabs[0]:
+    with eurocup_subtabs[1]:
         # Round Summary tab content (empty for now)
         pass
     
-    with eurocup_subtabs[1]:
+    with eurocup_subtabs[0]:
         # Games tab content - moved from original EuroCup tab
         # Create three columns for the controls
         col0, col1, col2 = st.columns([.3,2.8,2.6])
