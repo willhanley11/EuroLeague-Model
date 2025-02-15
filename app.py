@@ -1985,8 +1985,8 @@ def main():
     text-align: center !important;
     border-radius: 6px !important;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-    font-size: 11px !important;
-    font-weight: 700 !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
     padding: 2px 10px !important; /* Reduced horizontal padding */
     margin: 0 !important; /* Removed margins between tabs */
     color: #6b7280 !important;
@@ -2001,7 +2001,7 @@ def main():
 [data-baseweb="tab-list"] [role="tab"][aria-selected="true"] {
     color: #1f2937 !important;
     background: rgba(59, 130, 246, 0.2) !important;
-    font-weight: 700 !important;
+    font-weight: 900 !important;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
 }
 
@@ -2022,9 +2022,9 @@ def main():
 }
         /* Fix select box width */
         [data-testid="stSelectbox"] {
-            max-width: 350px !important;
-            margin: 0 auto !important;
-            margin-left:-10px;
+            width: 440px !important;
+
+
         }
 
         /* Adjust column containers */
@@ -2176,17 +2176,16 @@ def main():
  
 
 
-       
 .stSelectbox > div[data-baseweb="select"] > div[key="simulate-select-matchup"] > div,
 div[data-baseweb="select"] {
     margin-top: -28px;
-    margin-left: -15px;
+    margin-left: -55px;
     font-weight: 700;
-    border: 2px solid rgb(224, 231, 255); /* Softer border color */
+    border: 3px solid #A5B4FC !important;
     border-radius: 10px;
-    padding: 2px 8px;
-    height: 31px;
-    min-height: 31px !important;
+    padding: 3px 8px;
+    height: 32px;
+    min-height: 32px !important;
     background-color: rgb(245, 247, 255) !important; /* Soft, light blue background */
     color: rgb(59, 130, 246); /* More vibrant blue text */
     font-size: 12px;
@@ -2198,19 +2197,20 @@ div[data-baseweb="select"] {
 
 /* Target the inner select button */
 .stSelectbox > div[data-baseweb="select"] > div {
-    height: 20px !important;
-    min-height: 20px !important;
+    height: 22px !important;
+    min-height: 22px !important;
     display: flex;
     align-items: center;
 }
 
 /* Target the value container */
 .stSelectbox [data-baseweb="select"] [data-testid="stMarkdownContainer"] {
-    line-height: 1.2;
+    line-height: 1.1;
     padding-top: 0;
     padding-bottom: 0;
     display: flex;
     align-items: center;
+    font-size: 14px;
 }
 
 /* Hover Effect */
@@ -2235,6 +2235,7 @@ div[data-baseweb="select"]:focus-within {
     border-color: #6366F1 !important;
     box-shadow: 0 0 8px rgba(99, 102, 241, 0.3);
 }
+
 
 /* Dropdown Menu Styling */
 div[data-baseweb="popover"] {
@@ -2272,7 +2273,7 @@ div[data-baseweb="select"]:hover {
 
     with sport_tabs[0]:
     # Create second layer of tabs for Euroleague
-        euroleague_subtabs = st.tabs(["Games", "Round Summary"])
+        euroleague_subtabs = st.tabs([simulation_results_df['Round'].max(), "Round Summary"])
     
     with euroleague_subtabs[1]:
         # Round Summary tab content (empty for now)
@@ -2281,7 +2282,7 @@ div[data-baseweb="select"]:hover {
     with euroleague_subtabs[0]:
         # Games tab content - moved from original Euroleague tab
         # Create three columns for the controls
-        col0, col1, col2 = st.columns([.3, 2.8, 2.6])
+        col1, col2 = st.columns([1,.82])
         team_stats, player_statsTeam1, player_statsTeam2 = create_sample_data_euroleague()
         if 'team_stats' not in st.session_state:
             st.session_state['team_stats'] = team_stats
@@ -2295,43 +2296,12 @@ div[data-baseweb="select"]:hover {
         if 'simulation_results_df' not in st.session_state:
             st.session_state['simulation_results_df'] = simulation_results_df
         
-        with col0:
-            # Get the maximum round value from the entire dataset
-            max_round = simulation_results_df['Round'].max()
-            st.markdown(
-                f"""
-                <div style="
-                    background-color: white; 
-                    -webkit-background-color: white;
-                    background: white;
-                    -webkit-background: white;
-                    border-radius: 8px; 
-                    padding: 6px 6px; 
-                    margin-left:-60px;
-                    margin-top: 0px !important; 
-                    box-shadow: 0 4px 12px rgba(100, 100, 100, 0.4);
-                    color: rgb(26, 31, 54);
-                    display: flex; 
-                    justify-content: center; 
-                    align-items: center;
-                    position: relative;
-                    z-index: 10;">
-                    <div style="
-                        text-align: center; 
-                        font-weight: 700;  
-                        font-size: 12px; 
-                        color: rgb(26, 31, 54);">{max_round}</div>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-        
+               
         with col1:
             selected_matchup = st.selectbox(
                 'Select Matchup',
                 matchups,
                 key='simulate_matchup_select',
-                label_visibility='hidden'
             )
         
         with col2:
@@ -2375,19 +2345,6 @@ div[data-baseweb="select"]:hover {
         render_stats_tables_euroleague(selected_matchup, matchups, "simulate")
 
     with sport_tabs[1]:
-    # Create second layer of tabs for EuroCup
-        eurocup_subtabs = st.tabs(["Games", "Round Summary"])
-    
-    with eurocup_subtabs[1]:
-        # Round Summary tab content (empty for now)
-        pass
-    
-    with eurocup_subtabs[0]:
-        # Games tab content - moved from original EuroCup tab
-        # Create three columns for the controls
-        col0, col1, col2 = st.columns([.3,2.8,2.6])
-        
-        # Load EuroCup data
         team_stats_eurocup, player_statsTeam1_eurocup, player_statsTeam2_eurocup = create_sample_data_eurocup()
         if 'team_stats_eurocup' not in st.session_state:
             st.session_state['team_stats_eurocup'] = team_stats_eurocup
@@ -2407,38 +2364,20 @@ div[data-baseweb="select"]:hover {
         
         if 'simulation_results_df_eurocup' not in st.session_state:
             st.session_state['simulation_results_df_eurocup'] = simulation_results_df_eurocup
+    # Create second layer of tabs for EuroCup
+        eurocup_subtabs = st.tabs([simulation_results_df_eurocup['Round'].max(), "Round Summary"])
+    
+    with eurocup_subtabs[1]:
+        # Round Summary tab content (empty for now)
+        pass
+    
+    with eurocup_subtabs[0]:
+        # Games tab content - moved from original EuroCup tab
+        # Create three columns for the controls
+        col1, col2 = st.columns([1,.82])
         
-        with col0:
-            # Get the maximum round value from the entire dataset
-            max_round = simulation_results_df_eurocup['Round'].max()
-            st.markdown(
-                f"""
-                <div style="
-                    background-color: white; 
-                    -webkit-background-color: white;
-                    background: white;
-                    -webkit-background: white;
-                    border-radius: 8px; 
-                    padding: 6px 6px; 
-                    margin-left:-60px;
-                    margin-top: 0px; 
-                    box-shadow: 0 4px 12px rgba(100, 100, 100, 0.4);
-                    color: rgb(26, 31, 54);
-                    display: flex; 
-                    justify-content: center; 
-                    align-items: center;
-                    position: relative;
-                    z-index: 10;">
-                    <div style="
-                        text-align: center; 
-                        font-weight: 700;  
-                        font-size: 12px; 
-                        color: rgb(26, 31, 54);">{max_round}</div>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-        
+              
+               
         with col1:
             selected_matchup_eurocup = st.selectbox(
                 'Select Matchup',
