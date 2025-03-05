@@ -2144,6 +2144,10 @@ def assess_teams(OffensePlayerDataNEW1,elo_combined_df):
 
 # function to add or remove a player from a team
 def update_or_remove_player_data(players_data, df):
+    # If players_data is empty, return the entire DataFrame
+    if not players_data:
+        return df
+    
     df_copy = df.copy()
     
     for player_info in players_data:
@@ -2184,7 +2188,7 @@ def update_or_remove_player_data(players_data, df):
     df_copy = df_copy.drop_duplicates(subset=['Player'], keep='last')
     
     return df_copy
-
+    
     
 
 

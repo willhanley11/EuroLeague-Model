@@ -120,24 +120,24 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
    
    # Define team colors dictionary 
    euroleague_team_colors = {
-   'BER': '#ffed99',  # ALBA Berlin - Light yellow
-   'IST': '#d6e4ff',  # Anadolu Efes - Light navy 
-   'MCO': '#ffd6d9',  # Monaco - Light red
-   'BAS': '#d6e4ff',  # Baskonia - Light navy
-   'RED': '#ffd6d9',  # Zvezda - Light red
-   'MIL': '#ffd6d9',  # Milan - Light red
-   'BAR': '#d6e4ff',  # Barcelona - Light blue
-   'MUN': '#ffd6d9',  # Bayern - Light red
-   'ULK': '#ffed99',  # Fenerbahce - Light yellow
-   'ASV': '#e6e6e6',  # ASVEL - Light gray
-   'TEL': '#ffed99',  # Maccabi - Light yellow
-   'OLY': '#ffd6d9',  # Olympiacos - Light red
-   'PAN': '#d6ffe0',  # Panathinaikos - Light green
-   'PRS': '#e6e6e6',  # Paris - Light gray
-   'PAR': '#e6e6e6',  # Partizan - Light gray
-   'MAD': '#d6e4ff',  # Madrid - Light blue
-   'VIR': '#e6e6e6',  # Virtus - Light gray
-   'ZAL': '#d6ffe0',  # Zalgiris - Light green
+    'BER': '#fff5b3',  # ALBA Berlin - Light yellow
+    'IST': '#99c2e6',  # Anadolu Efes - Light royal blue  
+    'MCO': '#f0a0a8',  # Monaco - Light red
+    'BAS': '#94b8e0',  # Baskonia - Light navy blue
+    'RED': '#f7adb5',  # Crvena Zvezda - Light red
+    'MIL': '#ffb3c0',  # Milan - Light red with pink tone
+    'BAR': '#94b8e0',  # Barcelona - Light deep blue
+    'MUN': '#e6a6b1',  # Bayern - Light burgundy
+    'ULK': '#ffeab3',  # Fenerbahce - Light golden yellow
+    'ASV': '#d9dadb',  # ASVEL - Light gray
+    'TEL': '#ffe7b8',  # Maccabi - Light golden orange
+    'OLY': '#f7b7b7',  # Olympiacos - Light red
+    'PAN': '#99ccaa',  # Panathinaikos - Light dark green
+    'PRS': '#b3b8bf',  # Paris - Light slate
+    'PAR': '#a6a5a2',  # Partizan - Light black-gray
+    'MAD': '#e6e6e6',  # Real Madrid - Light silver
+    'VIR': '#a6a6a6',  # Virtus - Light black
+    'ZAL': '#99d1b3',  # Zalgiris - Light kelly green
 }
    euroleague_team_colors_light = {
    'BER': '#fff9e6',  # ALBA Berlin
@@ -178,26 +178,6 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
    'MAD': 'REAL MADRID',
    'VIR': 'VIRTUS BOLOGNA',
    'ZAL': 'ZALGIRIS KAUNAS',
-}
-   team_flags = {
-   'BER': '🇩🇪',  # Germany 
-   'IST': '🇹🇷',  # Turkey
-   'MCO': '🇲🇨',  # Monaco
-   'BAS': '🇪🇸',  # Spain
-   'RED': '🇷🇸',  # Serbia
-   'MIL': '🇮🇹',  # Italy
-   'BAR': '🇪🇸',  # Spain
-   'MUN': '🇩🇪',  # Germany
-   'ULK': '🇹🇷',  # Turkey
-   'ASV': '🇫🇷',  # France 
-   'TEL': '🇮🇱',  # Israel
-   'OLY': '🇬🇷',  # Greece
-   'PAN': '🇬🇷',  # Greece
-   'PRS': '🇫🇷',  # France
-   'PAR': '🇷🇸',  # Serbia
-   'MAD': '🇪🇸',  # Spain
-   'VIR': '🇮🇹',  # Italy
-   'ZAL': '🇱🇹',  # Lithuania
 }
 
    
@@ -363,7 +343,7 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
    first_row = simulation_results_df[simulation_results_df['Matchup'] == selected_matchup].iloc[0]
    st.markdown('<div class="euroleague_tab">', unsafe_allow_html=True)
 
-   team_stats_area, spacing1, logo_area,  stats_area = st.columns([1.4, 0.9, 4,  2.5])
+   team_stats_area, spacing1, logo_area,  stats_area = st.columns([1.4, 0.9, 4,  2.6])
    
    with team_stats_area:
        # Team Stats Table (Full Width)
@@ -444,9 +424,9 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
        <div class="team-stats-euroleague-container">
            <table style="width: 100%">
                <colgroup>
-                   <col style="width: 10%">
-                   <col style="width: 45%">
-                   <col style="width: 45%">
+                   <col style="width: 8%">
+                   <col style="width: 46%">
+                   <col style="width: 46%">
                </colgroup>
                <thead><tr>{}</tr></thead>
                <tbody>{}</tbody>
@@ -457,16 +437,16 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
        
        team_header = f"""<th>{team_stats_df.columns[0]}</th>
 <th>
-   <div style="display: flex; align-items: center; gap: 1px; justify-content: center;">
-       <div style="width: 40px; height: 40px; display: flex; align-items: center;">
+   <div style="display: flex; align-items: center; gap: 2px; justify-content: center;">
+       <div style="width: 40px; height: 40px; display: flex; align-items: center; padding: 2px;">
            <img src="{away_logo}" alt="Logo" style="width: 100%; height: 650px; object-fit: contain;">
        </div>
        <span>{team_stats_df.columns[1]}</span>
    </div>
 </th>
 <th>
-   <div style="display: flex; align-items: center; gap: 1px; justify-content: center;">
-       <div style="width: 40px; height: 40px; display: flex; align-items: center;">
+   <div style="display: flex; align-items: center; gap: 2px; justify-content: center;">
+       <div style="width: 40px; height: 40px; display: flex; align-items: center; padding: 2px;">
            <img src="{home_logo}" alt="Logo" style="width: 100%; height: 650px; object-fit: contain;">
        </div>
        <span>{team_stats_df.columns[2]}</span>
@@ -488,24 +468,24 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
 
        # Generate the table rows with conditional highlighting
        team_rows = ''.join(
-           f'<tr class="{" ".join(filter(None, [
-               "first-row" if index == 0 else "",
-               "section-start" if index == 1 else "",
-               "key-section" if 1 <= index <= 4 else ""
-           ]))}">' +
-           ''.join(
-               f'<td class="numeric" style="text-align: center; font-weight: 1000; font-size: 12px;">{value}</td>' 
-               if idx == 0
-               else f'<td class="numeric" style="text-align: center"><div style="margin-left: -2px;font-size: 12px;margin-right:-5px;"><span class="highlight" style="padding: 3px 3px; border-radius: 4px; background-color: {euroleague_team_colors[team_stats_df.columns[1]] if (idx == 1 and ((value > row[2] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[2] and row.iloc[0] in ["TO%", "TO"]))) else "transparent"}">{value:.1f}{"%" if str(row.iloc[0]).endswith("%") else ""}</span>{f"<img src=\'{away_logo}\' style=\'width: 28px; height: 28px; margin-left: 2px; vertical-align: middle;\'/>" if (idx == 1 and ((value > row[2] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[2] and row.iloc[0] in ["TO%", "TO"]))) else ""}</div></td>' 
-               if isinstance(value, (int, float)) and idx == 1
-               else f'<td class="numeric" style="text-align: center"><div style="margin-left: -2px;font-size: 12px;margin-right:-5px;"><span class="highlight" style="padding: 3px 3px; border-radius: 4px; background-color: {euroleague_team_colors[team_stats_df.columns[2]] if (idx == 2 and ((value > row[1] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[1] and row.iloc[0] in ["TO%", "TO"]))) else "transparent"}">{value:.1f}{"%" if str(row.iloc[0]).endswith("%") else ""}</span>{f"<img src=\'{home_logo}\' style=\'width: 28px; height: 28px; margin-left: 2px; vertical-align: middle;\'/>" if (idx == 2 and ((value > row[1] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[1] and row.iloc[0] in ["TO%", "TO"]))) else ""}</div></td>' 
-               if isinstance(value, (int, float)) and idx == 2
-               else f'<td style="text-align: center">{value}</td>'
-               for idx, (col, value) in enumerate(row.items())
-           ) + 
-           '</tr>'
-           for index, row in team_stats_df.iterrows()
-       )
+    f'<tr class="{" ".join(filter(None, [
+        "first-row" if index == 0 else "",
+        "section-start" if index == 1 else "",
+        "key-section" if 1 <= index <= 4 else ""
+    ]))}">' +
+    ''.join(
+        f'<td class="numeric" style="text-align: center; font-weight: 1000; font-size: 12px;">{value}</td>' 
+        if idx == 0
+        else f'<td class="numeric" style="text-align: center"><div style="margin-left: -2px;font-size: 12px;margin-right:-5px;"><span class="highlight" style="padding: 3px 3px; border-radius: 4px; background-color: {euroleague_team_colors[team_stats_df.columns[1]] if (idx == 1 and ((value > row[2] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[2] and row.iloc[0] in ["TO%", "TO"]))) else "transparent"}">{f"{value:.1f}%" if str(row.iloc[0]).endswith("%") else f"&nbsp;{value:>5.1f}&nbsp;"}</span>{f"<img src=\'{away_logo}\' style=\'width: 25px; height: 25px; margin-left: 2px; vertical-align: middle;\'/>" if (idx == 1 and ((value > row[2] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[2] and row.iloc[0] in ["TO%", "TO"]))) else ""}</div></td>' 
+        if isinstance(value, (int, float)) and idx == 1
+        else f'<td class="numeric" style="text-align: center"><div style="margin-left: -2px;font-size: 12px;margin-right:-5px;"><span class="highlight" style="padding: 3px 3px; border-radius: 4px; background-color: {euroleague_team_colors[team_stats_df.columns[2]] if (idx == 2 and ((value > row[1] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[1] and row.iloc[0] in ["TO%", "TO"]))) else "transparent"}">{f"{value:.1f}%" if str(row.iloc[0]).endswith("%") else f"&nbsp;{value:>5.1f}&nbsp;"}</span>{f"<img src=\'{home_logo}\' style=\'width: 25px; height: 25px; margin-left: 2px; vertical-align: middle;\'/>" if (idx == 2 and ((value > row[1] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[1] and row.iloc[0] in ["TO%", "TO"]))) else ""}</div></td>' 
+        if isinstance(value, (int, float)) and idx == 2
+        else f'<td style="text-align: center">{value}</td>'
+        for idx, (col, value) in enumerate(row.items())
+    ) + 
+    '</tr>'
+    for index, row in team_stats_df.iterrows()
+)
 
        # Render the table
        st.markdown(team_html.format(team_header, team_rows), unsafe_allow_html=True)
@@ -586,8 +566,8 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
 
            html_table += f'''
                <td>
-                   <div style="display: flex; align-items: center; justify-content: center; gap: 1px; padding: 0px; margin-left:0px;">
-                       <div style="width: 40px; height: 40px; display: flex; align-items: center;">
+                   <div style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 5px; margin-left:0px;">
+                       <div style="width: 30px; height: 30px; display: flex; align-items: center;">
                            <img src="{logo_to_use}" alt="Logo" style="width: 100%; height: auto; object-fit: contain;margin-left:0px;">
                        </div>
                        <span style="font-size: 14px; font-weight: 800; color: rgba(0,0,0,0.7);">{team_name}</span>
@@ -641,7 +621,7 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
           /* Button Styles */
           /* Button container styling */
 div.stButton {
-   margin-top: -540px !important;
+   margin-top: -500px !important;
    margin-left: -50px !important;  /* This moves buttons up */
    position: relative !important;
    z-index: 2 !important;  /* Ensure buttons stay on top */
@@ -682,7 +662,7 @@ div.stButton > button:focus {
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 0 15px rgba(100, 100, 100, .5);
-    margin-top: -520px !important;
+    margin-top: -480px !important;
 }
 
 .player-stats-table {
@@ -1277,7 +1257,7 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
    first_row = simulation_results_df_eurocup[simulation_results_df_eurocup['Matchup'] == selected_matchup].iloc[0]
    st.markdown('<div class="eurocup_tab">', unsafe_allow_html=True)
 
-   team_stats_area, spacing1, logo_area,  stats_area = st.columns([1.4, 0.9, 4,  2.5])
+   team_stats_area, spacing1, logo_area,  stats_area = st.columns([1.4, 0.9, 4,  2.6])
    
    with team_stats_area:
        # Team Stats Table (Full Width)
@@ -1371,16 +1351,16 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
        
        team_header = f"""<th>{team_stats_df.columns[0]}</th>
 <th>
-   <div style="display: flex; align-items: center; gap: 1px; justify-content: center;">
-       <div style="width: 40px; height: 40px; display: flex; align-items: center;">
+   <div style="display: flex; align-items: center; gap: 2px; justify-content: center;">
+       <div style="width: 40px; height: 40px; display: flex; align-items: center; padding: 2px;">
            <img src="{away_logo}" alt="Logo" style="width: 100%; height: 650px; object-fit: contain;">
        </div>
        <span>{team_stats_df.columns[1]}</span>
    </div>
 </th>
 <th>
-   <div style="display: flex; align-items: center; gap: 1px; justify-content: center;">
-       <div style="width: 40px; height: 40px; display: flex; align-items: center;">
+   <div style="display: flex; align-items: center; gap: 2px; justify-content: center;">
+       <div style="width: 40px; height: 40px; display: flex; align-items: center; padding: 2px;">
            <img src="{home_logo}" alt="Logo" style="width: 100%; height: 650px; object-fit: contain;">
        </div>
        <span>{team_stats_df.columns[2]}</span>
@@ -1402,24 +1382,24 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
 
        # Generate the table rows with conditional highlighting
        team_rows = ''.join(
-           f'<tr class="{" ".join(filter(None, [
-               "first-row" if index == 0 else "",
-               "section-start" if index == 1 else "",
-               "key-section" if 1 <= index <= 4 else ""
-           ]))}">' +
-           ''.join(
-               f'<td class="numeric" style="text-align: center; font-weight: 1000; font-size: 12px;">{value}</td>' 
-               if idx == 0
-               else f'<td class="numeric" style="text-align: center"><div style="margin-left: -2px;font-size: 12px;margin-right:-5px;"><span class="highlight" style="padding: 3px 3px; border-radius: 4px; background-color: {eurocup_team_colors_light[team_stats_df.columns[1]] if (idx == 1 and ((value > row[2] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[2] and row.iloc[0] in ["TO%", "TO"]))) else "transparent"}">{value:.1f}{"%" if str(row.iloc[0]).endswith("%") else ""}</span>{f"<img src=\'{away_logo}\' style=\'width: 28px; height: 28px; margin-left: 2px; vertical-align: middle;\'/>" if (idx == 1 and ((value > row[2] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[2] and row.iloc[0] in ["TO%", "TO"]))) else ""}</div></td>' 
-               if isinstance(value, (int, float)) and idx == 1
-               else f'<td class="numeric" style="text-align: center"><div style="margin-left: -2px;font-size: 12px;margin-right:-5px;"><span class="highlight" style="padding: 3px 3px; border-radius: 4px; background-color: {eurocup_team_colors_light[team_stats_df.columns[2]] if (idx == 2 and ((value > row[1] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[1] and row.iloc[0] in ["TO%", "TO"]))) else "transparent"}">{value:.1f}{"%" if str(row.iloc[0]).endswith("%") else ""}</span>{f"<img src=\'{home_logo}\' style=\'width: 28px; height: 28px; margin-left: 2px; vertical-align: middle;\'/>" if (idx == 2 and ((value > row[1] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[1] and row.iloc[0] in ["TO%", "TO"]))) else ""}</div></td>' 
-               if isinstance(value, (int, float)) and idx == 2
-               else f'<td style="text-align: center">{value}</td>'
-               for idx, (col, value) in enumerate(row.items())
-           ) + 
-           '</tr>'
-           for index, row in team_stats_df.iterrows()
-       )
+    f'<tr class="{" ".join(filter(None, [
+        "first-row" if index == 0 else "",
+        "section-start" if index == 1 else "",
+        "key-section" if 1 <= index <= 4 else ""
+    ]))}">' +
+    ''.join(
+        f'<td class="numeric" style="text-align: center; font-weight: 1000; font-size: 12px;">{value}</td>' 
+        if idx == 0
+        else f'<td class="numeric" style="text-align: center"><div style="margin-left: -2px;font-size: 12px;margin-right:-5px;"><span class="highlight" style="padding: 3px 3px; border-radius: 4px; background-color: {eurocup_team_colors_light[team_stats_df.columns[1]] if (idx == 1 and ((value > row[2] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[2] and row.iloc[0] in ["TO%", "TO"]))) else "transparent"}">{f"{value:.1f}%" if str(row.iloc[0]).endswith("%") else f"&nbsp;{value:>5.1f}&nbsp;"}</span>{f"<img src=\'{away_logo}\' style=\'width: 25px; height: 25px; margin-left: 2px; vertical-align: middle;\'/>" if (idx == 1 and ((value > row[2] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[2] and row.iloc[0] in ["TO%", "TO"]))) else ""}</div></td>' 
+        if isinstance(value, (int, float)) and idx == 1
+        else f'<td class="numeric" style="text-align: center"><div style="margin-left: -2px;font-size: 12px;margin-right:-5px;"><span class="highlight" style="padding: 3px 3px; border-radius: 4px; background-color: {eurocup_team_colors_light[team_stats_df.columns[2]] if (idx == 2 and ((value > row[1] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[1] and row.iloc[0] in ["TO%", "TO"]))) else "transparent"}">{f"{value:.1f}%" if str(row.iloc[0]).endswith("%") else f"&nbsp;{value:>5.1f}&nbsp;"}</span>{f"<img src=\'{home_logo}\' style=\'width: 25px; height: 25px; margin-left: 2px; vertical-align: middle;\'/>" if (idx == 2 and ((value > row[1] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[1] and row.iloc[0] in ["TO%", "TO"]))) else ""}</div></td>' 
+        if isinstance(value, (int, float)) and idx == 2
+        else f'<td style="text-align: center">{value}</td>'
+        for idx, (col, value) in enumerate(row.items())
+    ) + 
+    '</tr>'
+    for index, row in team_stats_df.iterrows()
+)
 
        # Render the table
        st.markdown(team_html.format(team_header, team_rows), unsafe_allow_html=True)
@@ -1500,8 +1480,8 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
 
            html_table += f'''
                <td>
-                   <div style="display: flex; align-items: center; justify-content: center; gap: 1px; padding: 0px; margin-left:0px;">
-                       <div style="width: 40px; height: 40px; display: flex; align-items: center;">
+                   <div style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 5px; margin-left:0px;">
+                       <div style="width: 30px; height: 30px; display: flex; align-items: center;">
                            <img src="{logo_to_use}" alt="Logo" style="width: 100%; height: auto; object-fit: contain;margin-left:0px;">
                        </div>
                        <span style="font-size: 14px; font-weight: 800; color: rgba(0,0,0,0.7);">{team_name}</span>
@@ -1555,7 +1535,7 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
           /* Button Styles */
           /* Button container styling */
 div.stButton {
-   margin-top: -540px !important;
+   margin-top: -500px !important;
    margin-left: -50px !important;  /* This moves buttons up */
    position: relative !important;
    z-index: 2 !important;  /* Ensure buttons stay on top */
@@ -1596,7 +1576,7 @@ div.stButton > button:focus {
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 0 15px rgba(100, 100, 100, .5);
-    margin-top: -520px !important;
+    margin-top: -480px !important;
 }
 
 .player-stats-table {
@@ -1923,6 +1903,1180 @@ div.stButton > button:focus {
 
 
 
+def render_round_summary(
+    simulation_results_df, 
+    team_colors, 
+    team_name_short, 
+    league_name='Euroleague'
+):
+    # CSS for styling - using unique class names to avoid conflicts
+    st.markdown("""
+    <style>
+    /* Round summary specific styles with unique class names */
+    .rs_table-container {
+        border: 3px !important;
+        border-radius: 16px;
+        background-color: white;
+        margin: -5px -10px 10px -10px;
+        box-shadow: 0 0 0 1px rgba(0,0,0,.2);
+    }
+
+    .rs_logo-cell {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(100, 100, 100, 3.5);
+        margin-bottom: 8px;
+    }
+
+    .rs_logo-cell img {
+        width: 60px;
+        height: 75px;
+        object-fit: contain;
+    }
+
+    .rs_team-name-box {
+        background-color: white;
+        border-radius: 8px;
+        padding: 6px;
+        box-shadow: 0 4px 10px rgba(100, 100, 100, 1.5);
+        margin-bottom: 6px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .rs_team-name {
+        font-weight: 700;
+        font-size: 11px !important;
+        font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+        color: rgba(26, 31, 54, 0.9);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Dark summary stats table style */
+    
+    .rs_summary-stats table {
+        border-collapse: collapse;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 2px solid white !important;
+        background-color: #1a1f36;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        width: 100%;
+    }
+    
+    .rs_summary-stats tr {
+        background-color: #1a1f36 !important;  /* Force dark background */
+    }
+    
+    .rs_summary-stats td {
+        background-color: #1a1f36 !important;  /* Force dark background */
+        padding: 6px;
+        text-align: center;
+        font-size: 20px;
+        vertical-align: middle;
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .rs_summary-stats th {
+        background-color: #1a1f36 !important;  /* Force dark background */
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 10px;
+        text-align: center;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        color: #ffffff;
+        padding: 3px;
+    }
+    
+    .rs_summary-stats td div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .rs_summary-stats td img {
+        width: 40px;
+        height: 40px;
+        vertical-align: middle;
+    }
+    
+    .rs_summary-stats td span {
+        font-size: 14px;
+        font-weight: 600;
+        color: #ffffff !important;
+        vertical-align: middle;
+    }
+
+    /* Enhanced Leaders section styling */
+    .rs_leaders-header {
+        background: linear-gradient(to right, #1a1f36, #2c3a5a);
+        color: white;
+        padding: 4px 8px;
+        font-weight: 600;
+        font-size: 14px;
+        text-align: center;
+        text-transform: uppercase;
+        border-radius: 6px 6px 0 0;
+        letter-spacing: 0.5px;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .rs_leaders-list {
+        background-color: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 0 0 6px 6px;
+        overflow: hidden;
+        border: 1px solid #e8e8e8;
+
+    }
+    
+    .rs_leader-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 4px 10px;
+        border-bottom: 1px solid #f0f0f0;
+        align-items: center;
+        background-color: white;
+        transition: background-color 0.15s ease;
+    }
+    
+    .rs_leader-row:hover {
+        background-color: #f8fafe;
+    }
+    
+    .rs_leader-row:last-child {
+        border-bottom: none;
+    }
+    
+    .rs_player-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .rs_team-indicator {
+        width: 3px;
+        height: 20px;
+        border-radius: 2px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    
+    .rs_player-name {
+        font-weight: 500;
+        font-size: 12px;
+        color: #1a1f36;
+        font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    }
+    
+    .rs_player-stat {
+        font-weight: 700;
+        font-size: 14px;
+        color: #1a1f36;
+        min-width: 30px;
+        text-align: right;
+        background: linear-gradient(to right, #0d6efd, #3b8ff9);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    /* Full-width game info header */
+    .rs_game-info-box {
+        background-color: white;
+        border-radius: 8px;
+        padding: 4px 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 12px;
+        margin-top:-15px;
+    }
+    
+    .rs_game-info-icon {
+        color: #1a1f36;
+        margin-right: 6px;
+        font-size: 14px;
+    }
+    
+    .rs_game-info-text {
+        font-weight: 600;
+        color: #1a1f36;
+        font-size: 13px;
+    }
+    
+    /* Filter buttons */
+    .rs_filter-buttons {
+        display: flex;
+        padding: 10px 16px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #e9ecef;
+        margin-bottom: 10px;
+    }
+    
+    .rs_filter-button {
+        background-color: #f1f3f5;
+        border: none;
+        padding: 6px 14px;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 13px;
+        color: #495057;
+        margin-right: 8px;
+    }
+    
+    .rs_filter-button.active {
+        background-color: #1a1f36;
+        color: white;
+    }
+
+    .rs_game-container {
+        margin-bottom: 24px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 16px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .rs_versus-symbol {
+        display: flex; 
+        justify-content: center; 
+        align-items: center;
+    }
+
+    .rs_versus-box {
+        background-color: white; 
+        border-radius: 8px; 
+        padding: 3px 8px; 
+        box-shadow: 0 4px 12px rgba(100, 100, 100, .4);
+        margin-top: 30px;
+    }
+
+    .rs_versus-text {
+        font-size: 16px; 
+        color: #1a1f36; 
+        font-weight: 800;
+    }
+    
+    /* Game separator */
+    .rs_game-separator {
+        height: 2px;
+        background: linear-gradient(to right, rgba(0,0,0,0.02), rgba(0,0,0,.5), rgba(0,0,0,0.02));
+        margin: -15px -15px;
+        position: relative;
+    }
+    
+    .rs_game-separator::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: white;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="%231a1f36"/></svg>');
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    # Group games by round
+    current_round = simulation_results_df['Round'].max()
+    round_games = simulation_results_df[simulation_results_df['Round'] == current_round]
+
+    # Track if we need to add a separator (after the first game)
+    first_game = True
+    
+    # Iterate through each game in the round
+    for _, game in round_games.iterrows():
+        
+        
+        home_team = game['Home_Team']
+        away_team = game['Away_Team']
+        home_code = game['Home_Code']
+        away_code = game['Away_Code']
+        home_logo = game['Home_Logo']
+        away_logo = game['Away_Logo']
+        time = game.get('Time', 'N/A')
+        arena = game.get('Arena', 'N/A')
+        matchup = game['Matchup']
+        
+        # Get team colors
+        home_color = team_colors.get(home_code, '#f0f0f0')
+        away_color = team_colors.get(away_code, '#f0f0f0')
+
+        # Prepare summary stats
+        summary_stats_df = pd.DataFrame(game['SimmedTeamStats'][-3:]).T
+        summary_stats_df.columns = summary_stats_df.iloc[0]
+        summary_stats_df = summary_stats_df.drop(summary_stats_df.index[0])
+        summary_stats_df = summary_stats_df.rename(columns={'Total Adjusted': 'Total'})
+        summary_stats_df = summary_stats_df[['Spread', 'Total', 'Money']]
+        st.markdown('<div class="rs_game-separator"></div>', unsafe_allow_html=True)
+        # Game info header using Streamlit columns for 50/50 split
+        time_col, arena_col = st.columns(2)
+        
+        with time_col:
+            st.markdown(f"""
+            <div class="rs_game-info-box">
+                <span class="rs_game-info-icon">🕒</span>
+                <span class="rs_game-info-text">{time}</span>
+            </div>
+            """, unsafe_allow_html=True)
+            
+        with arena_col:
+            st.markdown(f"""
+            <div class="rs_game-info-box">
+                <span class="rs_game-info-icon">🏟️</span>
+                <span class="rs_game-info-text">{arena}</span>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        # Team logos and summary stats
+        logo_col, vs_col, home_logo_col, stats_col = st.columns([1, 0.2, 1, 2.3])
+        
+        with logo_col:
+            st.markdown(
+                f"""
+                <div class="rs_logo-cell" style="background-color: {team_colors.get(away_code, '#f0f0f0')}">
+                    <img src="{away_logo}" alt="{away_team} Logo">
+                </div>
+                <div class="rs_team-name-box">
+                    <div class="rs_team-name">{team_name_short.get(away_code, away_team)}</div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+        
+        with vs_col:
+            st.markdown("""
+            <div class="rs_versus-symbol">
+                <div class="rs_versus-box">
+                    <span class="rs_versus-text">@</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with home_logo_col:
+            st.markdown(
+                f"""
+                <div class="rs_logo-cell" style="background-color: {team_colors.get(home_code, '#f0f0f0')}">
+                    <img src="{home_logo}" alt="{home_team} Logo">
+                </div>
+                <div class="rs_team-name-box">
+                    <div class="rs_team-name">{team_name_short.get(home_code, home_team)}</div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+        
+        with stats_col:
+            # Creating the dark summary stats table
+            html_table = """
+            <div class="rs_summary-stats">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>TEAM</th>
+            """
+            for col in summary_stats_df.columns:
+                html_table += f"<th>{col.upper()}</th>"
+            
+            html_table += """
+                        </tr>
+                    </thead>
+                    <tbody>
+            """
+            
+            for idx, row in summary_stats_df.iterrows():
+                html_table += "<tr>"
+
+                is_away = idx == away_code or idx == team_name_short.get(away_code, away_team)
+                logo_to_use = away_logo if is_away else home_logo
+                team_code = away_code if is_away else home_code
+
+                html_table += f'''
+                    <td>
+                        <div>
+                            <img src="{logo_to_use}" alt="{team_code} Logo">
+                            <span>{team_code}</span>
+                        </div>
+                    </td>
+                '''
+
+                for col, val in row.items():
+                    if isinstance(val, (int, float)):
+                        if col == "Money":
+                            html_table += f'<td>{val:.2f}</td>'
+                        else:
+                            html_table += f'<td>{val:.1f}</td>'
+                    else:
+                        html_table += f"<td>{val}</td>"
+                html_table += "</tr>"
+
+            html_table += """
+                    </tbody>
+                </table>
+            </div>
+            """
+
+            st.markdown(html_table, unsafe_allow_html=True)
+        
+        # Get player stats for the matchup
+        team_stats, player_statsTeam1, player_statsTeam2 = create_sample_data_euroleague()
+        filtered_player_statsTeam1 = player_statsTeam1[player_statsTeam1['Matchup'] == matchup]
+        filtered_player_statsTeam2 = player_statsTeam2[player_statsTeam2['Matchup'] == matchup]
+        
+        # Combine player stats from both teams for game-level top 5
+        combined_player_stats = pd.concat([filtered_player_statsTeam1, filtered_player_statsTeam2])
+        
+        # Get top players
+        top_players_pts = (
+            combined_player_stats.sort_values('PTS', ascending=False)
+            .drop_duplicates('Player')
+            .head(5)[['Player', 'Team', 'PTS']]
+        )
+        top_players_reb = (
+            combined_player_stats.sort_values('REB', ascending=False)
+            .drop_duplicates('Player')
+            .head(5)[['Player', 'Team', 'REB']]
+        )
+        top_players_3fg = (
+            combined_player_stats.sort_values('3FGM', ascending=False)
+            .drop_duplicates('Player')
+            .head(5)[['Player', 'Team', '3FGM']]
+        )
+        
+        # Leaders row with three columns of equal width
+        leader_col1, leader_col2, leader_col3 = st.columns(3)
+        
+        # Points Leaders
+        with leader_col1:
+            st.markdown('<div class="rs_leaders-header">POINTS LEADERS</div>', unsafe_allow_html=True)
+            st.markdown('<div class="rs_leaders-list">', unsafe_allow_html=True)
+            for _, row in top_players_pts.iterrows():
+                player = row['Player']
+                team = row.get('Team', '')
+                color = team_colors.get(team, '#1e293b')
+                
+                st.markdown(f"""
+                <div class="rs_leader-row">
+                    <div class="rs_player-info">
+                        <div class="rs_team-indicator" style="background-color: {team_colors.get(team, '#1e293b')};"></div>
+                        <span class="rs_player-name">{player}</span>
+                    </div>
+                    <span class="rs_player-stat">{row["PTS"]:.1f}</span>
+                </div>
+                """, unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
+        
+        # Rebounds Leaders
+        with leader_col2:
+            st.markdown('<div class="rs_leaders-header">REBOUNDS LEADERS</div>', unsafe_allow_html=True)
+            st.markdown('<div class="rs_leaders-list">', unsafe_allow_html=True)
+            for _, row in top_players_reb.iterrows():
+                player = row['Player']
+                team = row.get('Team', '')
+                color = team_colors.get(team, '#1e293b')
+                
+                st.markdown(f"""
+                <div class="rs_leader-row">
+                    <div class="rs_player-info">
+                        <div class="rs_team-indicator" style="background-color: {team_colors.get(team, '#1e293b')};"></div>
+                        <span class="rs_player-name">{player}</span>
+                    </div>
+                    <span class="rs_player-stat">{row["REB"]:.1f}</span>
+                </div>
+                """, unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
+        
+        # 3-Pointers Leaders
+        with leader_col3:
+            st.markdown('<div class="rs_leaders-header">3-POINT LEADERS</div>', unsafe_allow_html=True)
+            st.markdown('<div class="rs_leaders-list">', unsafe_allow_html=True)
+            for _, row in top_players_3fg.iterrows():
+                player = row['Player']
+                team = row.get('Team', '')
+                color = team_colors.get(team, '#1e293b')
+                
+                st.markdown(f"""
+                <div class="rs_leader-row">
+                    <div class="rs_player-info">
+                        <div class="rs_team-indicator" style="background-color: {team_colors.get(team, '#1e293b')};"></div>
+                        <span class="rs_player-name">{player}</span>
+                    </div>
+                    <span class="rs_player-stat">{row["3FGM"]:.1f}</span>
+                </div>
+                """, unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
+        
+        # Close the game container
+        st.markdown('</div>', unsafe_allow_html=True)
+        
+euroleague_team_colors = {
+  'BER': '#ffe14d',  # ALBA Berlin - Softer yellow
+  'IST': '#3379bd',  # Anadolu Efes - Softer royal blue
+  'MCO': '#d44150',  # Monaco - Softer red
+  'BAS': '#3773b3',  # Baskonia - Softer navy blue
+  'RED': '#e75a6b',  # Crvena Zvezda - Softer red
+  'MIL': '#ff5e75',  # Milan - Softer red with pink tone
+  'BAR': '#3674b5',  # Barcelona - Softer deep blue
+  'MUN': '#c54960',  # Bayern - Softer burgundy
+  'ULK': '#ffd54d',  # Fenerbahce - Softer golden yellow
+  'ASV': '#a3a6a9',  # ASVEL - Softer gray
+  'TEL': '#ffc966',  # Maccabi - Softer golden orange
+  'OLY': '#e66464',  # Olympiacos - Softer red
+  'PAN': '#338855',  # Panathinaikos - Softer dark green
+  'PRS': '#5d6772',  # Paris - Softer slate
+  'PAR': '#4f4d48',  # Partizan - Softer black-gray
+  'MAD': '#c0c0c0',  # Real Madrid - Silver instead of white
+  'VIR': '#454545',  # Virtus - Softer black
+  'ZAL': '#339966',  # Zalgiris - Softer kelly green
+}
+team_name_short = {
+    'BER': 'ALBA BERLIN',
+    'IST': 'ANADOLU EFES',
+    'MCO': 'AS MONACO', 
+    'BAS': 'BASKONIA',
+    'RED': 'CRVENA ZVEZDA',
+    'MIL': 'OLIMPIA MILANO',
+    'BAR': 'FC BARCELONA',
+    'MUN': 'BAYERN MUNICH',
+    'ULK': 'FENERBAHCE',
+    'ASV': 'LDLC ASVEL',
+    'TEL': 'MACCABI TEL AVIV',
+    'OLY': 'OLYMPIACOS',
+    'PAN': 'PANATHINAIKOS',
+    'PRS': 'PARIS BASKETBALL',
+    'PAR': 'PARTIZAN MOZZART',
+    'MAD': 'REAL MADRID',
+    'VIR': 'VIRTUS BOLOGNA',
+    'ZAL': 'ZALGIRIS KAUNAS',
+    # EuroCup teams (you may want to add these as well)
+    'LIE': 'LIETKABELIS',
+    'ARI': 'ARIS MIDEA',
+    'BAH': 'BAHCESEHIR',
+    'BES': 'BESIKTAS',
+    # ... add other EuroCup team short names
+}
+
+
+
+
+def render_round_summary_eurocup(
+    simulation_results_df_eurocup, 
+    eurocup_team_colors, 
+    team_name_short_eurocup, 
+    league_name='Eurocup'
+):
+    # CSS for styling - using unique class names to avoid conflicts
+    st.markdown("""
+    <style>
+    /* Round summary specific styles with unique class names */
+    .rs_table-container {
+        border: 3px !important;
+        border-radius: 16px;
+        background-color: white;
+        margin: -5px -10px 10px -10px;
+        box-shadow: 0 0 0 1px rgba(0,0,0,.2);
+    }
+
+    .rs_logo-cell {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(100, 100, 100, 3.5);
+        margin-bottom: 8px;
+    }
+
+    .rs_logo-cell img {
+        width: 60px;
+        height: 75px;
+        object-fit: contain;
+    }
+
+    .rs_team-name-box {
+        background-color: white;
+        border-radius: 8px;
+        padding: 6px;
+        box-shadow: 0 4px 10px rgba(100, 100, 100, 1.5);
+        margin-bottom: 6px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .rs_team-name {
+        font-weight: 700;
+        font-size: 11px !important;
+        font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+        color: rgba(26, 31, 54, 0.9);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Dark summary stats table style */
+    
+    .rs_summary-stats table {
+        border-collapse: collapse;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 2px solid white !important;
+        background-color: #1a1f36;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        width: 100%;
+    }
+    
+    .rs_summary-stats tr {
+        background-color: #1a1f36 !important;  /* Force dark background */
+    }
+    
+    .rs_summary-stats td {
+        background-color: #1a1f36 !important;  /* Force dark background */
+        padding: 6px;
+        text-align: center;
+        font-size: 20px;
+        vertical-align: middle;
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .rs_summary-stats th {
+        background-color: #1a1f36 !important;  /* Force dark background */
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 10px;
+        text-align: center;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        color: #ffffff;
+        padding: 3px;
+    }
+    
+    .rs_summary-stats td div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .rs_summary-stats td img {
+        width: 40px;
+        height: 40px;
+        vertical-align: middle;
+    }
+    
+    .rs_summary-stats td span {
+        font-size: 14px;
+        font-weight: 600;
+        color: #ffffff !important;
+        vertical-align: middle;
+    }
+
+    /* Enhanced Leaders section styling */
+    .rs_leaders-header {
+        background: linear-gradient(to right, #1a1f36, #2c3a5a);
+        color: white;
+        padding: 4px 8px;
+        font-weight: 600;
+        font-size: 14px;
+        text-align: center;
+        text-transform: uppercase;
+        border-radius: 6px 6px 0 0;
+        letter-spacing: 0.5px;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .rs_leaders-list {
+        background-color: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 0 0 6px 6px;
+        overflow: hidden;
+        border: 1px solid #e8e8e8;
+
+    }
+    
+    .rs_leader-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 4px 10px;
+        border-bottom: 1px solid #f0f0f0;
+        align-items: center;
+        background-color: white;
+        transition: background-color 0.15s ease;
+    }
+    
+    .rs_leader-row:hover {
+        background-color: #f8fafe;
+    }
+    
+    .rs_leader-row:last-child {
+        border-bottom: none;
+    }
+    
+    .rs_player-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .rs_team-indicator {
+        width: 3px;
+        height: 20px;
+        border-radius: 2px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    
+    .rs_player-name {
+        font-weight: 500;
+        font-size: 12px;
+        color: #1a1f36;
+        font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    }
+    
+    .rs_player-stat {
+        font-weight: 700;
+        font-size: 14px;
+        color: #1a1f36;
+        min-width: 30px;
+        text-align: right;
+        background: linear-gradient(to right, #0d6efd, #3b8ff9);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    /* Full-width game info header */
+    .rs_game-info-box {
+        background-color: white;
+        border-radius: 8px;
+        padding: 4px 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 12px;
+        margin-top:-15px;
+    }
+    
+    .rs_game-info-icon {
+        color: #1a1f36;
+        margin-right: 6px;
+        font-size: 14px;
+    }
+    
+    .rs_game-info-text {
+        font-weight: 600;
+        color: #1a1f36;
+        font-size: 13px;
+    }
+    
+    /* Filter buttons */
+    .rs_filter-buttons {
+        display: flex;
+        padding: 10px 16px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #e9ecef;
+        margin-bottom: 10px;
+    }
+    
+    .rs_filter-button {
+        background-color: #f1f3f5;
+        border: none;
+        padding: 6px 14px;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 13px;
+        color: #495057;
+        margin-right: 8px;
+    }
+    
+    .rs_filter-button.active {
+        background-color: #1a1f36;
+        color: white;
+    }
+
+    .rs_game-container {
+        margin-bottom: 24px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 16px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .rs_versus-symbol {
+        display: flex; 
+        justify-content: center; 
+        align-items: center;
+    }
+
+    .rs_versus-box {
+        background-color: white; 
+        border-radius: 8px; 
+        padding: 3px 8px; 
+        box-shadow: 0 4px 12px rgba(100, 100, 100, .4);
+        margin-top: 30px;
+    }
+
+    .rs_versus-text {
+        font-size: 16px; 
+        color: #1a1f36; 
+        font-weight: 800;
+    }
+    
+    /* Game separator */
+    .rs_game-separator {
+        height: 2px;
+        background: linear-gradient(to right, rgba(0,0,0,0.02), rgba(0,0,0,.5), rgba(0,0,0,0.02));
+        margin: -15px -15px;
+        position: relative;
+    }
+    
+    .rs_game-separator::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: white;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="%231a1f36"/></svg>');
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    # Group games by round
+    current_round = simulation_results_df_eurocup['Round'].max()
+    round_games = simulation_results_df_eurocup[simulation_results_df_eurocup['Round'] == current_round]
+
+    # Track if we need to add a separator (after the first game)
+    first_game = True
+    
+    # Iterate through each game in the round
+    for _, game in round_games.iterrows():
+        
+        
+        home_team = game['Home_Team']
+        away_team = game['Away_Team']
+        home_code = game['Home_Code']
+        away_code = game['Away_Code']
+        home_logo = game['Home_Logo']
+        away_logo = game['Away_Logo']
+        time = game.get('Time', 'N/A')
+        arena = game.get('Arena', 'N/A')
+        matchup = game['Matchup']
+        
+        # Get team colors
+        home_color = eurocup_team_colors.get(home_code, '#f0f0f0')
+        away_color = eurocup_team_colors.get(away_code, '#f0f0f0')
+
+        # Prepare summary stats
+        summary_stats_df = pd.DataFrame(game['SimmedTeamStats'][-3:]).T
+        summary_stats_df.columns = summary_stats_df.iloc[0]
+        summary_stats_df = summary_stats_df.drop(summary_stats_df.index[0])
+        summary_stats_df = summary_stats_df.rename(columns={'Total Adjusted': 'Total'})
+        summary_stats_df = summary_stats_df[['Spread', 'Total', 'Money']]
+        st.markdown('<div class="rs_game-separator"></div>', unsafe_allow_html=True)
+        # Game info header using Streamlit columns for 50/50 split
+        time_col, arena_col = st.columns(2)
+        
+        with time_col:
+            st.markdown(f"""
+            <div class="rs_game-info-box">
+                <span class="rs_game-info-icon">🕒</span>
+                <span class="rs_game-info-text">{time}</span>
+            </div>
+            """, unsafe_allow_html=True)
+            
+        with arena_col:
+            st.markdown(f"""
+            <div class="rs_game-info-box">
+                <span class="rs_game-info-icon">🏟️</span>
+                <span class="rs_game-info-text">{arena}</span>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        # Team logos and summary stats
+        logo_col, vs_col, home_logo_col, stats_col = st.columns([1, 0.2, 1, 2.3])
+        
+        with logo_col:
+            st.markdown(
+                f"""
+                <div class="rs_logo-cell" style="background-color: {eurocup_team_colors.get(away_code, '#f0f0f0')}">
+                    <img src="{away_logo}" alt="{away_team} Logo">
+                </div>
+                <div class="rs_team-name-box">
+                    <div class="rs_team-name">{team_name_short_eurocup.get(away_code, away_team)}</div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+        
+        with vs_col:
+            st.markdown("""
+            <div class="rs_versus-symbol">
+                <div class="rs_versus-box">
+                    <span class="rs_versus-text">@</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with home_logo_col:
+            st.markdown(
+                f"""
+                <div class="rs_logo-cell" style="background-color: {eurocup_team_colors.get(home_code, '#f0f0f0')}">
+                    <img src="{home_logo}" alt="{home_team} Logo">
+                </div>
+                <div class="rs_team-name-box">
+                    <div class="rs_team-name">{team_name_short_eurocup.get(home_code, home_team)}</div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+        
+        with stats_col:
+            # Creating the dark summary stats table
+            html_table = """
+            <div class="rs_summary-stats">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>TEAM</th>
+            """
+            for col in summary_stats_df.columns:
+                html_table += f"<th>{col.upper()}</th>"
+            
+            html_table += """
+                        </tr>
+                    </thead>
+                    <tbody>
+            """
+            
+            for idx, row in summary_stats_df.iterrows():
+                html_table += "<tr>"
+
+                is_away = idx == away_code or idx == team_name_short.get(away_code, away_team)
+                logo_to_use = away_logo if is_away else home_logo
+                team_code = away_code if is_away else home_code
+
+                html_table += f'''
+                    <td>
+                        <div>
+                            <img src="{logo_to_use}" alt="{team_code} Logo">
+                            <span>{team_code}</span>
+                        </div>
+                    </td>
+                '''
+
+                for col, val in row.items():
+                    if isinstance(val, (int, float)):
+                        if col == "Money":
+                            html_table += f'<td>{val:.2f}</td>'
+                        else:
+                            html_table += f'<td>{val:.1f}</td>'
+                    else:
+                        html_table += f"<td>{val}</td>"
+                html_table += "</tr>"
+
+            html_table += """
+                    </tbody>
+                </table>
+            </div>
+            """
+
+            st.markdown(html_table, unsafe_allow_html=True)
+        
+        # Get player stats for the matchup
+        team_stats, player_statsTeam1, player_statsTeam2 = create_sample_data_eurocup()
+        filtered_player_statsTeam1 = player_statsTeam1[player_statsTeam1['Matchup'] == matchup]
+        filtered_player_statsTeam2 = player_statsTeam2[player_statsTeam2['Matchup'] == matchup]
+        
+        # Combine player stats from both teams for game-level top 5
+        combined_player_stats = pd.concat([filtered_player_statsTeam1, filtered_player_statsTeam2])
+        
+        # Get top players
+        top_players_pts = (
+            combined_player_stats.sort_values('PTS', ascending=False)
+            .drop_duplicates('Player')
+            .head(5)[['Player', 'Team', 'PTS']]
+        )
+        top_players_reb = (
+            combined_player_stats.sort_values('REB', ascending=False)
+            .drop_duplicates('Player')
+            .head(5)[['Player', 'Team', 'REB']]
+        )
+        top_players_3fg = (
+            combined_player_stats.sort_values('3FGM', ascending=False)
+            .drop_duplicates('Player')
+            .head(5)[['Player', 'Team', '3FGM']]
+        )
+        
+        # Leaders row with three columns of equal width
+        leader_col1, leader_col2, leader_col3 = st.columns(3)
+        
+        # Points Leaders
+        with leader_col1:
+            st.markdown('<div class="rs_leaders-header">POINTS LEADERS</div>', unsafe_allow_html=True)
+            st.markdown('<div class="rs_leaders-list">', unsafe_allow_html=True)
+            for _, row in top_players_pts.iterrows():
+                player = row['Player']
+                team = row.get('Team', '')
+                color = eurocup_team_colors.get(team, '#1e293b')
+                
+                st.markdown(f"""
+                <div class="rs_leader-row">
+                    <div class="rs_player-info">
+                        <div class="rs_team-indicator" style="background-color: {eurocup_team_colors.get(team, '#1e293b')};"></div>
+                        <span class="rs_player-name">{player}</span>
+                    </div>
+                    <span class="rs_player-stat">{row["PTS"]:.1f}</span>
+                </div>
+                """, unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
+        
+        # Rebounds Leaders
+        with leader_col2:
+            st.markdown('<div class="rs_leaders-header">REBOUNDS LEADERS</div>', unsafe_allow_html=True)
+            st.markdown('<div class="rs_leaders-list">', unsafe_allow_html=True)
+            for _, row in top_players_reb.iterrows():
+                player = row['Player']
+                team = row.get('Team', '')
+                color = eurocup_team_colors.get(team, '#1e293b')
+                
+                st.markdown(f"""
+                <div class="rs_leader-row">
+                    <div class="rs_player-info">
+                        <div class="rs_team-indicator" style="background-color: {eurocup_team_colors.get(team, '#1e293b')};"></div>
+                        <span class="rs_player-name">{player}</span>
+                    </div>
+                    <span class="rs_player-stat">{row["REB"]:.1f}</span>
+                </div>
+                """, unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
+        
+        # 3-Pointers Leaders
+        with leader_col3:
+            st.markdown('<div class="rs_leaders-header">3-POINT LEADERS</div>', unsafe_allow_html=True)
+            st.markdown('<div class="rs_leaders-list">', unsafe_allow_html=True)
+            for _, row in top_players_3fg.iterrows():
+                player = row['Player']
+                team = row.get('Team', '')
+                color = eurocup_team_colors.get(team, '#1e293b')
+                
+                st.markdown(f"""
+                <div class="rs_leader-row">
+                    <div class="rs_player-info">
+                        <div class="rs_team-indicator" style="background-color: {eurocup_team_colors.get(team, '#1e293b')};"></div>
+                        <span class="rs_player-name">{player}</span>
+                    </div>
+                    <span class="rs_player-stat">{row["3FGM"]:.1f}</span>
+                </div>
+                """, unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
+        
+        # Close the game container
+        st.markdown('</div>', unsafe_allow_html=True)
+        
+eurocup_team_colors = {
+    'LIE': '#8b1538',  # Lietkabelis
+    'ARI': '#ffd700',  # Aris
+    'BAH': '#0066b3',  # Bahcesehir
+    'BES': '#000000',  # Besiktas
+    'BUD': '#003874',  # Buducnost
+    'LJU': '#008751',  # Cedevita Olimpija
+    'JLB': '#e31837',  # JL Bourg
+    'TRE': '#000000',  # Dolomiti Energia Trento
+    'CAN': '#fdb927',  # Gran Canaria
+    'HJE': '#c8102e',  # Hapoel Jerusalem
+    'HAP': '#ec1c24',  # Hapoel Tel Aviv
+    'JOV': '#006241',  # Joventut
+    'ULM': '#f47920',  # Ulm
+    'SOP': '#ffd700',  # Sopot
+    'TTK': '#00b4e3',  # Turk Telekom
+    'CLU': '#000000',  # Cluj
+    'VNC': '#7b2132',  # Venice
+    'VAL': '#f47a38',  # Valencia
+    'VEO': '#000000',  # Hamburg
+    'WOL': '#00a79d'   # Wolves
+}
+
+# Light version of team colors
+eurocup_team_colors_light = {
+    'LIE': '#ffd6e0',  # Light Burgundy (darker)
+    'ARI': '#ffe4b3',  # Light Yellow (darker)
+    'BAH': '#cce6ff',  # Light Blue (darker)
+    'BES': '#e6e6e6',  # Light Gray (darker)
+    'BUD': '#cce0ff',  # Light Navy (darker)
+    'LJU': '#ccffe0',  # Light Green (darker)
+    'JLB': '#ffd0d6',  # Light Red (darker)
+    'TRE': '#e6e6e6',  # Light Gray (darker)
+    'CAN': '#ffe4b3',  # Light Yellow (darker)
+    'HJE': '#ffd0d4',  # Light Red (darker)
+    'HAP': '#ffd0d2',  # Light Red (darker)
+    'JOV': '#ccffe0',  # Light Green (darker)
+    'ULM': '#ffe0cc',  # Light Orange (darker)
+    'SOP': '#ffe4b3',  # Light Yellow (darker)
+    'TTK': '#ccf2ff',  # Light Blue (darker)
+    'CLU': '#e6e6e6',  # Light Gray (darker)
+    'VNC': '#ffd6e0',  # Light Burgundy (darker)
+    'VAL': '#ffe0cc',  # Light Orange (darker)
+    'VEO': '#e6e6e6',  # Light Gray (darker)
+    'WOL': '#ccfff8'   # Light Turquoise (darker)
+}
+
+# Short team names
+team_name_short_eurocup = {
+    'LIE': 'LIETKABELIS',
+    'ARI': 'ARIS MIDEA',
+    'BAH': 'BAHCESEHIR',
+    'BES': 'BESIKTAS',
+    'BUD': 'BUDUCNOST',
+    'LJU': 'CEDEVITA',
+    'JLB': 'JL BOURG',
+    'TRE': 'DOLOMITI',
+    'CAN': 'GRAN CANARIA',
+    'HJE': 'HAPOEL BANK',
+    'HAP': 'HAPOEL TEL AVIV',
+    'JOV': 'JOVENTUT',
+    'ULM': 'RATIOPHARM',
+    'SOP': 'TREFL SOPOT',
+    'TTK': 'TURK TELEKOM',
+    'CLU': 'U-BT CLUJ',
+    'VNC': 'REYER VENICE',
+    'VAL': 'VALENCIA',
+    'VEO': 'VEOLIA TOWERS',
+    'WOL': 'WOLVES'
+}
+
+
+
+
 
 
 
@@ -1947,9 +3101,6 @@ def main():
     margin: 0 auto !important;
     margin-top: -130px !important; /* Adjusted from -60px */
 }
-
-
-
 
         /* Reset the default container padding */
         .main .block-container {
@@ -2023,8 +3174,6 @@ def main():
         /* Fix select box width */
         [data-testid="stSelectbox"] {
             width: 440px !important;
-
-
         }
 
         /* Adjust column containers */
@@ -2042,9 +3191,6 @@ def main():
             width: 250px !important;
             margin: 0 !important;
         }
-
-
-
 
         /* Logo sizing */
         .logo-cell img {
@@ -2091,13 +3237,97 @@ def main():
 
     <div class="logo-text">EUROLYTICS</div>
     """, unsafe_allow_html=True)
+    
+    # Add JavaScript for tab dropdown behavior
+    st.markdown("""
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Wait for Streamlit to fully render the UI
+        setTimeout(function() {
+            // Get all top-level tabs
+            const mainTabs = document.querySelectorAll('[data-baseweb="tab-list"] [role="tab"]');
+            const mainTabPanels = document.querySelectorAll('[data-baseweb="tab-panel"]');
+            
+            // Initially hide all second-level tabs except for the currently active one
+            function setupNestedTabs() {
+                mainTabPanels.forEach((panel, index) => {
+                    // Find nested tab lists within each panel
+                    const nestedTabLists = panel.querySelectorAll('[data-baseweb="tab-list"]');
+                    
+                    if (nestedTabLists.length > 0) {
+                        // If this is not the active panel, hide its nested tabs
+                        if (!mainTabs[index].getAttribute('aria-selected') === 'true') {
+                            nestedTabLists.forEach(list => {
+                                list.style.display = 'none';
+                            });
+                        }
+                    }
+                });
+            }
+            
+            // Toggle visibility of nested tabs when clicking on main tabs
+            mainTabs.forEach((tab, index) => {
+                tab.addEventListener('click', function() {
+                    // Show nested tabs in the selected panel
+                    const selectedPanel = mainTabPanels[index];
+                    const nestedTabLists = selectedPanel.querySelectorAll('[data-baseweb="tab-list"]');
+                    
+                    nestedTabLists.forEach(list => {
+                        list.style.display = 'flex';
+                    });
+                    
+                    // Hide nested tabs in other panels
+                    mainTabPanels.forEach((panel, i) => {
+                        if (i !== index) {
+                            const otherNestedTabLists = panel.querySelectorAll('[data-baseweb="tab-list"]');
+                            otherNestedTabLists.forEach(list => {
+                                list.style.display = 'none';
+                            });
+                        }
+                    });
+                });
+            });
+            
+            // Initial setup
+            setupNestedTabs();
+            
+            // Add CSS to make second-level tabs look like dropdowns
+            const style = document.createElement('style');
+            style.textContent = `
+                /* Style for dropdown-like tabs */
+                [data-baseweb="tab-list"] [data-baseweb="tab-list"] {
+                    position: relative;
+                    margin-top: 5px;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+                    overflow: hidden;
+                    transition: all 0.3s ease;
+                }
+                
+                /* Add a small arrow indicator to parent tabs */
+                [data-baseweb="tab-list"] > [role="tab"]::after {
+                    content: "▼";
+                    font-size: 10px;
+                    margin-left: 5px;
+                    display: inline-block;
+                    transition: transform 0.3s ease;
+                }
+                
+                /* Rotate arrow when tab is active */
+                [data-baseweb="tab-list"] > [role="tab"][aria-selected="true"]::after {
+                    transform: rotate(180deg);
+                }
+            `;
+            document.head.appendChild(style);
+        }, 1000); // Adjust timeout if needed to ensure UI is fully loaded
+    });
+    </script>
+    """, unsafe_allow_html=True)
 
     # Start fixed-width container
     st.markdown('<div class="fixed-width-container">', unsafe_allow_html=True)
 
-
-
-    
+    # Load data
     script_dir = os.path.dirname(os.path.abspath(__file__))
     pickle_path = os.path.join(script_dir, 'data', 'euroleague_simulations.pkl')
     with open(pickle_path, 'rb') as f:
@@ -2105,8 +3335,6 @@ def main():
 
     st.markdown("""
        <style>
-
-
     .summary-stats-euroleague table,
     .summary-stats-eurocup table {
 
@@ -2174,8 +3402,6 @@ def main():
     }
     
  
-
-
 .stSelectbox > div[data-baseweb="select"] > div[key="simulate-select-matchup"] > div,
 div[data-baseweb="select"] {
     margin-top: -28px;
@@ -2264,168 +3490,326 @@ div[data-baseweb="select"]:hover {
        </style>
    """, unsafe_allow_html=True)
 
+    # Load team stats data
+    team_stats, player_statsTeam1, player_statsTeam2 = create_sample_data_euroleague()
+    if 'team_stats' not in st.session_state:
+        st.session_state['team_stats'] = team_stats
+    if 'player_statsTeam1' not in st.session_state:
+        st.session_state['player_statsTeam1'] = player_statsTeam1
+    if 'player_statsTeam2' not in st.session_state:
+        st.session_state['player_statsTeam2'] = player_statsTeam2
 
-
+    matchups = team_stats['Matchup'].unique().tolist()
     
+    if 'simulation_results_df' not in st.session_state:
+        st.session_state['simulation_results_df'] = simulation_results_df
+    
+    # Load EuroCup simulation results
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    pickle_path_eurocup = os.path.join(script_dir, 'data', 'eurocup_simulations.pkl')
+    with open(pickle_path_eurocup, 'rb') as f:
+        simulation_results_df_eurocup = pickle.load(f)
+    
+    # Load EuroCup team stats
+    team_stats_eurocup, player_statsTeam1_eurocup, player_statsTeam2_eurocup = create_sample_data_eurocup()
+    if 'team_stats_eurocup' not in st.session_state:
+        st.session_state['team_stats_eurocup'] = team_stats_eurocup
+    if 'player_statsTeam1_eurocup' not in st.session_state:
+        st.session_state['player_statsTeam1_eurocup'] = player_statsTeam1_eurocup
+    if 'player_statsTeam2_eurocup' not in st.session_state:
+        st.session_state['player_statsTeam2_eurocup'] = player_statsTeam2_eurocup
+    
+    if 'simulation_results_df_eurocup' not in st.session_state:
+        st.session_state['simulation_results_df_eurocup'] = simulation_results_df_eurocup
+        
+    # Get EuroCup matchups
+    matchups_eurocup = team_stats_eurocup['Matchup'].unique().tolist()
+    
+    # Top level tabs: Euroleague and EuroCup
     sport_tabs = st.tabs(["Euroleague", "EuroCup"])
     
     st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
 
+    # EUROLEAGUE TAB
     with sport_tabs[0]:
-    # Create second layer of tabs for Euroleague
-        euroleague_subtabs = st.tabs([simulation_results_df['Round'].max(), "Round Summary"])
-    
-    with euroleague_subtabs[1]:
-        # Round Summary tab content (empty for now)
-        pass
-    
-    with euroleague_subtabs[0]:
-        # Games tab content - moved from original Euroleague tab
-        # Create three columns for the controls
-        col1, col2 = st.columns([1,.82])
-        team_stats, player_statsTeam1, player_statsTeam2 = create_sample_data_euroleague()
-        if 'team_stats' not in st.session_state:
-            st.session_state['team_stats'] = team_stats
-        if 'player_statsTeam1' not in st.session_state:
-            st.session_state['player_statsTeam1'] = player_statsTeam1
-        if 'player_statsTeam2' not in st.session_state:
-            st.session_state['player_statsTeam2'] = player_statsTeam2
-
-        matchups = team_stats['Matchup'].unique().tolist()
-    
-        if 'simulation_results_df' not in st.session_state:
-            st.session_state['simulation_results_df'] = simulation_results_df
+        # Second level tabs: Statistics and Round #
+        euroleague_main_tabs = st.tabs(["Fixture Simulations","Statistics"])
         
-               
-        with col1:
-            selected_matchup = st.selectbox(
-                'Select Matchup',
-                matchups,
-                key='simulate_matchup_select',
-            )
+        # Statistics tab
+        with euroleague_main_tabs[1]:
+                st.markdown("### Euroleague Statistics")
+                
+                # Load pickle files (located at the same level as the main script)
+                script_dir = os.path.dirname(os.path.abspath(__file__))
+                
+                # Create narrower columns for filters
+                filter_col1, filter_col2, filter_col3 = st.columns([1,1,1])
+                
+                with filter_col1:
+                        # Replace radio button with dropdown for stats type
+                        stats_select = st.selectbox(
+                                "Stats Type", 
+                                ["BasicStats", "Per40Stats"]
+                        )
+                
+                with filter_col2:
+                        # Load available seasons and format without comma
+                        available_seasons = []
+                        for stats_file in ['BasicStats.pkl', 'Per40Stats.pkl']:
+                                file_path = os.path.join(script_dir, stats_file)
+                                if os.path.exists(file_path):
+                                        with open(file_path, 'rb') as f:
+                                                stats_data = pickle.load(f)
+                                                
+                                                # Extract seasons based on DataFrame or dictionary structure
+                                                if isinstance(stats_data, pd.DataFrame):
+                                                        seasons = stats_data['Season'].unique() if 'Season' in stats_data.columns else []
+                                                elif isinstance(stats_data, dict):
+                                                        # Try to extract seasons from first table if possible
+                                                        first_table_key = list(stats_data.keys())[0] if stats_data else None
+                                                        if first_table_key and isinstance(stats_data[first_table_key], pd.DataFrame):
+                                                                seasons = stats_data[first_table_key]['Season'].unique() if 'Season' in stats_data[first_table_key].columns else []
+                                                        else:
+                                                                seasons = []
+                                                
+                                                # Add unique seasons to the list
+                                                available_seasons.extend(seasons)
+                        
+                        # Remove duplicates and sort
+                        available_seasons = sorted(set(available_seasons))
+                        
+                        # Format seasons without comma
+                        formatted_seasons = [str(int(season)) for season in available_seasons]
+                        
+                        # Season dropdown
+                        season_select = st.selectbox(
+                                "Season", 
+                                formatted_seasons
+                        )
+                
+                with filter_col3:
+                        # Team filter
+                        try:
+                                # Load the data to get team list
+                                stats_pickle_path = os.path.join(script_dir, f'{stats_select}.pkl')
+                                if os.path.exists(stats_pickle_path):
+                                        with open(stats_pickle_path, 'rb') as f:
+                                                euroleague_stats = pickle.load(f)
+                                        
+                                        # Get team list based on data type
+                                        if isinstance(euroleague_stats, pd.DataFrame):
+                                                team_list = sorted(euroleague_stats['Team'].unique())
+                                        elif isinstance(euroleague_stats, dict):
+                                                # Try to get team list from first table
+                                                first_table_key = list(euroleague_stats.keys())[0] if euroleague_stats else None
+                                                team_list = sorted(euroleague_stats[first_table_key]['Team'].unique()) if first_table_key else []
+                                        else:
+                                                team_list = []
+                                        
+                                        # Team filter dropdown
+                                        team_select = st.selectbox(
+                                                "Team",
+                                                ["All Teams"] + team_list
+                                        )
+                                else:
+                                        st.warning(f"{stats_select}.pkl file not found")
+                                        team_select = "All Teams"
+                        except Exception as e:
+                                st.error(f"Error setting up team filter: {e}")
+                                team_select = "All Teams"
+                
+                try:
+                        # Load the selected statistics data
+                        stats_pickle_path = os.path.join(script_dir, f'{stats_select}.pkl')
+                        if os.path.exists(stats_pickle_path):
+                                with open(stats_pickle_path, 'rb') as f:
+                                        euroleague_stats = pickle.load(f)
+                                
+                                # Check if euroleague_stats is a DataFrame or a dictionary
+                                if isinstance(euroleague_stats, pd.DataFrame):
+                                        # Apply filters
+                                        filtered_stats = euroleague_stats[
+                                                (euroleague_stats['Season'] == float(season_select)) &
+                                                ((euroleague_stats['Team'] == team_select) | (team_select == "All Teams"))
+                                        ]
+                                        
+                                        # Display as a sortable dataframe
+                                        st.dataframe(filtered_stats, use_container_width=True)
+                                
+                                elif isinstance(euroleague_stats, dict):
+                                        # If it's a dictionary, let user choose which table to display
+                                        table_options = list(euroleague_stats.keys())
+                                        if table_options:
+                                                selected_table = st.selectbox("Select Statistics Table", table_options)
+                                                if selected_table in euroleague_stats:
+                                                        # Get the specific table
+                                                        table_data = euroleague_stats[selected_table]
+                                                        
+                                                        # Apply filters if possible
+                                                        if isinstance(table_data, pd.DataFrame):
+                                                                filtered_stats = table_data[
+                                                                        (table_data['Season'] == float(season_select)) &
+                                                                        ((table_data['Team'] == team_select) | (team_select == "All Teams"))
+                                                                ]
+                                                                
+                                                                # Display the filtered table
+                                                                st.dataframe(filtered_stats, use_container_width=True)
+                                                        else:
+                                                                # If filtering not possible, show original table
+                                                                st.dataframe(table_data, use_container_width=True)
+                                        else:
+                                                st.warning("No tables found in statistics file")
+                                else:
+                                        st.warning("Unknown data format in statistics file")
+                        else:
+                                st.warning(f"{stats_select}.pkl file not found. Please make sure it is in the same directory as the script.")
+                
+                except Exception as e:
+                        st.error(f"Error loading statistics: {e}")
         
-        with col2:
-            matchup_data = simulation_results_df[simulation_results_df['Matchup'] == selected_matchup].iloc[0]
-            time_value = matchup_data.get('Time', 'N/A')
-            arena_value = matchup_data.get('Arena', 'N/A')
+        # Round tab
+        with euroleague_main_tabs[0]:
+            # Third level tabs: Fixtures and Fixtures Summary
+            euroleague_round_tabs = st.tabs([f"{simulation_results_df['Round'].max()} Summary", f"{simulation_results_df['Round'].max()} Fixtures"])
             
-            st.markdown(
-                f"""
-                <div style="
-                    background-color: white; 
-                    -webkit-background-color: white;
-                    background: white;
-                    -webkit-background: white;
-                    border-radius: 8px; 
-                    padding: 5px 8px; 
-                    margin-top: 0px; 
-                    box-shadow: 0 4px 6px rgba(100, 100, 100, 0.4);
-                    margin-right:-50px; 
-                    margin-left:-27px;
-                    display: flex; 
-                    justify-content: center; 
-                    align-items: center; 
-                    gap: 30px; 
-                    color: black !important;">
-                    <div style="
-                        text-align: center; 
-                        font-weight: 700;  
-                        font-size: 12px; 
-                        color: rgb(26, 31, 54);">{time_value}</div>
-                    <div style="
-                        text-align: center; 
-                        font-weight: 700;  
-                        font-size: 12px; 
-                        color: rgb(26, 31, 54);">{arena_value}</div>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-        
-        render_stats_tables_euroleague(selected_matchup, matchups, "simulate")
+            # Fixtures tab - similar to your original euroleague_subtabs[1]
+            with euroleague_round_tabs[1]:
+                col1, col2 = st.columns([1,.82])
+                
+                with col1:
+                    selected_matchup = st.selectbox(
+                        'Select Matchup',
+                        matchups,
+                        key='simulate_matchup_select',
+                    )
+                
+                with col2:
+                    matchup_data = simulation_results_df[simulation_results_df['Matchup'] == selected_matchup].iloc[0]
+                    time_value = matchup_data.get('Time', 'N/A')
+                    arena_value = matchup_data.get('Arena', 'N/A')
+                    
+                    st.markdown(
+                        f"""
+                        <div style="
+                            background-color: white; 
+                            -webkit-background-color: white;
+                            background: white;
+                            -webkit-background: white;
+                            border-radius: 8px; 
+                            padding: 5px 8px; 
+                            margin-top: 0px; 
+                            box-shadow: 0 4px 6px rgba(100, 100, 100, 0.4);
+                            margin-right:-50px; 
+                            margin-left:-27px;
+                            display: flex; 
+                            justify-content: center; 
+                            align-items: center; 
+                            gap: 30px; 
+                            color: black !important;">
+                            <div style="
+                                text-align: center; 
+                                font-weight: 700;  
+                                font-size: 12px; 
+                                color: rgb(26, 31, 54);">{time_value}</div>
+                            <div style="
+                                text-align: center; 
+                                font-weight: 700;  
+                                font-size: 12px; 
+                                color: rgb(26, 31, 54);">{arena_value}</div>
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
+                
+                render_stats_tables_euroleague(selected_matchup, matchups, "simulate")
+            
+            # Fixtures Summary tab - similar to your original euroleague_subtabs[0]
+            with euroleague_round_tabs[0]:
+                render_round_summary(
+                    simulation_results_df, 
+                    euroleague_team_colors, 
+                    team_name_short, 
+                    'Euroleague'
+                )
 
+    # EUROCUP TAB
     with sport_tabs[1]:
-        team_stats_eurocup, player_statsTeam1_eurocup, player_statsTeam2_eurocup = create_sample_data_eurocup()
-        if 'team_stats_eurocup' not in st.session_state:
-            st.session_state['team_stats_eurocup'] = team_stats_eurocup
-        if 'player_statsTeam1_eurocup' not in st.session_state:
-            st.session_state['player_statsTeam1_eurocup'] = player_statsTeam1_eurocup
-        if 'player_statsTeam2_eurocup' not in st.session_state:
-            st.session_state['player_statsTeam2_eurocup'] = player_statsTeam2_eurocup
-
-        # Get EuroCup matchups
-        matchups_eurocup = team_stats_eurocup['Matchup'].unique().tolist()
-
-        # Load EuroCup simulation results
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        pickle_path_eurocup = os.path.join(script_dir, 'data', 'eurocup_simulations.pkl')
-        with open(pickle_path_eurocup, 'rb') as f:
-            simulation_results_df_eurocup = pickle.load(f)
+        # Second level tabs: Statistics and Round #
+        eurocup_main_tabs = st.tabs(["Fixture Simulations", "Statistics"])
         
-        if 'simulation_results_df_eurocup' not in st.session_state:
-            st.session_state['simulation_results_df_eurocup'] = simulation_results_df_eurocup
-    # Create second layer of tabs for EuroCup
-        eurocup_subtabs = st.tabs([simulation_results_df_eurocup['Round'].max(), "Round Summary"])
-    
-    with eurocup_subtabs[1]:
-        # Round Summary tab content (empty for now)
-        pass
-    
-    with eurocup_subtabs[0]:
-        # Games tab content - moved from original EuroCup tab
-        # Create three columns for the controls
-        col1, col2 = st.columns([1,.82])
+        # Statistics tab
+        with eurocup_main_tabs[1]:
+            st.markdown("### EuroCup Statistics")
+            # Add your statistics content here
+            st.write("Statistics content will go here")
         
-              
-               
-        with col1:
-            selected_matchup_eurocup = st.selectbox(
-                'Select Matchup',
-                matchups_eurocup,
-                key='simulate_matchup_select_eurocup',
-                label_visibility='hidden'
-            )
-        
-        with col2:
-            matchup_data_eurocup = simulation_results_df_eurocup[simulation_results_df_eurocup['Matchup'] == selected_matchup_eurocup].iloc[0]
-            time_value_eurocup = matchup_data_eurocup.get('Time', 'N/A')
-            arena_value_eurocup = matchup_data_eurocup.get('Arena', 'N/A')
+        # Round tab
+        with eurocup_main_tabs[0]:
+            # Third level tabs: Fixtures and Fixtures Summary
+            eurocup_round_tabs = st.tabs([f"Playoffs {simulation_results_df_eurocup['Round'].max()} Summary", f"Playoffs {simulation_results_df_eurocup['Round'].max()} Fixtures"])
             
-            st.markdown(
-                f"""
-                <div style="
-                    background-color: white; 
-                    -webkit-background-color: white;
-                    background: white;
-                    -webkit-background: white;
-                    border-radius: 8px; 
-                    padding: 5px 8px; 
-                    margin-top: 0px; 
-                    box-shadow: 0 4px 6px rgba(100, 100, 100, 0.4);
-                    margin-right:-50px; 
-                    margin-left:-27px;
-                    display: flex; 
-                    justify-content: center; 
-                    align-items: center; 
-                    gap: 30px; 
-                    color: black !important;">
-                    <div style="
-                        text-align: center; 
-                        font-weight: 700;  
-                        font-size: 12px; 
-                        color: rgb(26, 31, 54);">{time_value_eurocup}</div>
-                    <div style="
-                        text-align: center; 
-                        font-weight: 700;  
-                        font-size: 12px; 
-                        color: rgb(26, 31, 54);">{arena_value_eurocup}</div>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-        
-        render_stats_tables_eurocup(selected_matchup_eurocup, matchups_eurocup, simulation_results_df_eurocup, "simulate")
+            # Fixtures tab
+            with eurocup_round_tabs[1]:
+                col1, col2 = st.columns([1,.82])
+                
+                with col1:
+                    selected_matchup_eurocup = st.selectbox(
+                        'Select Matchup',
+                        matchups_eurocup,
+                        key='simulate_matchup_select_eurocup',
+                        label_visibility='hidden'
+                    )
+                
+                with col2:
+                    matchup_data_eurocup = simulation_results_df_eurocup[simulation_results_df_eurocup['Matchup'] == selected_matchup_eurocup].iloc[0]
+                    time_value_eurocup = matchup_data_eurocup.get('Time', 'N/A')
+                    arena_value_eurocup = matchup_data_eurocup.get('Arena', 'N/A')
+                    
+                    st.markdown(
+                        f"""
+                        <div style="
+                            background-color: white; 
+                            -webkit-background-color: white;
+                            background: white;
+                            -webkit-background: white;
+                            border-radius: 8px; 
+                            padding: 5px 8px; 
+                            margin-top: 0px; 
+                            box-shadow: 0 4px 6px rgba(100, 100, 100, 0.4);
+                            margin-right:-50px; 
+                            margin-left:-27px;
+                            display: flex; 
+                            justify-content: center; 
+                            align-items: center; 
+                            gap: 30px; 
+                            color: black !important;">
+                            <div style="
+                                text-align: center; 
+                                font-weight: 700;  
+                                font-size: 12px; 
+                                color: rgb(26, 31, 54);">{time_value_eurocup}</div>
+                            <div style="
+                                text-align: center; 
+                                font-weight: 700;  
+                                font-size: 12px; 
+                                color: rgb(26, 31, 54);">{arena_value_eurocup}</div>
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
+                
+                render_stats_tables_eurocup(selected_matchup_eurocup, matchups_eurocup, simulation_results_df_eurocup, "simulate")
+            
+            # Fixtures Summary tab
+            with eurocup_round_tabs[0]:
+                render_round_summary_eurocup(
+                    simulation_results_df_eurocup, 
+                    eurocup_team_colors, 
+                    team_name_short_eurocup, 
+                    'Eurocup'
+                )
     
+    # Close all divs
     st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True) 

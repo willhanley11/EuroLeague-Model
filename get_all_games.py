@@ -38,7 +38,7 @@ def get_euroleague_data(start_season: int, end_season: int):
    
    return playbyplay_data, shot_data, boxscore_data
 
-playbyplay, shotdata, boxscore = get_euroleague_data(2024,2024)
+playbyplay, shotdata, boxscore = get_euroleague_data(2023,2024)
 
 
 # In[3]:
@@ -2144,6 +2144,10 @@ def assess_teams(OffensePlayerDataNEW1,elo_combined_df):
 
 # function to add or remove a player from a team
 def update_or_remove_player_data(players_data, df):
+    # If players_data is empty, return the entire DataFrame
+    if not players_data:
+        return df
+    
     df_copy = df.copy()
     
     for player_info in players_data:
@@ -2184,7 +2188,6 @@ def update_or_remove_player_data(players_data, df):
     df_copy = df_copy.drop_duplicates(subset=['Player'], keep='last')
     
     return df_copy
-
     
 
 
@@ -2219,7 +2222,7 @@ def run_full_simuluation (home_team, away_team, HFA, players_to_update, number_o
     '''
     
     teamsDF1 = update_or_remove_player_data(players_to_update, teamsDF)
-    teamsDF1 = teamsDF1[teamsDF1['PlayedInMostRecentGame'] == 1]
+    teamsDF1 = teamsDF1[(teamsDF1['PlayedInMostRecentGame'] == 1) & (teamsDF1['Season'] == teamsDF1['Season'].max())]
     
     SimmedGameStats = simulate_matchup(home_team, away_team, HFA, number_of_simulations, possession_adjust, teamsDF1)
 
@@ -2228,7 +2231,7 @@ def run_full_simuluation (home_team, away_team, HFA, players_to_update, number_o
                                             ascending=[True, False, False, False]))
     
     # Create decay weights for each possession
-    def calculate_decay_weights(group, decay_factor=0.98):
+    def calculate_decay_weights(group, decay_factor=0.99):
         indices = np.arange(len(group))
         weights = np.power(decay_factor, indices)
         # Normalize weights to sum to 1
@@ -2380,9 +2383,13 @@ def run_full_simuluation (home_team, away_team, HFA, players_to_update, number_o
 # In[28]:
 
 
-import requests
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 import pandas as pd
+import time
 
 def get_team_code(team_name):
     team_codes = {
@@ -2407,85 +2414,100 @@ def get_team_code(team_name):
     }
     return team_codes.get(team_name, '')
 
-def get_euroleague_games():
-    url = "https://www.euroleaguebasketball.net/en/euroleague/game-center/"
+def get_euroleague_games_selenium():
+    # Setup Chrome webdriver
+    options = webdriver.ChromeOptions()
+    # Uncomment the next line to run in background
+    # options.add_argument('--headless')  
+    driver = webdriver.Chrome(options=options)
     
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-    }
-    
-    response = requests.get(url, headers=headers)
-    soup = BeautifulSoup(response.text, 'html.parser')
-    
-    # Try different selectors for round information
-    round_element = None
-    
-    # Try finding by looking for text that contains "Round"
-    round_spans = soup.find_all('span')
-    for span in round_spans:
-        if span.text and 'Round' in span.text:
-            round_element = span
-            break
-            
-    # If still not found, try alternative class-based approach
-    if not round_element:
-        round_element = soup.select_one('span[class*="round"]')  # This will match any class containing "round"
-    
-    round_text = round_element.text.strip() if round_element else ''
-    
-    # Find all game articles
-    game_articles = soup.find_all('article')
-    
-    matches = []
-    for article in game_articles:
-        game_span = article.find('span', class_='visually-hidden_wrap__Ob8t3')
-        if game_span and game_span.text.strip().startswith('game '):
-            teams = game_span.text.strip()[5:].split(' vs ')
-            if len(teams) == 2:
-                home_team = teams[1].strip()
-                away_team = teams[0].strip()
-                
-                # Get info div containing time and arena
-                info_div = article.select_one('div[class*="gameCard"] > div > div')
-                if info_div:
-                    game_time = info_div.find('time').text.strip() if info_div.find('time') else ''
-                    arena_span = article.select_one('div[class*="gameCard"] > div > div > span')
-                    arena = arena_span.text.strip() if arena_span else ''
-                
-                matches.append({
-                    'Home': home_team,
-                    'Away': away_team,
-                    'Home_Code': get_team_code(home_team),
-                    'Away_Code': get_team_code(away_team),
-                    'Matchup': f"{away_team} @ {home_team}",
-                    'Time': game_time,
-                    'Arena': arena,
-                    'Round': round_text
-                })
-    
-    potential_round_containers = soup.find_all('div', class_=lambda x: x and ('round' in x.lower() or 'header' in x.lower()))
+    try:
+        # Navigate to the specific round page
+        driver.get("https://www.euroleaguebasketball.net/en/euroleague/game-center/?round=28&season=E2024")
         
-    return pd.DataFrame(matches)
+        # Wait for page to load
+        time.sleep(5)  # Give time for dynamic content to load
+        
+        # Optional: Look for and click cookie consent
+        try:
+            cookie_button = WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Accept All')]"))
+            )
+            cookie_button.click()
+            time.sleep(2)  # Wait after clicking
+        except Exception as e:
+            print(f"No cookie consent found or unable to click: {e}")
+        
+        # Get page source
+        page_source = driver.page_source
+        
+        # Parse with BeautifulSoup
+        soup = BeautifulSoup(page_source, 'html.parser')
+        
+        # Try to find round information
+        round_element = soup.find('span', text=lambda t: t and 'Round' in t)
+        round_text = round_element.text.strip() if round_element else 'Round 27'
+        
+        # Find all game articles
+        game_articles = soup.find_all('article')
+        
+        matches = []
+        for article in game_articles:
+            game_span = article.find('span', class_='visually-hidden_wrap__Ob8t3')
+            if game_span and game_span.text.strip().startswith('game '):
+                teams = game_span.text.strip()[5:].split(' vs ')
+                if len(teams) == 2:
+                    home_team = teams[1].strip()
+                    away_team = teams[0].strip()
+                    
+                    # Get info div containing time and arena
+                    info_div = article.select_one('div[class*="gameCard"] > div > div')
+                    if info_div:
+                        game_time = info_div.find('time').text.strip() if info_div.find('time') else ''
+                        arena_span = article.select_one('div[class*="gameCard"] > div > div > span')
+                        arena = arena_span.text.strip() if arena_span else ''
+                    
+                    matches.append({
+                        'Home': home_team,
+                        'Away': away_team,
+                        'Home_Code': get_team_code(home_team),
+                        'Away_Code': get_team_code(away_team),
+                        'Matchup': f"{away_team} @ {home_team}",
+                        'Time': game_time,
+                        'Arena': arena,
+                        'Round': round_text
+                    })
+        
+        return pd.DataFrame(matches)
+    
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return pd.DataFrame()
+    
+    finally:
+        # Always close the browser
+        driver.quit()
 
 # Get and display games
-games = get_euroleague_games()
-
-
+games = get_euroleague_games_selenium()
 
 # In[29]:
 
 
 all_simulations = []
-
 # Iterate through each game in the DataFrame
 for index, game in games.iterrows():
     updated_players = []
-    SimmedTeamStats,SimmedBoxScore, SimmedBoxScoreTeam1, SimmedBoxScoreTeam2 = run_full_simuluation(
+    
+    # Set HFA based on home team
+    home_team_hfa = 0.8 if game['Home_Code'] != 'TEL' else 0
+    
+    SimmedTeamStats, SimmedBoxScore, SimmedBoxScoreTeam1, SimmedBoxScoreTeam2 = run_full_simuluation(
         home_team=game['Home_Code'],
         away_team=game['Away_Code'], 
-        HFA=0.8, 
+        HFA=home_team_hfa, 
         players_to_update=updated_players, 
-        number_of_simulations=60000, 
+        number_of_simulations=20000, 
         possession_adjust=0,
         teamsDF=teamsDF,
         homeusage_for=homeusage_for,
@@ -2501,15 +2523,14 @@ for index, game in games.iterrows():
         'Away_Team': game['Away'],
         'Home_Code': game['Home_Code'],
         'Away_Code': game['Away_Code'],
-	'Time': game['Time'],
+        'Time': game['Time'],
         'Arena': game['Arena'],
         'Round': game['Round'],
         'SimmedTeamStats': SimmedTeamStats,
-	'SimmedBoxScore': SimmedBoxScore,
-        'SimmedBoxScoreTeam1': SimmedBoxScore,
+        'SimmedBoxScore': SimmedBoxScore,
+        'SimmedBoxScoreTeam1': SimmedBoxScoreTeam1,
         'SimmedBoxScoreTeam2': SimmedBoxScoreTeam2
-       }
-    
+    }
     
     # Append the simulation result to the list
     all_simulations.append(simulation_result)
