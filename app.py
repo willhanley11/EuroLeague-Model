@@ -3095,7 +3095,7 @@ def main():
     padding: .5rem !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
     margin: 0 auto !important;
-    margin-top: -130px !important; /* Adjusted from -60px */
+    margin-top: -145px !important; /* Adjusted from -60px */
 }
 
         /* Reset the default container padding */
@@ -3165,6 +3165,7 @@ def main():
 /* Container Adjustments */
 .stTabs {
     margin-left: 0 !important;
+
     padding-left: 0 !important;
 }
         /* Fix select box width */
