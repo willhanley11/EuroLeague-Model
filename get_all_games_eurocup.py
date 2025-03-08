@@ -1212,29 +1212,28 @@ def calculate_player_elo_ratings (OffensePlayerDataNEW1,DefensePlayerDataNEW1):
     
     # k values for each specific stat. the larger the k value, the mroe discrepency there is between very good and very bad at each stat
     k_values = {
-        'two_made_for_team': .7,
-        'two_missed_for_team': .7,
+        'two_made_for_team': .75,
+        'two_missed_for_team': .75,
         'two_fga_for_team': .9,
-        'three_made_for_team': .6,
-        'three_missed_for_team': .6,
+        'three_made_for_team': .65,
+        'three_missed_for_team': .65,
         'three_fga_for_team': .9,
-        'fta_for_team': .6,
-        'ftm_for_team': .4,
-        'oreb_for_team': .6,        
-        'to_for_team': .2,
+        'fta_for_team': .65,
+        'ftm_for_team': .45,
+        'oreb_for_team': .65,        
+        'to_for_team': .6,
         'Duration': .5,
         'UsagePercent': .5,
-        'two_made_against_team': .5,
-        'two_missed_against_team': .5,
+        'two_made_against_team': .55,
+        'two_missed_against_team': .55,
         'two_fga_against_team': .7,
-        'three_made_against_team': .4,
-        'three_missed_against_team': .4,
+        'three_made_against_team': .45,
+        'three_missed_against_team': .45,
         'three_fga_against_team': .7,
-        'fta_against_team': .6,
+        'fta_against_team': .65,
         'ftm_against_team': .001,
-        'oreb_against_team': .6,  
-        'to_against_team': .2,
-        'UsagePercent': .6}
+        'oreb_against_team': .65,  
+        'to_against_team': .6,}
     
     def elo_adjustment(current_elo, outcome, k):
         return current_elo + k * outcome

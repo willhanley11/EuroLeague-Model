@@ -38,7 +38,7 @@ def get_euroleague_data(start_season: int, end_season: int):
    
    return playbyplay_data, shot_data, boxscore_data
 
-playbyplay, shotdata, boxscore = get_euroleague_data(2023,2024)
+playbyplay, shotdata, boxscore = get_euroleague_data(2024,2024)
 
 
 # In[3]:
@@ -578,7 +578,7 @@ def clean_playbyplay_data(playbyplay, boxdata, shotdata):
     alldata['PlayInfo'] = alldata['PLAYINFO']
     alldata['POINTS_A'] = alldata.groupby((alldata['PLAYTYPE'] == 'BP').cumsum())['POINTS_A_x'].transform(lambda x: x.ffill().fillna(0))
     alldata['POINTS_B'] = alldata.groupby((alldata['PLAYTYPE'] == 'BP').cumsum())['POINTS_B_x'].transform(lambda x: x.ffill().fillna(0))
-    alldata = alldata[(abs(alldata['POINTS_A'] - alldata['POINTS_B']) <= 20) | (alldata['Period'] < 4)]
+    alldata = alldata[(abs(alldata['POINTS_A'] - alldata['POINTS_B']) <= 25) | (alldata['Period'] < 4)]
     
     # Return Clean Play by Play Dataset
     return alldata[['Season','Phase','Round','Gamecode','HomeTeam','AwayTeam','Period','Clock','NumberOfPlay',
@@ -1212,29 +1212,28 @@ def calculate_player_elo_ratings (OffensePlayerDataNEW1,DefensePlayerDataNEW1):
     
     # k values for each specific stat. the larger the k value, the mroe discrepency there is between very good and very bad at each stat
     k_values = {
-        'two_made_for_team': .7,
-        'two_missed_for_team': .7,
-        'two_fga_for_team': .9,
-        'three_made_for_team': .6,
-        'three_missed_for_team': .6,
-        'three_fga_for_team': .9,
+        'two_made_for_team': .5,
+        'two_missed_for_team': .5,
+        'two_fga_for_team': .8,
+        'three_made_for_team': .4,
+        'three_missed_for_team': .4,
+        'three_fga_for_team': .8,
         'fta_for_team': .6,
         'ftm_for_team': .4,
-        'oreb_for_team': .6,        
-        'to_for_team': .2,
+        'oreb_for_team': .65,        
+        'to_for_team': .6,
         'Duration': .5,
         'UsagePercent': .5,
         'two_made_against_team': .5,
         'two_missed_against_team': .5,
-        'two_fga_against_team': .7,
+        'two_fga_against_team': .5,
         'three_made_against_team': .4,
         'three_missed_against_team': .4,
-        'three_fga_against_team': .7,
+        'three_fga_against_team': .5,
         'fta_against_team': .6,
         'ftm_against_team': .001,
-        'oreb_against_team': .6,  
-        'to_against_team': .2,
-        'UsagePercent': .6}
+        'oreb_against_team': .65,  
+        'to_against_team': .6,}
     
     def elo_adjustment(current_elo, outcome, k):
         return current_elo + k * outcome
@@ -2423,7 +2422,7 @@ def get_euroleague_games_selenium():
     
     try:
         # Navigate to the specific round page
-        driver.get("https://www.euroleaguebasketball.net/en/euroleague/game-center/?round=28&season=E2024")
+        driver.get("https://www.euroleaguebasketball.net/en/euroleague/game-center/?round=29&season=E2024")
         
         # Wait for page to load
         time.sleep(5)  # Give time for dynamic content to load
@@ -2516,6 +2515,9 @@ for index, game in games.iterrows():
         awayusage_against=awayusage_against,
     )
     
+    # Add print statement to show home and away teams after simulation
+    print(f"Simulation completed: {game['Home']} (Home) vs {game['Away']} (Away)")
+    
     # Create a dictionary with simulation results and game details
     simulation_result = {
         'Matchup': game['Matchup'],
@@ -2534,7 +2536,6 @@ for index, game in games.iterrows():
     
     # Append the simulation result to the list
     all_simulations.append(simulation_result)
-
 # Convert the list of simulation results to a DataFrame if needed
 simulation_results_df = pd.DataFrame(all_simulations)
 
