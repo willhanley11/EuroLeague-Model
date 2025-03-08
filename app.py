@@ -120,44 +120,44 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
    
    # Define team colors dictionary 
    euroleague_team_colors = {
-    'BER': '#fff5b3',  # ALBA Berlin - Light yellow
-    'IST': '#99c2e6',  # Anadolu Efes - Light royal blue  
-    'MCO': '#f0a0a8',  # Monaco - Light red
-    'BAS': '#94b8e0',  # Baskonia - Light navy blue
-    'RED': '#f7adb5',  # Crvena Zvezda - Light red
-    'MIL': '#ffb3c0',  # Milan - Light red with pink tone
-    'BAR': '#94b8e0',  # Barcelona - Light deep blue
-    'MUN': '#e6a6b1',  # Bayern - Light burgundy
-    'ULK': '#ffeab3',  # Fenerbahce - Light golden yellow
-    'ASV': '#d9dadb',  # ASVEL - Light gray
-    'TEL': '#ffe7b8',  # Maccabi - Light golden orange
-    'OLY': '#f7b7b7',  # Olympiacos - Light red
-    'PAN': '#99ccaa',  # Panathinaikos - Light dark green
-    'PRS': '#b3b8bf',  # Paris - Light slate
-    'PAR': '#a6a5a2',  # Partizan - Light black-gray
-    'MAD': '#e6e6e6',  # Real Madrid - Light silver
-    'VIR': '#a6a6a6',  # Virtus - Light black
-    'ZAL': '#99d1b3',  # Zalgiris - Light kelly green
+  'BER': '#ffe14d',  # ALBA Berlin - Softer yellow
+  'IST': '#3379bd',  # Anadolu Efes - Softer royal blue
+  'MCO': '#d44150',  # Monaco - Softer red
+  'BAS': '#3773b3',  # Baskonia - Softer navy blue
+  'RED': '#e75a6b',  # Crvena Zvezda - Softer red
+  'MIL': '#ff5e75',  # Milan - Softer red with pink tone
+  'BAR': '#3674b5',  # Barcelona - Softer deep blue
+  'MUN': '#c54960',  # Bayern - Softer burgundy
+  'ULK': '#ffd54d',  # Fenerbahce - Softer golden yellow
+  'ASV': '#a3a6a9',  # ASVEL - Softer gray
+  'TEL': '#ffc966',  # Maccabi - Softer golden orange
+  'OLY': '#e66464',  # Olympiacos - Softer red
+  'PAN': '#338855',  # Panathinaikos - Softer dark green
+  'PRS': '#5d6772',  # Paris - Softer slate
+  'PAR': '#4f4d48',  # Partizan - Softer black-gray
+  'MAD': '#c0c0c0',  # Real Madrid - Silver instead of white
+  'VIR': '#454545',  # Virtus - Softer black
+  'ZAL': '#339966',  # Zalgiris - Softer kelly green
 }
    euroleague_team_colors_light = {
-   'BER': '#fff9e6',  # ALBA Berlin
-   'IST': '#f2f5ff',  # Anadolu Efes
-   'MCO': '#fff2f3',  # Monaco
-   'BAS': '#f2f5ff',  # Baskonia
-   'RED': '#fff2f3',  # Zvezda
-   'MIL': '#fff2f3',  # Milan 
-   'BAR': '#f2f5ff',  # Barcelona
-   'MUN': '#fff2f3',  # Bayern
-   'ULK': '#fff9e6',  # Fenerbahce
-   'ASV': '#f7f7f7',  # ASVEL
-   'TEL': '#fff9e6',  # Maccabi
-   'OLY': '#fff2f3',  # Olympiacos
-   'PAN': '#f2fff5',  # Panathinaikos
-   'PRS': '#f7f7f7',  # Paris
-   'PAR': '#f7f7f7',  # Partizan
-   'MAD': '#f2f5ff',  # Madrid
-   'VIR': '#f7f7f7',  # Virtus
-   'ZAL': '#f2fff5',  # Zalgiris
+    'BER': '#ffe99e',  # ALBA Berlin - Darker light yellow
+    'IST': '#b0c9f0',  # Anadolu Efes - Darker light blue
+    'BAS': '#a0bfed',  # Baskonia - Darker light navy blue
+    'MCO': '#f0b7bd',  # Monaco - Darker light red
+    'RED': '#f2b6bf',  # Crvena Zvezda - Darker light red
+    'MIL': '#ffb5c2',  # Milan - Darker light pink-red
+    'BAR': '#a0bfed',  # Barcelona - Darker light deep blue
+    'MUN': '#e5adb9',  # Bayern - Darker light burgundy
+    'ULK': '#ffe69e',  # Fenerbahce - Darker light golden yellow
+    'ASV': '#c7c9cc',  # ASVEL - Darker light gray
+    'TEL': '#ffd699',  # Maccabi - Darker light golden orange
+    'OLY': '#f2b6b6',  # Olympiacos - Darker light red
+    'PAN': '#a0d4b6',  # Panathinaikos - Darker light green
+    'PRS': '#b5bac2',  # Paris - Darker light slate
+    'PAR': '#b8b6b2',  # Partizan - Darker light gray
+    'MAD': '#d9d9d9',  # Real Madrid - Darker light silver
+    'VIR': '#b3b3b3',  # Virtus - Darker light black-gray
+    'ZAL': '#9ad9bc',  # Zalgiris - Darker light kelly green
 }
    team_name_short = {
    'BER': 'ALBA BERLIN',
@@ -477,9 +477,9 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
     ''.join(
         f'<td class="numeric" style="text-align: center; font-weight: 1000; font-size: 12px;">{value}</td>' 
         if idx == 0
-        else f'<td class="numeric" style="text-align: center"><div style="margin-left: -2px;font-size: 12px;margin-right:-5px;"><span class="highlight" style="padding: 3px 3px; border-radius: 4px; background-color: {euroleague_team_colors[team_stats_df.columns[1]] if (idx == 1 and ((value > row[2] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[2] and row.iloc[0] in ["TO%", "TO"]))) else "transparent"}">{f"{value:.1f}%" if str(row.iloc[0]).endswith("%") else f"&nbsp;{value:>5.1f}&nbsp;"}</span>{f"<img src=\'{away_logo}\' style=\'width: 25px; height: 25px; margin-left: 2px; vertical-align: middle;\'/>" if (idx == 1 and ((value > row[2] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[2] and row.iloc[0] in ["TO%", "TO"]))) else ""}</div></td>' 
+        else f'<td class="numeric" style="text-align: center"><div style="margin-left: -2px;font-size: 12px;margin-right:-5px;"><span class="highlight" style="padding: 3px 3px; border-radius: 4px; background-color: {euroleague_team_colors_light[team_stats_df.columns[1]] if (idx == 1 and ((value > row[2] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[2] and row.iloc[0] in ["TO%", "TO"]))) else "transparent"}">{f"{value:.1f}%" if str(row.iloc[0]).endswith("%") else f"&nbsp;{value:>5.1f}&nbsp;"}</span>{f"<img src=\'{away_logo}\' style=\'width: 25px; height: 25px; margin-left: 2px; vertical-align: middle;\'/>" if (idx == 1 and ((value > row[2] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[2] and row.iloc[0] in ["TO%", "TO"]))) else ""}</div></td>' 
         if isinstance(value, (int, float)) and idx == 1
-        else f'<td class="numeric" style="text-align: center"><div style="margin-left: -2px;font-size: 12px;margin-right:-5px;"><span class="highlight" style="padding: 3px 3px; border-radius: 4px; background-color: {euroleague_team_colors[team_stats_df.columns[2]] if (idx == 2 and ((value > row[1] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[1] and row.iloc[0] in ["TO%", "TO"]))) else "transparent"}">{f"{value:.1f}%" if str(row.iloc[0]).endswith("%") else f"&nbsp;{value:>5.1f}&nbsp;"}</span>{f"<img src=\'{home_logo}\' style=\'width: 25px; height: 25px; margin-left: 2px; vertical-align: middle;\'/>" if (idx == 2 and ((value > row[1] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[1] and row.iloc[0] in ["TO%", "TO"]))) else ""}</div></td>' 
+        else f'<td class="numeric" style="text-align: center"><div style="margin-left: -2px;font-size: 12px;margin-right:-5px;"><span class="highlight" style="padding: 3px 3px; border-radius: 4px; background-color: {euroleague_team_colors_light[team_stats_df.columns[2]] if (idx == 2 and ((value > row[1] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[1] and row.iloc[0] in ["TO%", "TO"]))) else "transparent"}">{f"{value:.1f}%" if str(row.iloc[0]).endswith("%") else f"&nbsp;{value:>5.1f}&nbsp;"}</span>{f"<img src=\'{home_logo}\' style=\'width: 25px; height: 25px; margin-left: 2px; vertical-align: middle;\'/>" if (idx == 2 and ((value > row[1] and row.iloc[0] not in ["TO%", "TO"]) or (value < row[1] and row.iloc[0] in ["TO%", "TO"]))) else ""}</div></td>' 
         if isinstance(value, (int, float)) and idx == 2
         else f'<td style="text-align: center">{value}</td>'
         for idx, (col, value) in enumerate(row.items())
