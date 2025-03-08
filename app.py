@@ -252,7 +252,7 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
     border-radius: 16px;
     color: rgb(26, 31, 54) !important;
     box-shadow: 0 4px 12px rgba(100, 100, 100, .5);
-    margin-top: -25px !important;
+    margin-top: -50px !important;
     margin-left: -60px !important;
     border: 2px solid white !important; 
     overflow: hidden;
@@ -339,6 +339,7 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
 
        </style>
    """, unsafe_allow_html=True)
+
    
    first_row = simulation_results_df[simulation_results_df['Matchup'] == selected_matchup].iloc[0]
    st.markdown('<div class="euroleague_tab">', unsafe_allow_html=True)
@@ -621,7 +622,7 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
           /* Button Styles */
           /* Button container styling */
 div.stButton {
-   margin-top: -500px !important;
+   margin-top: -480px !important;
    margin-left: -50px !important;  /* This moves buttons up */
    position: relative !important;
    z-index: 2 !important;  /* Ensure buttons stay on top */
@@ -662,7 +663,6 @@ div.stButton > button:focus {
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 0 15px rgba(100, 100, 100, .5);
-    margin-top: -480px !important;
 }
 
 .player-stats-table {
@@ -1145,7 +1145,7 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
        .team-name-box {
            background-color: white;
            border-radius: 8px;
-           padding: 8px;
+           padding: 2px;
            box-shadow: 0 4px 10px rgba(100, 100, 100, 1.5);
            margin-bottom: 6px;
            width: 100%;
@@ -1166,7 +1166,7 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
     border-radius: 16px;
     color: rgb(26, 31, 54);
     box-shadow: 0 4px 12px rgba(100, 100, 100, .5);
-    margin-top: -25px !important;
+    margin-top: -50px !important;
     margin-left: -60px !important;
     border: 2px solid white !important; 
     overflow: hidden;
@@ -1535,7 +1535,7 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
           /* Button Styles */
           /* Button container styling */
 div.stButton {
-   margin-top: -500px !important;
+   margin-top: -485px !important;
    margin-left: -50px !important;  /* This moves buttons up */
    position: relative !important;
    z-index: 2 !important;  /* Ensure buttons stay on top */
@@ -1576,7 +1576,7 @@ div.stButton > button:focus {
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 0 15px rgba(100, 100, 100, .5);
-    margin-top: -480px !important;
+    margin-top: -470px !important;
 }
 
 .player-stats-table {
@@ -1950,7 +1950,7 @@ def render_round_summary(
     }
 
     .rs_team-name {
-        font-weight: 700;
+        font-weight: 800;
         font-size: 11px !important;
         font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
         color: rgba(26, 31, 54, 0.9);
@@ -2525,7 +2525,7 @@ def render_round_summary_eurocup(
     }
 
     .rs_team-name {
-        font-weight: 700;
+        font-weight: 800;
         font-size: 11px !important;
         font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
         color: rgba(26, 31, 54, 0.9);
@@ -3082,10 +3082,6 @@ team_name_short_eurocup = {
 
 
 
-
-
-
-
 def main():
     st.set_page_config(layout="wide", page_icon="🏀", page_title="Eurolytics")
     
@@ -3342,7 +3338,7 @@ def main():
         border-radius: 16px;
         overflow: hidden;
         border: 2px solid white !important;
-        margin-top: 5px;
+        margin-top: -15px;
         background-color: #1a1f36;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
@@ -3404,7 +3400,7 @@ def main():
  
 .stSelectbox > div[data-baseweb="select"] > div[key="simulate-select-matchup"] > div,
 div[data-baseweb="select"] {
-    margin-top: -28px;
+    margin-top: -38px;
     margin-left: -55px;
     font-weight: 700;
     border: 3px solid #A5B4FC !important;
@@ -3487,6 +3483,30 @@ div[data-baseweb="option"]:hover {
 div[data-baseweb="select"]:hover {
     box-shadow: 0 4px 12px rgba(45, 99, 226, 0.2);
 }    
+.rs_game-separator3 {
+        height: 2px;
+        background: linear-gradient(to right, rgba(0,0,0,0.02), rgba(0,0,0,.5), rgba(0,0,0,0.02));
+        margin: 1px 0px -15px 0px !important;
+        position: relative;
+    }
+    
+    .rs_game-separator3::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: white;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="%231a1f36"/></svg>');
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+
        </style>
    """, unsafe_allow_html=True)
 
@@ -3530,284 +3550,606 @@ div[data-baseweb="select"]:hover {
     
     st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
 
+
     # EUROLEAGUE TAB
     with sport_tabs[0]:
-        # Second level tabs: Statistics and Round #
-        euroleague_main_tabs = st.tabs(["Fixture Simulations","Statistics"])
+        # Directly create third level tabs without the middle tier
+        euroleague_round_tabs = st.tabs(["Fixtures", "Summary", "Leaders"])
+        
+        # Fixtures Summary tab (Summary)
+        with euroleague_round_tabs[1]:
+            render_round_summary(
+                simulation_results_df, 
+                euroleague_team_colors, 
+                team_name_short, 
+                'Euroleague'
+            )
+        
+        # Fixtures tab (Fixtures)
+        with euroleague_round_tabs[0]:
+            st.markdown('<div class="rs_game-separator3"></div>', unsafe_allow_html=True)
+
+# Add some spacing
+            st.markdown('<div style="height: 15px;"></div>', unsafe_allow_html=True)
+
+            col1, col2 = st.columns([1,.82])
+            
+            with col1:
+                selected_matchup = st.selectbox(
+                    'Select Matchup',
+                    matchups,
+                    key='simulate_matchup_select',
+                    label_visibility='hidden'
+                )
+            
+            with col2:
+                matchup_data = simulation_results_df[simulation_results_df['Matchup'] == selected_matchup].iloc[0]
+                time_value = matchup_data.get('Time', 'N/A')
+                arena_value = matchup_data.get('Arena', 'N/A')
+                
+                st.markdown(
+                    f"""
+                    <div style="
+                        background-color: white; 
+                        -webkit-background-color: white;
+                        background: white;
+                        -webkit-background: white;
+                        border-radius: 8px; 
+                        padding: 5px 8px; 
+                        margin-top: -10px; 
+                        box-shadow: 0 4px 6px rgba(100, 100, 100, 0.4);
+                        margin-right:-50px; 
+                        margin-left:-27px;
+                        display: flex; 
+                        justify-content: center; 
+                        align-items: center; 
+                        gap: 30px; 
+                        color: black !important;">
+                        <div style="
+                            text-align: center; 
+                            font-weight: 700;  
+                            font-size: 12px; 
+                            color: rgb(26, 31, 54);">{time_value}</div>
+                        <div style="
+                            text-align: center; 
+                            font-weight: 700;  
+                            font-size: 12px; 
+                            color: rgb(26, 31, 54);">{arena_value}</div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+            
+            render_stats_tables_euroleague(selected_matchup, matchups, "simulate")
         
         # Statistics tab
-        with euroleague_main_tabs[1]:
-                st.markdown("### Euroleague Statistics")
+        with euroleague_round_tabs[2]:
+                # Add custom styling with white background and updated layout
+                st.markdown("""
+                <style>
+                /* Game separator styling */
+                .rs_game-separator {
+                    height: 2px;
+                    background: linear-gradient(to right, rgba(0,0,0,0.02), rgba(0,0,0,.5), rgba(0,0,0,0.02));
+                    margin: 5px -15px 15px -15px;
+                    position: relative;
+                }
                 
-                # Load pickle files (located at the same level as the main script)
-                script_dir = os.path.dirname(os.path.abspath(__file__))
+                .rs_game-separator::after {
+                    content: "";
+                    position: absolute;
+                    width: 20px;
+                    height: 20px;
+                    background-color: white;
+                    border-radius: 50%;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+                    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="%231a1f36"/></svg>');
+                    background-repeat: no-repeat;
+                    background-position: center;
+                }
                 
-                # Create narrower columns for filters
-                filter_col1, filter_col2, filter_col3 = st.columns([1,1,1])
+                /* Table header styling with title - unique for round leaders */
+                .rl_leaders_table_header {
+                    background-color: #1a1f36;
+                    color: white;
+                    padding: 6px 8px;
+                    font-weight: 600;
+                    text-align: center;
+                    font-size: 12px;
+                    letter-spacing: 0.5px;
+                    border-radius: 8px 8px 0 0;
+                    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+                    text-transform: uppercase;
+                    position: relative;
+                    z-index: 10;
+                }
                 
-                with filter_col1:
-                        # Replace radio button with dropdown for stats type
-                        stats_select = st.selectbox(
-                                "Stats Type", 
-                                ["BasicStats", "Per40Stats"]
-                        )
+                /* Table rows styling with unique names */
+                .rl_leader_row {
+                    display: grid;
+                    grid-template-columns: 60px 1fr 100px;
+                    padding: 6px 10px;
+                    align-items: center;
+                    border-bottom: 1px solid #f0f2f5;
+                    background-color: white;
+                }
                 
-                with filter_col2:
-                        # Load available seasons and format without comma
-                        available_seasons = []
-                        for stats_file in ['BasicStats.pkl', 'Per40Stats.pkl']:
-                                file_path = os.path.join(script_dir, stats_file)
-                                if os.path.exists(file_path):
-                                        with open(file_path, 'rb') as f:
-                                                stats_data = pickle.load(f)
-                                                
-                                                # Extract seasons based on DataFrame or dictionary structure
-                                                if isinstance(stats_data, pd.DataFrame):
-                                                        seasons = stats_data['Season'].unique() if 'Season' in stats_data.columns else []
-                                                elif isinstance(stats_data, dict):
-                                                        # Try to extract seasons from first table if possible
-                                                        first_table_key = list(stats_data.keys())[0] if stats_data else None
-                                                        if first_table_key and isinstance(stats_data[first_table_key], pd.DataFrame):
-                                                                seasons = stats_data[first_table_key]['Season'].unique() if 'Season' in stats_data[first_table_key].columns else []
-                                                        else:
-                                                                seasons = []
-                                                
-                                                # Add unique seasons to the list
-                                                available_seasons.extend(seasons)
+                .rl_leader_row:last-child {
+                    border-bottom: none;
+                }
+                
+                .rl_leader_row:hover {
+                    background-color: #f8f9fa;
+                }
+                
+                /* Rank cell styling */
+                .rl_rank_cell {
+                    text-align: center;
+                    font-weight: 700;
+                    font-size: 16px;
+                    color: #64748b;
+                }
+                
+                /* Player cell styling */
+                .rl_player_cell {
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                }
+                
+                .rl_team_logo {
+                    width: 24px;
+                    height: 24px;
+                    object-fit: contain;
+                }
+                
+                .rl_player_name {
+                    font-weight: 700;
+                    font-size: 15px;
+                    color: #1a1f36;
+                }
+                
+                .rl_player_team {
+                    font-size: 12px;
+                    color: #64748b;
+                    font-weight: 400;
+                }
+                
+                /* Stat cell styling */
+                .rl_stat_cell {
+                    text-align: right;
+                    font-weight: 700;
+                    font-size: 16px;
+                    color: #3b82f6;
+                }
+                </style>
+                """, unsafe_allow_html=True)
+                
+                # Add game separator
+                st.markdown('<div class="rs_game-separator"></div>', unsafe_allow_html=True)
+                
+                # Get current round
+                current_round = simulation_results_df['Round'].max()
+                round_games = simulation_results_df[simulation_results_df['Round'] == current_round]
+                
+                # Create empty DataFrame to store all player stats for the round
+                all_player_stats = pd.DataFrame()
+                
+                # Define logo mappings for teams
+                team_logos = {}
+                
+                # Iterate through each game to get player stats and combine them
+                for _, game in round_games.iterrows():
+                        matchup = game['Matchup']
                         
-                        # Remove duplicates and sort
-                        available_seasons = sorted(set(available_seasons))
+                        # Get player stats for the matchup
+                        team_stats, player_statsTeam1, player_statsTeam2 = create_sample_data_euroleague()
+                        filtered_player_statsTeam1 = player_statsTeam1[player_statsTeam1['Matchup'] == matchup].copy()
+                        filtered_player_statsTeam2 = player_statsTeam2[player_statsTeam2['Matchup'] == matchup].copy()
                         
-                        # Format seasons without comma
-                        formatted_seasons = [str(int(season)) for season in available_seasons]
+                        # Add matchup information
+                        filtered_player_statsTeam1['Matchup'] = matchup
+                        filtered_player_statsTeam2['Matchup'] = matchup
                         
-                        # Season dropdown
-                        season_select = st.selectbox(
-                                "Season", 
-                                formatted_seasons
-                        )
+                        # Combine stats from both teams
+                        game_stats = pd.concat([filtered_player_statsTeam1, filtered_player_statsTeam2])
+                        
+                        # Add to the combined dataframe
+                        all_player_stats = pd.concat([all_player_stats, game_stats])
+                        
+                        # Store team logos
+                        team_logos[game['Home_Code']] = game['Home_Logo']
+                        team_logos[game['Away_Code']] = game['Away_Logo']
                 
-                with filter_col3:
-                        # Team filter
-                        try:
-                                # Load the data to get team list
-                                stats_pickle_path = os.path.join(script_dir, f'{stats_select}.pkl')
-                                if os.path.exists(stats_pickle_path):
-                                        with open(stats_pickle_path, 'rb') as f:
-                                                euroleague_stats = pickle.load(f)
-                                        
-                                        # Get team list based on data type
-                                        if isinstance(euroleague_stats, pd.DataFrame):
-                                                team_list = sorted(euroleague_stats['Team'].unique())
-                                        elif isinstance(euroleague_stats, dict):
-                                                # Try to get team list from first table
-                                                first_table_key = list(euroleague_stats.keys())[0] if euroleague_stats else None
-                                                team_list = sorted(euroleague_stats[first_table_key]['Team'].unique()) if first_table_key else []
-                                        else:
-                                                team_list = []
-                                        
-                                        # Team filter dropdown
-                                        team_select = st.selectbox(
-                                                "Team",
-                                                ["All Teams"] + team_list
-                                        )
-                                else:
-                                        st.warning(f"{stats_select}.pkl file not found")
-                                        team_select = "All Teams"
-                        except Exception as e:
-                                st.error(f"Error setting up team filter: {e}")
-                                team_select = "All Teams"
+                # Define stat options with labels and corresponding column names
+                stat_options = {
+                    "Points": "PTS",
+                    "Offensive Rebounds": "OREB",
+                    "Defensive Rebounds": "DREB",
+                    "Total Rebounds": "REB", 
+                    "Turnovers": "TO",
+                    "2-Point Field Goals": "2FGM",
+                    "2-Point Attempts": "2FGA",
+                    "2-Point %": "2PT%",
+                    "3-Point Field Goals": "3FGM",
+                    "3-Point Attempts": "3FGA",
+                    "3-Point %": "3PT%",
+                    "Free Throws": "FT",
+                    "Free Throw Attempts": "FTA",
+                    "Free Throw %": "FT%",
+                    "Minutes": "MIN",
+                }
                 
-                try:
-                        # Load the selected statistics data
-                        stats_pickle_path = os.path.join(script_dir, f'{stats_select}.pkl')
-                        if os.path.exists(stats_pickle_path):
-                                with open(stats_pickle_path, 'rb') as f:
-                                        euroleague_stats = pickle.load(f)
-                                
-                                # Check if euroleague_stats is a DataFrame or a dictionary
-                                if isinstance(euroleague_stats, pd.DataFrame):
-                                        # Apply filters
-                                        filtered_stats = euroleague_stats[
-                                                (euroleague_stats['Season'] == float(season_select)) &
-                                                ((euroleague_stats['Team'] == team_select) | (team_select == "All Teams"))
-                                        ]
-                                        
-                                        # Display as a sortable dataframe
-                                        st.dataframe(filtered_stats, use_container_width=True)
-                                
-                                elif isinstance(euroleague_stats, dict):
-                                        # If it's a dictionary, let user choose which table to display
-                                        table_options = list(euroleague_stats.keys())
-                                        if table_options:
-                                                selected_table = st.selectbox("Select Statistics Table", table_options)
-                                                if selected_table in euroleague_stats:
-                                                        # Get the specific table
-                                                        table_data = euroleague_stats[selected_table]
-                                                        
-                                                        # Apply filters if possible
-                                                        if isinstance(table_data, pd.DataFrame):
-                                                                filtered_stats = table_data[
-                                                                        (table_data['Season'] == float(season_select)) &
-                                                                        ((table_data['Team'] == team_select) | (team_select == "All Teams"))
-                                                                ]
-                                                                
-                                                                # Display the filtered table
-                                                                st.dataframe(filtered_stats, use_container_width=True)
-                                                        else:
-                                                                # If filtering not possible, show original table
-                                                                st.dataframe(table_data, use_container_width=True)
-                                        else:
-                                                st.warning("No tables found in statistics file")
-                                else:
-                                        st.warning("Unknown data format in statistics file")
-                        else:
-                                st.warning(f"{stats_select}.pkl file not found. Please make sure it is in the same directory as the script.")
-                
-                except Exception as e:
-                        st.error(f"Error loading statistics: {e}")
-        
-        # Round tab
-        with euroleague_main_tabs[0]:
-            # Third level tabs: Fixtures and Fixtures Summary
-            euroleague_round_tabs = st.tabs([f"{simulation_results_df['Round'].max()} Summary", f"{simulation_results_df['Round'].max()} Fixtures"])
-            
-            # Fixtures tab - similar to your original euroleague_subtabs[1]
-            with euroleague_round_tabs[1]:
-                col1, col2 = st.columns([1,.82])
-                
-                with col1:
-                    selected_matchup = st.selectbox(
-                        'Select Matchup',
-                        matchups,
-                        key='simulate_matchup_select',
-                    )
-                
-                with col2:
-                    matchup_data = simulation_results_df[simulation_results_df['Matchup'] == selected_matchup].iloc[0]
-                    time_value = matchup_data.get('Time', 'N/A')
-                    arena_value = matchup_data.get('Arena', 'N/A')
-                    
-                    st.markdown(
-                        f"""
-                        <div style="
-                            background-color: white; 
-                            -webkit-background-color: white;
-                            background: white;
-                            -webkit-background: white;
-                            border-radius: 8px; 
-                            padding: 5px 8px; 
-                            margin-top: 0px; 
-                            box-shadow: 0 4px 6px rgba(100, 100, 100, 0.4);
-                            margin-right:-50px; 
-                            margin-left:-27px;
-                            display: flex; 
-                            justify-content: center; 
-                            align-items: center; 
-                            gap: 30px; 
-                            color: black !important;">
-                            <div style="
-                                text-align: center; 
-                                font-weight: 700;  
-                                font-size: 12px; 
-                                color: rgb(26, 31, 54);">{time_value}</div>
-                            <div style="
-                                text-align: center; 
-                                font-weight: 700;  
-                                font-size: 12px; 
-                                color: rgb(26, 31, 54);">{arena_value}</div>
-                        </div>
-                        """,
-                        unsafe_allow_html=True
-                    )
-                
-                render_stats_tables_euroleague(selected_matchup, matchups, "simulate")
-            
-            # Fixtures Summary tab - similar to your original euroleague_subtabs[0]
-            with euroleague_round_tabs[0]:
-                render_round_summary(
-                    simulation_results_df, 
-                    euroleague_team_colors, 
-                    team_name_short, 
-                    'Euroleague'
-                )
+                # Use columns to position the selectbox on the right
+                label_col, select_col = st.columns([1, 3])
 
+                with label_col:
+                    st.markdown('<div style="padding-top: 5px; font-weight: 700; font-family: -apple-system, system-ui, BlinkMacSystemFont, \'Segoe UI\', Roboto, \'Helvetica Neue\', Arial, sans-serif; text-transform: uppercase; margin-top: -12px;margin-left:-30px; color: #1a1f36; letter-spacing: 0.1px; display: flex; align-items: center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px; color: #3b82f6;"><path d="M11 3L11 21M3 12L21 12"></path></svg>Select Statistic:</div>', unsafe_allow_html=True)
+                
+                with select_col:
+                    # Add the selectbox
+                    stat_label = st.selectbox(
+                        "",
+                        options=list(stat_options.keys()),
+                        index=0,
+                        key="rl_stat_selector",
+                        label_visibility="hidden"
+                    )
+                
+                # Get the selected stat column name
+                selected_stat = stat_options[stat_label]
+                
+                # Sort and get top players
+                top_players = all_player_stats.sort_values(selected_stat, ascending=False)
+                
+                # Drop duplicates to get unique players and take top 20
+                top_players = top_players.drop_duplicates("Player")
+                
+                # Add title as table header with unique class name
+                st.markdown(f'''
+                <div class="rl_leaders_table_header" style="display: flex; justify-content: space-between;">
+                    <div>{simulation_results_df["Round"].max()}</div>
+                    <div>{stat_label} LEADERS</div>
+                </div>
+                ''', unsafe_allow_html=True)
+                
+                # Generate table rows with unique class names - Generate only once
+                for i, (idx, row) in enumerate(top_players.iterrows()):
+                    player = row['Player']
+                    team = row.get('Team', '')
+                    matchup = row.get('Matchup', '')
+                    
+                    # Get team logo
+                    logo_url = team_logos.get(team, '')
+                    if not logo_url:
+                        # If logo not found, use a placeholder
+                        logo_url = "https://via.placeholder.com/32"
+                    
+                    # Format stat value based on type
+                    if selected_stat.endswith("%"):
+                        stat_value = f"{row[selected_stat]:.2f}%"
+                    else:
+                        stat_value = f"{row[selected_stat]:.1f}"
+                    
+                    # Create row with game name on same line - using unique class names
+                    st.markdown(f"""
+                    <div class="rl_leader_row">
+                        <div class="rl_rank_cell">{i+1}</div>
+                        <div class="rl_player_cell">
+                            <img src="{logo_url}" class="rl_team_logo" alt="{team}">
+                            <div>
+                                <span class="rl_player_name">{player}</span> <span class="rl_player_team">{matchup}</span>
+                            </div>
+                        </div>
+                        <div class="rl_stat_cell">{stat_value}</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                
+                # Close table container
+                st.markdown('</div>', unsafe_allow_html=True)
     # EUROCUP TAB
     with sport_tabs[1]:
-        # Second level tabs: Statistics and Round #
-        eurocup_main_tabs = st.tabs(["Fixture Simulations", "Statistics"])
+        # Directly create third level tabs without the middle tier
+        eurocup_round_tabs = st.tabs(["Fixtures", "Summary", "Leaders"])
+        
+        # Fixtures Summary tab
+        with eurocup_round_tabs[1]:
+            render_round_summary_eurocup(
+                simulation_results_df_eurocup, 
+                eurocup_team_colors, 
+                team_name_short_eurocup, 
+                'Eurocup'
+            )
+        
+        # Fixtures tab
+        with eurocup_round_tabs[0]:
+            st.markdown('<div class="rs_game-separator3"></div>', unsafe_allow_html=True)
+
+# Add some spacing
+            st.markdown('<div style="height: 15px;"></div>', unsafe_allow_html=True)
+            col1, col2 = st.columns([1,.82])
+            
+            with col1:
+                selected_matchup_eurocup = st.selectbox(
+                    'Select Matchup',
+                    matchups_eurocup,
+                    key='simulate_matchup_select_eurocup',
+                    label_visibility='hidden'
+                )
+            
+            with col2:
+                matchup_data_eurocup = simulation_results_df_eurocup[simulation_results_df_eurocup['Matchup'] == selected_matchup_eurocup].iloc[0]
+                time_value_eurocup = matchup_data_eurocup.get('Time', 'N/A')
+                arena_value_eurocup = matchup_data_eurocup.get('Arena', 'N/A')
+                
+                st.markdown(
+                    f"""
+                    <div style="
+                        background-color: white; 
+                        -webkit-background-color: white;
+                        background: white;
+                        -webkit-background: white;
+                        border-radius: 8px; 
+                        padding: 5px 8px; 
+                        margin-top: -10px; 
+                        box-shadow: 0 4px 6px rgba(100, 100, 100, 0.4);
+                        margin-right:-50px; 
+                        margin-left:-27px;
+                        display: flex; 
+                        justify-content: center; 
+                        align-items: center; 
+                        gap: 30px; 
+                        color: black !important;">
+                        <div style="
+                            text-align: center; 
+                            font-weight: 700;  
+                            font-size: 12px; 
+                            color: rgb(26, 31, 54);">{time_value_eurocup}</div>
+                        <div style="
+                            text-align: center; 
+                            font-weight: 700;  
+                            font-size: 12px; 
+                            color: rgb(26, 31, 54);">{arena_value_eurocup}</div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+            
+            render_stats_tables_eurocup(selected_matchup_eurocup, matchups_eurocup, simulation_results_df_eurocup, "simulate")
         
         # Statistics tab
-        with eurocup_main_tabs[1]:
-            st.markdown("### EuroCup Statistics")
-            # Add your statistics content here
-            st.write("Statistics content will go here")
-        
-        # Round tab
-        with eurocup_main_tabs[0]:
-            # Third level tabs: Fixtures and Fixtures Summary
-            eurocup_round_tabs = st.tabs([f"Playoffs {simulation_results_df_eurocup['Round'].max()} Summary", f"Playoffs {simulation_results_df_eurocup['Round'].max()} Fixtures"])
-            
-            # Fixtures tab
-            with eurocup_round_tabs[1]:
-                col1, col2 = st.columns([1,.82])
+        with eurocup_round_tabs[2]:
+                # Add custom styling with white background and updated layout
+                st.markdown("""
+                <style>
+                /* Game separator styling */
+                .rs_game-separator2 {
+                    height: 2px;
+                    background: linear-gradient(to right, rgba(0,0,0,0.02), rgba(0,0,0,.5), rgba(0,0,0,0.02));
+                    margin: -15px -15px 15px -15px;
+                    position: relative;
+                }
                 
-                with col1:
-                    selected_matchup_eurocup = st.selectbox(
-                        'Select Matchup',
-                        matchups_eurocup,
-                        key='simulate_matchup_select_eurocup',
-                        label_visibility='hidden'
+                .rs_game-separator2::after {
+                    content: "";
+                    position: absolute;
+                    width: 20px;
+                    height: 20px;
+                    background-color: white;
+                    border-radius: 50%;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+                    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="%231a1f36"/></svg>');
+                    background-repeat: no-repeat;
+                    background-position: center;
+                }
+                
+                /* Table header styling with title - unique for round leaders */
+                .rl_leaders_table_header {
+                    background-color: #1a1f36;
+                    color: white;
+                    padding: 6px 8px;
+                    font-weight: 600;
+                    text-align: center;
+                    font-size: 12px;
+                    letter-spacing: 0.5px;
+                    border-radius: 8px 8px 0 0;
+                    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+                    text-transform: uppercase;
+                    position: relative;
+                    z-index: 10;
+                }
+                
+                /* Table rows styling with unique names */
+                .rl_leader_row {
+                    display: grid;
+                    grid-template-columns: 60px 1fr 100px;
+                    padding: 6px 10px;
+                    align-items: center;
+                    border-bottom: 1px solid #f0f2f5;
+                    background-color: white;
+                }
+                
+                .rl_leader_row:last-child {
+                    border-bottom: none;
+                }
+                
+                .rl_leader_row:hover {
+                    background-color: #f8f9fa;
+                }
+                
+                /* Rank cell styling */
+                .rl_rank_cell {
+                    text-align: center;
+                    font-weight: 700;
+                    font-size: 16px;
+                    color: #64748b;
+                }
+                
+                /* Player cell styling */
+                .rl_player_cell {
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                }
+                
+                .rl_team_logo {
+                    width: 24px;
+                    height: 24px;
+                    object-fit: contain;
+                }
+                
+                .rl_player_name {
+                    font-weight: 700;
+                    font-size: 15px;
+                    color: #1a1f36;
+                }
+                
+                .rl_player_team {
+                    font-size: 12px;
+                    color: #64748b;
+                    font-weight: 400;
+                }
+                
+                /* Stat cell styling */
+                .rl_stat_cell {
+                    text-align: right;
+                    font-weight: 700;
+                    font-size: 16px;
+                    color: #3b82f6;
+                }
+                </style>
+                """, unsafe_allow_html=True)
+                
+                # Add game separator
+                st.markdown('<div class="rs_game-separator2"></div>', unsafe_allow_html=True)
+                
+                # Get current round
+                current_round = simulation_results_df_eurocup['Round'].max()
+                round_games = simulation_results_df_eurocup[simulation_results_df_eurocup['Round'] == current_round]
+                
+                # Create empty DataFrame to store all player stats for the round
+                all_player_stats = pd.DataFrame()
+                
+                # Define logo mappings for teams
+                team_logos = {}
+                
+                # Iterate through each game to get player stats and combine them
+                for _, game in round_games.iterrows():
+                        matchup = game['Matchup']
+                        
+                        # Get player stats for the matchup
+                        team_stats, player_statsTeam1, player_statsTeam2 = create_sample_data_eurocup()
+                        filtered_player_statsTeam1 = player_statsTeam1[player_statsTeam1['Matchup'] == matchup].copy()
+                        filtered_player_statsTeam2 = player_statsTeam2[player_statsTeam2['Matchup'] == matchup].copy()
+                        
+                        # Add matchup information
+                        filtered_player_statsTeam1['Matchup'] = matchup
+                        filtered_player_statsTeam2['Matchup'] = matchup
+                        
+                        # Combine stats from both teams
+                        game_stats = pd.concat([filtered_player_statsTeam1, filtered_player_statsTeam2])
+                        
+                        # Add to the combined dataframe
+                        all_player_stats = pd.concat([all_player_stats, game_stats])
+                        
+                        # Store team logos
+                        team_logos[game['Home_Code']] = game['Home_Logo']
+                        team_logos[game['Away_Code']] = game['Away_Logo']
+                
+                # Define stat options with labels and corresponding column names
+                stat_options = {
+                    "Points": "PTS",
+                    "Offensive Rebounds": "OREB",
+                    "Defensive Rebounds": "DREB",
+                    "Total Rebounds": "REB", 
+                    "Turnovers": "TO",
+                    "2-Point Field Goals": "2FGM",
+                    "2-Point Attempts": "2FGA",
+                    "2-Point %": "2PT%",
+                    "3-Point Field Goals": "3FGM",
+                    "3-Point Attempts": "3FGA",
+                    "3-Point %": "3PT%",
+                    "Free Throws": "FT",
+                    "Free Throw Attempts": "FTA",
+                    "Free Throw %": "FT%",
+                    "Minutes": "MIN",
+                }
+                
+                # Use columns to position the selectbox on the right
+                label_col, select_col = st.columns([1, 3])
+
+                with label_col:
+                    st.markdown('<div style="padding-top: 5px; font-weight: 700; font-family: -apple-system, system-ui, BlinkMacSystemFont, \'Segoe UI\', Roboto, \'Helvetica Neue\', Arial, sans-serif; text-transform: uppercase; margin-top: -12px;margin-left:-30px; color: #1a1f36; letter-spacing: 0.1px; display: flex; align-items: center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px; color: #3b82f6;"><path d="M11 3L11 21M3 12L21 12"></path></svg>Select Statistic:</div>', unsafe_allow_html=True)
+                with select_col:
+                    # Add the selectbox
+                    stat_label = st.selectbox(
+                        "",
+                        options=list(stat_options.keys()),
+                        index=0,
+                        key="rl_stat_selector2",
+                        label_visibility="hidden"
                     )
                 
-                with col2:
-                    matchup_data_eurocup = simulation_results_df_eurocup[simulation_results_df_eurocup['Matchup'] == selected_matchup_eurocup].iloc[0]
-                    time_value_eurocup = matchup_data_eurocup.get('Time', 'N/A')
-                    arena_value_eurocup = matchup_data_eurocup.get('Arena', 'N/A')
+                # Get the selected stat column name
+                selected_stat = stat_options[stat_label]
+                
+                # Sort and get top players
+                top_players = all_player_stats.sort_values(selected_stat, ascending=False)
+                
+                # Drop duplicates to get unique players and take top 20
+                top_players = top_players.drop_duplicates("Player")
+                
+                # Add title as table header with unique class name
+                st.markdown(f'''
+                <div class="rl_leaders_table_header" style="display: flex; justify-content: space-between;">
+                    <div>{simulation_results_df["Round"].max()}</div>
+                    <div>{stat_label} LEADERS</div>
+                </div>
+                ''', unsafe_allow_html=True)
+                
+                # Generate table rows with unique class names - Generate only once
+                for i, (idx, row) in enumerate(top_players.iterrows()):
+                    player = row['Player']
+                    team = row.get('Team', '')
+                    matchup = row.get('Matchup', '')
                     
-                    st.markdown(
-                        f"""
-                        <div style="
-                            background-color: white; 
-                            -webkit-background-color: white;
-                            background: white;
-                            -webkit-background: white;
-                            border-radius: 8px; 
-                            padding: 5px 8px; 
-                            margin-top: 0px; 
-                            box-shadow: 0 4px 6px rgba(100, 100, 100, 0.4);
-                            margin-right:-50px; 
-                            margin-left:-27px;
-                            display: flex; 
-                            justify-content: center; 
-                            align-items: center; 
-                            gap: 30px; 
-                            color: black !important;">
-                            <div style="
-                                text-align: center; 
-                                font-weight: 700;  
-                                font-size: 12px; 
-                                color: rgb(26, 31, 54);">{time_value_eurocup}</div>
-                            <div style="
-                                text-align: center; 
-                                font-weight: 700;  
-                                font-size: 12px; 
-                                color: rgb(26, 31, 54);">{arena_value_eurocup}</div>
+                    # Get team logo
+                    logo_url = team_logos.get(team, '')
+                    if not logo_url:
+                        # If logo not found, use a placeholder
+                        logo_url = "https://via.placeholder.com/32"
+                    
+                    # Format stat value based on type
+                    if selected_stat.endswith("%"):
+                        stat_value = f"{row[selected_stat]:.2f}%"
+                    else:
+                        stat_value = f"{row[selected_stat]:.1f}"
+                    
+                    # Create row with game name on same line - using unique class names
+                    st.markdown(f"""
+                    <div class="rl_leader_row">
+                        <div class="rl_rank_cell">{i+1}</div>
+                        <div class="rl_player_cell">
+                            <img src="{logo_url}" class="rl_team_logo" alt="{team}">
+                            <div>
+                                <span class="rl_player_name">{player}</span> <span class="rl_player_team">{matchup}</span>
+                            </div>
                         </div>
-                        """,
-                        unsafe_allow_html=True
-                    )
+                        <div class="rl_stat_cell">{stat_value}</div>
+                    </div>
+                    """, unsafe_allow_html=True)
                 
-                render_stats_tables_eurocup(selected_matchup_eurocup, matchups_eurocup, simulation_results_df_eurocup, "simulate")
-            
-            # Fixtures Summary tab
-            with eurocup_round_tabs[0]:
-                render_round_summary_eurocup(
-                    simulation_results_df_eurocup, 
-                    eurocup_team_colors, 
-                    team_name_short_eurocup, 
-                    'Eurocup'
-                )
+                # Close table container
+                st.markdown('</div>', unsafe_allow_html=True)
+
+
+
     
     # Close all divs
     st.markdown('</div>', unsafe_allow_html=True)
