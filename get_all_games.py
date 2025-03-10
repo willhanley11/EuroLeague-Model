@@ -2445,7 +2445,14 @@ def get_euroleague_games_selenium():
         
         # Try to find round information
         round_element = soup.find('span', text=lambda t: t and 'Round' in t)
-        round_text = round_element.text.strip() if round_element else 'Round 27'
+        round_text = round_element.text.strip() if round_element else 'Round 29'
+        
+        # Find the season information (Regular Season)
+        season_element = soup.select_one('div[class*="seasonFilters"] button:nth-child(2)')
+        season_text = season_element.text.strip() if season_element else 'Regular Season'
+        
+        # Combine season and round text
+        full_round_text = f"{season_text} {round_text}"
         
         # Find all game articles
         game_articles = soup.find_all('article')
@@ -2474,7 +2481,7 @@ def get_euroleague_games_selenium():
                         'Matchup': f"{away_team} @ {home_team}",
                         'Time': game_time,
                         'Arena': arena,
-                        'Round': round_text
+                        'Round': full_round_text
                     })
         
         return pd.DataFrame(matches)
@@ -2506,7 +2513,7 @@ for index, game in games.iterrows():
         away_team=game['Away_Code'], 
         HFA=home_team_hfa, 
         players_to_update=updated_players, 
-        number_of_simulations=20000, 
+        number_of_simulations=30000, 
         possession_adjust=0,
         teamsDF=teamsDF,
         homeusage_for=homeusage_for,
