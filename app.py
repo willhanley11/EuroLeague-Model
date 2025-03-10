@@ -3238,87 +3238,187 @@ def main():
     # Add JavaScript for tab dropdown behavior
     st.markdown("""
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Wait for Streamlit to fully render the UI
-        setTimeout(function() {
-            // Get all top-level tabs
-            const mainTabs = document.querySelectorAll('[data-baseweb="tab-list"] [role="tab"]');
-            const mainTabPanels = document.querySelectorAll('[data-baseweb="tab-panel"]');
-            
-            // Initially hide all second-level tabs except for the currently active one
-            function setupNestedTabs() {
-                mainTabPanels.forEach((panel, index) => {
-                    // Find nested tab lists within each panel
-                    const nestedTabLists = panel.querySelectorAll('[data-baseweb="tab-list"]');
-                    
-                    if (nestedTabLists.length > 0) {
-                        // If this is not the active panel, hide its nested tabs
-                        if (!mainTabs[index].getAttribute('aria-selected') === 'true') {
-                            nestedTabLists.forEach(list => {
-                                list.style.display = 'none';
-                            });
-                        }
-                    }
-                });
+document.addEventListener('DOMContentLoaded', function() {
+    // Wait for Streamlit to fully render the UI
+    setTimeout(function() {
+        // Add CSS for improved tab styling
+        const style = document.createElement('style');
+        style.textContent = `
+            /* Override default tab styling */
+            [data-baseweb="tab-list"] {
+                position: relative !important;
             }
             
-            // Toggle visibility of nested tabs when clicking on main tabs
-            mainTabs.forEach((tab, index) => {
-                tab.addEventListener('click', function() {
-                    // Show nested tabs in the selected panel
-                    const selectedPanel = mainTabPanels[index];
-                    const nestedTabLists = selectedPanel.querySelectorAll('[data-baseweb="tab-list"]');
-                    
-                    nestedTabLists.forEach(list => {
-                        list.style.display = 'flex';
-                    });
-                    
-                    // Hide nested tabs in other panels
-                    mainTabPanels.forEach((panel, i) => {
-                        if (i !== index) {
-                            const otherNestedTabLists = panel.querySelectorAll('[data-baseweb="tab-list"]');
-                            otherNestedTabLists.forEach(list => {
-                                list.style.display = 'none';
-                            });
-                        }
-                    });
-                });
+            /* Primary top-level tabs (Euroleague, EuroCup) */
+            div[data-testid="stVerticalBlock"] div[data-baseweb="tab-list"]:first-of-type {
+                background: linear-gradient(90deg, #1a1f36, #2a344e) !important;
+                margin-bottom: 10px !important;
+                border-radius: 8px !important; 
+                padding: 3px !important;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+                height: 45px !important;
+                z-index: 100 !important;
+            }
+            
+            /* Primary tab buttons */
+            div[data-testid="stVerticalBlock"] div[data-baseweb="tab-list"]:first-of-type [role="tab"] {
+                color: white !important;
+                font-weight: 700 !important;
+                font-size: 14px !important;
+                padding: 8px 20px !important;
+                transition: all 0.2s ease !important;
+                border-bottom: 3px solid transparent !important;
+                height: 100% !important;
+                display: flex !important;
+                align-items: center !important;
+            }
+            
+            /* Primary tab hover */
+            div[data-testid="stVerticalBlock"] div[data-baseweb="tab-list"]:first-of-type [role="tab"]:hover {
+                background: rgba(255, 255, 255, 0.1) !important;
+            }
+            
+            /* Primary tab active */
+            div[data-testid="stVerticalBlock"] div[data-baseweb="tab-list"]:first-of-type [role="tab"][aria-selected="true"] {
+                background: rgba(255, 255, 255, 0.15) !important;
+                border-bottom: 3px solid #ff0000 !important;
+                color: white !important;
+                font-weight: 700 !important;
+            }
+            
+            /* Primary tab active dropdown indicator */
+            div[data-testid="stVerticalBlock"] div[data-baseweb="tab-list"]:first-of-type [role="tab"][aria-selected="true"]::after {
+                content: "";
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                margin-left: -8px;
+                width: 0;
+                height: 0;
+                border-left: 8px solid transparent;
+                border-right: 8px solid transparent;
+                border-top: 8px solid #2a344e;
+                z-index: 101;
+            }
+            
+            /* Secondary tabs row (Round X) */
+            div[data-testid="stVerticalBlock"] div[data-baseweb="tab-panel"] div[data-baseweb="tab-list"]:first-of-type {
+                background: #f0f2f5 !important;
+                border-radius: 8px !important;
+                margin-top: 0 !important;
+                padding: 3px !important;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+                height: 34px !important;
+                margin-left: 20px !important;
+                width: auto !important;
+                animation: fadeIn 0.3s ease-out;
+            }
+            
+            /* Secondary tab buttons */
+            div[data-testid="stVerticalBlock"] div[data-baseweb="tab-panel"] div[data-baseweb="tab-list"]:first-of-type [role="tab"] {
+                color: #444 !important;
+                font-weight: 600 !important;
+                font-size: 13px !important;
+                padding: 4px 14px !important;
+                border-radius: 4px !important;
+                transition: all 0.2s ease !important;
+                border-bottom: 3px solid transparent !important;
+                height: 100% !important;
+                display: flex !important;
+                align-items: center !important;
+            }
+            
+            /* Tertiary tabs (Fixtures, Summary, Leaders) */
+            div[data-testid="stVerticalBlock"] div[data-baseweb="tab-panel"] div[data-baseweb="tab-panel"] div[data-baseweb="tab-list"] {
+                background: white !important;
+                border-radius: 8px !important;
+                margin-left: 40px !important;
+                padding: 3px !important;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+                height: 30px !important;
+                border: 1px solid #eaecef !important;
+                animation: fadeIn 0.3s ease-out;
+            }
+            
+            /* Tertiary tab buttons */
+            div[data-testid="stVerticalBlock"] div[data-baseweb="tab-panel"] div[data-baseweb="tab-panel"] div[data-baseweb="tab-list"] [role="tab"] {
+                color: #555 !important;
+                font-weight: 600 !important;
+                font-size: 12px !important;
+                padding: 4px 12px !important;
+                border-radius: 4px !important;
+                transition: all 0.2s ease !important;
+                height: 100% !important;
+                display: flex !important;
+                align-items: center !important;
+                border-bottom: 2px solid transparent !important;
+            }
+            
+            /* Tertiary tab hover */
+            div[data-testid="stVerticalBlock"] div[data-baseweb="tab-panel"] div[data-baseweb="tab-panel"] div[data-baseweb="tab-list"] [role="tab"]:hover {
+                background: rgba(0, 0, 0, 0.03) !important;
+            }
+            
+            /* Tertiary tab active */
+            div[data-testid="stVerticalBlock"] div[data-baseweb="tab-panel"] div[data-baseweb="tab-panel"] div[data-baseweb="tab-list"] [role="tab"][aria-selected="true"] {
+                background: white !important;
+                color: #3b82f6 !important;
+                border-bottom: 2px solid #3b82f6 !important;
+                font-weight: 700 !important;
+            }
+            
+            /* Animation keyframes */
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(-5px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            
+            /* Animation for tab panels */
+            div[data-baseweb="tab-panel"] {
+                animation: fadeIn 0.3s ease-out;
+            }
+            
+            /* Fix secondary tab round number */
+            div[data-testid="stVerticalBlock"] div[data-baseweb="tab-panel"] div[data-baseweb="tab-list"]:first-of-type [role="tab"]::before {
+                content: "ROUND ";
+                font-weight: 700;
+            }
+        `;
+        
+        document.head.appendChild(style);
+        
+        // Add a subtle animation when tabs are clicked
+        const tabButtons = document.querySelectorAll('[role="tab"]');
+        tabButtons.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Add a subtle animation class
+                tab.classList.add('tab-click-effect');
+                
+                // Remove it after animation completes
+                setTimeout(() => {
+                    tab.classList.remove('tab-click-effect');
+                }, 300);
             });
+        });
+        
+        // Add animation styles
+        const animationStyle = document.createElement('style');
+        animationStyle.textContent = `
+            .tab-click-effect {
+                animation: tabClick 0.3s ease-out;
+            }
             
-            // Initial setup
-            setupNestedTabs();
-            
-            // Add CSS to make second-level tabs look like dropdowns
-            const style = document.createElement('style');
-            style.textContent = `
-                /* Style for dropdown-like tabs */
-                [data-baseweb="tab-list"] [data-baseweb="tab-list"] {
-                    position: relative;
-                    margin-top: 5px;
-                    border-radius: 8px;
-                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-                    overflow: hidden;
-                    transition: all 0.3s ease;
-                }
-                
-                /* Add a small arrow indicator to parent tabs */
-                [data-baseweb="tab-list"] > [role="tab"]::after {
-                    content: "▼";
-                    font-size: 10px;
-                    margin-left: 5px;
-                    display: inline-block;
-                    transition: transform 0.3s ease;
-                }
-                
-                /* Rotate arrow when tab is active */
-                [data-baseweb="tab-list"] > [role="tab"][aria-selected="true"]::after {
-                    transform: rotate(180deg);
-                }
-            `;
-            document.head.appendChild(style);
-        }, 1000); // Adjust timeout if needed to ensure UI is fully loaded
-    });
-    </script>
+            @keyframes tabClick {
+                0% { transform: scale(1); }
+                50% { transform: scale(0.97); }
+                100% { transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(animationStyle);
+        
+    }, 1500); // Give more time for UI to render
+});
+</script>
     """, unsafe_allow_html=True)
 
     # Start fixed-width container
@@ -3551,80 +3651,88 @@ div[data-baseweb="select"]:hover {
     
     st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
 
-
     # EUROLEAGUE TAB
     with sport_tabs[0]:
-        # Directly create third level tabs without the middle tier
-        euroleague_round_tabs = st.tabs(["Fixtures", "Summary", "Leaders"])
+        # Get the current round for Euroleague
+        current_round_euroleague = simulation_results_df['Round'].max()
         
-        # Fixtures Summary tab (Summary)
-        with euroleague_round_tabs[1]:
-            render_round_summary(
-                simulation_results_df, 
-                euroleague_team_colors, 
-                team_name_short, 
-                'Euroleague'
-            )
+        # Create round tabs - NEW LAYER OF TABS
+        euroleague_round_tab_labels = [f"{current_round_euroleague}"]
+        euroleague_round_tabs = st.tabs(euroleague_round_tab_labels)
         
-        # Fixtures tab (Fixtures)
+        # Inside the Round tab
         with euroleague_round_tabs[0]:
-            st.markdown('<div class="rs_game-separator3"></div>', unsafe_allow_html=True)
-
-# Add some spacing
-            st.markdown('<div style="height: 15px;"></div>', unsafe_allow_html=True)
-
-            col1, col2 = st.columns([1,.82])
+            # Create the third level tabs (Fixtures, Summary, Leaders)
+            euroleague_section_tabs = st.tabs(["Fixtures", "Summary", "Leaders"])
             
-            with col1:
-                selected_matchup = st.selectbox(
-                    'Select Matchup',
-                    matchups,
-                    key='simulate_matchup_select',
-                    label_visibility='hidden'
+            # Fixtures Summary tab (Summary)
+            with euroleague_section_tabs[1]:
+                render_round_summary(
+                    simulation_results_df, 
+                    euroleague_team_colors, 
+                    team_name_short, 
+                    'Euroleague'
                 )
             
-            with col2:
-                matchup_data = simulation_results_df[simulation_results_df['Matchup'] == selected_matchup].iloc[0]
-                time_value = matchup_data.get('Time', 'N/A')
-                arena_value = matchup_data.get('Arena', 'N/A')
+            # Fixtures tab (Fixtures)
+            with euroleague_section_tabs[0]:
+                st.markdown('<div class="rs_game-separator3"></div>', unsafe_allow_html=True)
+
+                # Add some spacing
+                st.markdown('<div style="height: 15px;"></div>', unsafe_allow_html=True)
+
+                col1, col2 = st.columns([1,.82])
                 
-                st.markdown(
-                    f"""
-                    <div style="
-                        background-color: white; 
-                        -webkit-background-color: white;
-                        background: white;
-                        -webkit-background: white;
-                        border-radius: 8px; 
-                        padding: 5px 8px; 
-                        margin-top: -10px; 
-                        box-shadow: 0 4px 6px rgba(100, 100, 100, 0.4);
-                        margin-right:-50px; 
-                        margin-left:-27px;
-                        display: flex; 
-                        justify-content: center; 
-                        align-items: center; 
-                        gap: 30px; 
-                        color: black !important;">
+                with col1:
+                    selected_matchup = st.selectbox(
+                        'Select Matchup',
+                        matchups,
+                        key='simulate_matchup_select',
+                        label_visibility='hidden'
+                    )
+                
+                with col2:
+                    matchup_data = simulation_results_df[simulation_results_df['Matchup'] == selected_matchup].iloc[0]
+                    time_value = matchup_data.get('Time', 'N/A')
+                    arena_value = matchup_data.get('Arena', 'N/A')
+                    
+                    st.markdown(
+                        f"""
                         <div style="
-                            text-align: center; 
-                            font-weight: 700;  
-                            font-size: 12px; 
-                            color: rgb(26, 31, 54);">{time_value}</div>
-                        <div style="
-                            text-align: center; 
-                            font-weight: 700;  
-                            font-size: 12px; 
-                            color: rgb(26, 31, 54);">{arena_value}</div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
+                            background-color: white; 
+                            -webkit-background-color: white;
+                            background: white;
+                            -webkit-background: white;
+                            border-radius: 8px; 
+                            padding: 5px 8px; 
+                            margin-top: -10px; 
+                            box-shadow: 0 4px 6px rgba(100, 100, 100, 0.4);
+                            margin-right:-50px; 
+                            margin-left:-27px;
+                            display: flex; 
+                            justify-content: center; 
+                            align-items: center; 
+                            gap: 30px; 
+                            color: black !important;">
+                            <div style="
+                                text-align: center; 
+                                font-weight: 700;  
+                                font-size: 12px; 
+                                color: rgb(26, 31, 54);">{time_value}</div>
+                            <div style="
+                                text-align: center; 
+                                font-weight: 700;  
+                                font-size: 12px; 
+                                color: rgb(26, 31, 54);">{arena_value}</div>
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
+                
+                render_stats_tables_euroleague(selected_matchup, matchups, "simulate")
             
-            render_stats_tables_euroleague(selected_matchup, matchups, "simulate")
-        
-        # Statistics tab
-        with euroleague_round_tabs[2]:
+            # Statistics tab
+            with euroleague_section_tabs[2]:
                 # Add custom styling with white background and updated layout
                 st.markdown("""
                 <style>
@@ -3789,7 +3897,7 @@ div[data-baseweb="select"]:hover {
 
                 with label_col:
                     st.markdown('<div style="padding-top: 5px; font-weight: 700; font-family: -apple-system, system-ui, BlinkMacSystemFont, \'Segoe UI\', Roboto, \'Helvetica Neue\', Arial, sans-serif; text-transform: uppercase; margin-top: -12px;margin-left:-30px; color: #1a1f36; letter-spacing: 0.1px; display: flex; align-items: center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px; color: #3b82f6;"><path d="M11 3L11 21M3 12L21 12"></path></svg>Select Statistic:</div>', unsafe_allow_html=True)
-                
+
                 with select_col:
                     # Add the selectbox
                     stat_label = st.selectbox(
@@ -3851,78 +3959,88 @@ div[data-baseweb="select"]:hover {
                 
                 # Close table container
                 st.markdown('</div>', unsafe_allow_html=True)
+
     # EUROCUP TAB
     with sport_tabs[1]:
-        # Directly create third level tabs without the middle tier
-        eurocup_round_tabs = st.tabs(["Fixtures", "Summary", "Leaders"])
+        # Get the current round for EuroCup
+        current_round_eurocup = simulation_results_df_eurocup['Round'].max()
         
-        # Fixtures Summary tab
-        with eurocup_round_tabs[1]:
-            render_round_summary_eurocup(
-                simulation_results_df_eurocup, 
-                eurocup_team_colors, 
-                team_name_short_eurocup, 
-                'Eurocup'
-            )
+        # Create round tabs - NEW LAYER OF TABS
+        eurocup_round_tab_labels = [f"{current_round_eurocup}"]
+        eurocup_round_tabs = st.tabs(eurocup_round_tab_labels)
         
-        # Fixtures tab
+        # Inside the Round tab
         with eurocup_round_tabs[0]:
-            st.markdown('<div class="rs_game-separator3"></div>', unsafe_allow_html=True)
+            # Create the third level tabs (Fixtures, Summary, Leaders)
+            eurocup_section_tabs = st.tabs(["Fixtures", "Summary", "Leaders"])
+            
+            # Fixtures Summary tab
+            with eurocup_section_tabs[1]:
+                render_round_summary_eurocup(
+                    simulation_results_df_eurocup, 
+                    eurocup_team_colors, 
+                    team_name_short_eurocup, 
+                    'Eurocup'
+                )
+            
+            # Fixtures tab
+            with eurocup_section_tabs[0]:
+                st.markdown('<div class="rs_game-separator3"></div>', unsafe_allow_html=True)
 
-# Add some spacing
-            st.markdown('<div style="height: 15px;"></div>', unsafe_allow_html=True)
-            col1, col2 = st.columns([1,.82])
-            
-            with col1:
-                selected_matchup_eurocup = st.selectbox(
-                    'Select Matchup',
-                    matchups_eurocup,
-                    key='simulate_matchup_select_eurocup',
-                    label_visibility='hidden'
-                )
-            
-            with col2:
-                matchup_data_eurocup = simulation_results_df_eurocup[simulation_results_df_eurocup['Matchup'] == selected_matchup_eurocup].iloc[0]
-                time_value_eurocup = matchup_data_eurocup.get('Time', 'N/A')
-                arena_value_eurocup = matchup_data_eurocup.get('Arena', 'N/A')
+                # Add some spacing
+                st.markdown('<div style="height: 15px;"></div>', unsafe_allow_html=True)
+                col1, col2 = st.columns([1,.82])
                 
-                st.markdown(
-                    f"""
-                    <div style="
-                        background-color: white; 
-                        -webkit-background-color: white;
-                        background: white;
-                        -webkit-background: white;
-                        border-radius: 8px; 
-                        padding: 5px 8px; 
-                        margin-top: -10px; 
-                        box-shadow: 0 4px 6px rgba(100, 100, 100, 0.4);
-                        margin-right:-50px; 
-                        margin-left:-27px;
-                        display: flex; 
-                        justify-content: center; 
-                        align-items: center; 
-                        gap: 30px; 
-                        color: black !important;">
+                with col1:
+                    selected_matchup_eurocup = st.selectbox(
+                        'Select Matchup',
+                        matchups_eurocup,
+                        key='simulate_matchup_select_eurocup',
+                        label_visibility='hidden'
+                    )
+                
+                with col2:
+                    matchup_data_eurocup = simulation_results_df_eurocup[simulation_results_df_eurocup['Matchup'] == selected_matchup_eurocup].iloc[0]
+                    time_value_eurocup = matchup_data_eurocup.get('Time', 'N/A')
+                    arena_value_eurocup = matchup_data_eurocup.get('Arena', 'N/A')
+                    
+                    st.markdown(
+                        f"""
                         <div style="
-                            text-align: center; 
-                            font-weight: 700;  
-                            font-size: 12px; 
-                            color: rgb(26, 31, 54);">{time_value_eurocup}</div>
-                        <div style="
-                            text-align: center; 
-                            font-weight: 700;  
-                            font-size: 12px; 
-                            color: rgb(26, 31, 54);">{arena_value_eurocup}</div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
+                            background-color: white; 
+                            -webkit-background-color: white;
+                            background: white;
+                            -webkit-background: white;
+                            border-radius: 8px; 
+                            padding: 5px 8px; 
+                            margin-top: -10px; 
+                            box-shadow: 0 4px 6px rgba(100, 100, 100, 0.4);
+                            margin-right:-50px; 
+                            margin-left:-27px;
+                            display: flex; 
+                            justify-content: center; 
+                            align-items: center; 
+                            gap: 30px; 
+                            color: black !important;">
+                            <div style="
+                                text-align: center; 
+                                font-weight: 700;  
+                                font-size: 12px; 
+                                color: rgb(26, 31, 54);">{time_value_eurocup}</div>
+                            <div style="
+                                text-align: center; 
+                                font-weight: 700;  
+                                font-size: 12px; 
+                                color: rgb(26, 31, 54);">{arena_value_eurocup}</div>
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
+                
+                render_stats_tables_eurocup(selected_matchup_eurocup, matchups_eurocup, simulation_results_df_eurocup, "simulate")
             
-            render_stats_tables_eurocup(selected_matchup_eurocup, matchups_eurocup, simulation_results_df_eurocup, "simulate")
-        
-        # Statistics tab
-        with eurocup_round_tabs[2]:
+            # Statistics tab
+            with eurocup_section_tabs[2]:
                 # Add custom styling with white background and updated layout
                 st.markdown("""
                 <style>
@@ -4148,7 +4266,6 @@ div[data-baseweb="select"]:hover {
                 
                 # Close table container
                 st.markdown('</div>', unsafe_allow_html=True)
-
 
 
     
