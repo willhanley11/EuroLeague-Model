@@ -3649,7 +3649,7 @@ div[data-baseweb="select"]:hover {
     # Top level tabs: Euroleague and EuroCup
     sport_tabs = st.tabs(["Euroleague", "EuroCup", "About"])
     
-    st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
+
 
     # EUROLEAGUE TAB
     with sport_tabs[0]:
@@ -4268,7 +4268,8 @@ div[data-baseweb="select"]:hover {
                 st.markdown('</div>', unsafe_allow_html=True)
 
     with sport_tabs[2]:
-    # Add CSS for styling the About tab with enhanced professional appearance
+        st.markdown('<div class="about-tab-content">', unsafe_allow_html=True)
+        # Add CSS for styling the About tab with enhanced professional appearance
         st.markdown("""
 <style>
     body {
@@ -4403,76 +4404,72 @@ div[data-baseweb="select"]:hover {
     }
 </style>
 """, unsafe_allow_html=True)
-    
-    # Add the separator above the title
-    st.markdown('<div class="about-separator"></div>', unsafe_allow_html=True)
-    
-    # Title
-    st.markdown('<h1 class="about-header">About Our Analytics</h1>', unsafe_allow_html=True)
-    
-    # Data Collection section
-    st.markdown('<h2 class="section-header">Data Collection & Enhancement</h2>', unsafe_allow_html=True)
-    
-    # Bullet points with proper alignment
-    bullet_points = [
-        "Utilize the Euroleague API to collect play-by-play, boxscore and shot location data",
-        "Identify players on the court at each moment of every game",
-        "Find and address inconsistencies in the data to fix actual and potential errors",
-        "Break down the start and end of each possession",
-        "Eliminate garbage time possessions"
-    ]
-    
-    for point in bullet_points:
-        st.markdown(f"""
-        <div class="bullet-point">
-            <span class="bullet-marker">•</span>
-            <span class="bullet-text">{point}</span>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    st.markdown('</div>', unsafe_allow_html=True)
-    
-    # Player Impact Analysis section
-    st.markdown('<h2 class="section-header">Player Impact Analysis</h2>', unsafe_allow_html=True)
-
-    
-    impact_points = [
-        "Create Player Level Datasets",
-        "Applying a unique weighting system to determine players' impact on each possession",
-        "Incorporating opponent offensive/defensive statistics for Elo rating calculations",
-        "Tracking how each possession began to inform transition probability matrices",
-        "Player impact ratings for offense/defense eFG%, offensive and defensive rebounding, turnovers, and free throw attempt rate"
-    ]
-    
-    for point in impact_points:
-        st.markdown(f"""
-        <div class="bullet-point">
-            <span class="bullet-marker">•</span>
-            <span class="bullet-text">{point}</span>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    st.markdown('</div>', unsafe_allow_html=True)
-    
-    # Advanced Metrics section
-    st.markdown('<h2 class="section-header">Game Simulations</h2>', unsafe_allow_html=True)
-
-    
-    metrics_points = [
-        "20+ Offensive and Defensive Player-level Elo ratings, inclusive of Pace ratings",
-        "Create player influenced team transition matrices to simulate games 30,000 times",
-        "Home Court Advantage analysis to capture impace across all major statistical categories (shooting percentages, offensive rebounding, fouls, etc.)",
-    ]
-    
-    for point in metrics_points:
-        st.markdown(f"""
-        <div class="bullet-point">
-            <span class="bullet-marker">•</span>
-            <span class="bullet-text">{point}</span>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    st.markdown('</div>', unsafe_allow_html=True)
+        
+        st.markdown('<div class="sport-about-tab">', unsafe_allow_html=True)
+        
+        # Add the separator above the title
+        st.markdown('<div class="about-separator"></div>', unsafe_allow_html=True)
+        
+        # Title
+        st.markdown('<h1 class="about-header">About Our Analytics</h1>', unsafe_allow_html=True)
+        
+        # Data Collection section
+        st.markdown('<h2 class="section-header">Data Collection & Enhancement</h2>', unsafe_allow_html=True)
+        
+        # Bullet points with proper alignment
+        bullet_points = [
+            "Utilize the Euroleague API to collect play-by-play, boxscore and shot location data",
+            "Identify players on the court at each moment of every game",
+            "Find and address inconsistencies in the data to fix actual and potential errors",
+            "Break down the start and end of each possession",
+            "Eliminate garbage time possessions"
+        ]
+        
+        for point in bullet_points:
+            st.markdown(f"""
+            <div class="bullet-point">
+                <span class="bullet-marker">•</span>
+                <span class="bullet-text">{point}</span>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        # Player Impact Analysis section
+        st.markdown('<h2 class="section-header">Player Impact Analysis</h2>', unsafe_allow_html=True)
+        
+        impact_points = [
+            "Create Player Level Datasets",
+            "Apply a unique weighting system to determine players' impact on each possession",
+            "Incorporate opponent offensive/defensive statistics for Elo rating calculations",
+            "Track how each possession begins to inform transition probability matrices",
+            "Calculate player impact ratings for offense/defense eFG%, offensive and defensive rebounding, turnovers, and free throw attempt rate"
+        ]
+        
+        for point in impact_points:
+            st.markdown(f"""
+            <div class="bullet-point">
+                <span class="bullet-marker">•</span>
+                <span class="bullet-text">{point}</span>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        # Advanced Metrics section
+        st.markdown('<h2 class="section-header">Game Simulations</h2>', unsafe_allow_html=True)
+        
+        metrics_points = [
+            "Develop 20+ Offensive and Defensive Player-level Elo ratings, inclusive of Pace ratings",
+            "Create player influenced team transition matrices to simulate games 30,000 times",
+            "Analyze Home Court Advantage to capture impact across all major statistical categories (shooting percentages, offensive rebounding, fouls, etc.)",
+        ]
+        
+        for point in metrics_points:
+            st.markdown(f"""
+            <div class="bullet-point">
+                <span class="bullet-marker">•</span>
+                <span class="bullet-text">{point}</span>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        st.markdown('</div>', unsafe_allow_html=True)
     
        
     # Close all divs
