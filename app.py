@@ -3647,7 +3647,7 @@ div[data-baseweb="select"]:hover {
     matchups_eurocup = team_stats_eurocup['Matchup'].unique().tolist()
     
     # Top level tabs: Euroleague and EuroCup
-    sport_tabs = st.tabs(["Euroleague", "EuroCup"])
+    sport_tabs = st.tabs(["Euroleague", "EuroCup", "About"])
     
     st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
 
@@ -4267,7 +4267,230 @@ div[data-baseweb="select"]:hover {
                 # Close table container
                 st.markdown('</div>', unsafe_allow_html=True)
 
+    with sport_tabs[2]:
+    # Add CSS for styling the About tab with enhanced professional appearance
+        st.markdown("""
+<style>
+    body {
+        font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif !important;
+    }
+    
+    .about-header {
+        font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif !important;
+        font-size: 28px !important;
+        font-weight: 700 !important;
+        color: #333 !important;
+        margin-bottom: 0px !important;
+        margin-top:-15px !important;
+        text-align: center !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1px !important;
+        background: linear-gradient(to right, #2c3e50, #3498db) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+    }
+    
+    .section-header {
+        font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif !important;
+        font-size: 18px !important;
+        font-weight: 800 !important;
+        color: #333 !important;
+        margin-top: 15px !important;
+        margin-bottom: 22px !important;
+        padding-left: 18px !important;
+        border-left: 4px solid #3b82f6 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        position: relative !important;
+        transition: transform 0.3s ease !important;
+    }
+    
+    .section-header:hover {
+        transform: translateX(5px) !important;
+    }
+    
+    /* Add a subtle line after the section header */
+    .section-header::after {
+        content: "" !important;
+        position: absolute !important;
+        bottom: -10px !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 1px !important;
+        background: linear-gradient(to right, rgba(59, 130, 246, 0.5), rgba(59, 130, 246, 0.05)) !important;
+    }
+    
+    .section-text {
+        font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif !important;
+        font-size: 16px !important;
+        color: #2c3e50 !important;
+        margin-bottom: 15px !important;
+        line-height: 1.7 !important;
+        margin-top: 16px !important;
+        font-weight: 400 !important;
+        background-color: #f4f6f7 !important;
+        padding: 15px 20px !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05) !important;
+        border-left: 4px solid #3b82f6 !important;
+    }
+    
+    .bullet-container {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        padding: 15px !important;
+        background-color: #f9fafb !important;
+        border-radius: 8px !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.03) !important;
+        margin-top: 10px !important;
+    }
+    
+    .bullet-point {
+        display: flex !important;
+        align-items: flex-start !important;
+    }
+    
+    .bullet-marker {
+        color: #3b82f6 !important;
+        font-size: 18px !important;
+        line-height: 1 !important;
+        margin-right: 12px !important;
+        margin-top: 1px !important;
+        font-weight: bold !important;
+    }
+    
+    .bullet-text {
+        font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif !important;
+        color: #2c3e50 !important;
+        font-size: 15px !important;
+        line-height: 1.6 !important;
+        flex: 1 !important;
+    }
+    
+    .note-text {
+        font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif !important;
+        font-style: italic !important;
+        color: #6b7280 !important;
+        font-size: 14px !important;
+        background-color: rgba(59, 130, 246, 0.05) !important;
+        padding: 3px 6px !important;
+        border-radius: 4px !important;
+    }
+    
+    /* About page separator styling */
+    .about-separator {
+        height: 2px !important;
+        background: linear-gradient(to right, rgba(0,0,0,0.02), rgba(0,0,0,.5), rgba(0,0,0,0.02)) !important;
+        margin: -15px -15px 30px -25px !important;
+        position: relative !important;
+    }
+    
+    .about-separator::after {
+        content: "" !important;
+        position: absolute !important;
+        width: 20px !important;
+        height: 20px !important;
+        background-color: white !important;
+        border-radius: 50% !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1) !important;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="%231a1f36"/></svg>') !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+    
+    # Add the separator above the title
+    st.markdown('<div class="about-separator"></div>', unsafe_allow_html=True)
+    
+    # Title
+    st.markdown('<h1 class="about-header">About Our Analytics</h1>', unsafe_allow_html=True)
+    
+    # Data Collection section
+    st.markdown('<h2 class="section-header">Data Collection & Enhancement</h2>', unsafe_allow_html=True)
+    
+    # Bullet points with proper alignment
+    bullet_points = [
+        "Utilize the Euroleague API to collect play-by-play, boxscore and shot location data",
+        "Identify players on the court at each moment of every game",
+        "Find and address inconsistencies in the data to fix actual and potential errors",
+        "Break down the start and end of each possession",
+        "Eliminate garbage time possessions"
+    ]
+    
+    for point in bullet_points:
+        st.markdown(f"""
+        <div class="bullet-point">
+            <span class="bullet-marker">•</span>
+            <span class="bullet-text">{point}</span>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Player Impact Analysis section
+    st.markdown('<h2 class="section-header">Player Impact Analysis</h2>', unsafe_allow_html=True)
 
+    
+    impact_points = [
+        "Create Player Level Datasets",
+        "Applying a unique weighting system to determine players' impact on each possession",
+        "Incorporating opponent offensive/defensive statistics for Elo rating calculations",
+        "Tracking how each possession began to inform transition probability matrices"
+    ]
+    
+    for point in impact_points:
+        st.markdown(f"""
+        <div class="bullet-point">
+            <span class="bullet-marker">•</span>
+            <span class="bullet-text">{point}</span>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Advanced Metrics section
+    st.markdown('<h2 class="section-header">Advanced Metrics</h2>', unsafe_allow_html=True)
+
+    
+    metrics_points = [
+        "20+ Offensive and Defensive Player-level Elo ratings created",
+        "Player impact ratings for offense/defense eFG%, offensive and defensive rebounding, turnovers, and free throw attempt rate",
+        "Pace influence metrics for each player"
+    ]
+    
+    for point in metrics_points:
+        st.markdown(f"""
+        <div class="bullet-point">
+            <span class="bullet-marker">•</span>
+            <span class="bullet-text">{point}</span>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Home Court Advantage section
+    st.markdown('<h2 class="section-header">Home Court Advantage Analysis</h2>', unsafe_allow_html=True)
+
+    advantage_points = [
+        "Compile team outcomes when playing at home versus away on both offense and defense",
+        "Creating transition matrices for home teams, away teams, and combined performance",
+        "Assess the impact across all major statistical categories (shooting percentages, offensive rebounding, fouls, etc.)"
+    ]
+    
+    for point in advantage_points:
+        st.markdown(f"""
+        <div class="bullet-point">
+            <span class="bullet-marker">•</span>
+            <span class="bullet-text">{point}</span>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)
     
     # Close all divs
     st.markdown('</div>', unsafe_allow_html=True)
