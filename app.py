@@ -4440,7 +4440,8 @@ div[data-baseweb="select"]:hover {
         "Create Player Level Datasets",
         "Applying a unique weighting system to determine players' impact on each possession",
         "Incorporating opponent offensive/defensive statistics for Elo rating calculations",
-        "Tracking how each possession began to inform transition probability matrices"
+        "Tracking how each possession began to inform transition probability matrices",
+        "Player impact ratings for offense/defense eFG%, offensive and defensive rebounding, turnovers, and free throw attempt rate"
     ]
     
     for point in impact_points:
@@ -4454,13 +4455,13 @@ div[data-baseweb="select"]:hover {
     st.markdown('</div>', unsafe_allow_html=True)
     
     # Advanced Metrics section
-    st.markdown('<h2 class="section-header">Advanced Metrics</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">Game Simulations</h2>', unsafe_allow_html=True)
 
     
     metrics_points = [
-        "20+ Offensive and Defensive Player-level Elo ratings created",
-        "Player impact ratings for offense/defense eFG%, offensive and defensive rebounding, turnovers, and free throw attempt rate",
-        "Pace influence metrics for each player"
+        "20+ Offensive and Defensive Player-level Elo ratings, inclusive of Pace ratings",
+        "Create player influenced team transition matrices to simulate games 30,000 times",
+        "Home Court Advantage analysis to capture impace across all major statistical categories (shooting percentages, offensive rebounding, fouls, etc.)",
     ]
     
     for point in metrics_points:
@@ -4473,25 +4474,7 @@ div[data-baseweb="select"]:hover {
     
     st.markdown('</div>', unsafe_allow_html=True)
     
-    # Home Court Advantage section
-    st.markdown('<h2 class="section-header">Home Court Advantage Analysis</h2>', unsafe_allow_html=True)
-
-    advantage_points = [
-        "Compile team outcomes when playing at home versus away on both offense and defense",
-        "Creating transition matrices for home teams, away teams, and combined performance",
-        "Assess the impact across all major statistical categories (shooting percentages, offensive rebounding, fouls, etc.)"
-    ]
-    
-    for point in advantage_points:
-        st.markdown(f"""
-        <div class="bullet-point">
-            <span class="bullet-marker">•</span>
-            <span class="bullet-text">{point}</span>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    st.markdown('</div>', unsafe_allow_html=True)
-    
+       
     # Close all divs
     st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
