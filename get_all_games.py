@@ -1214,10 +1214,10 @@ def calculate_player_elo_ratings (OffensePlayerDataNEW1,DefensePlayerDataNEW1):
     k_values = {
         'two_made_for_team': .5,
         'two_missed_for_team': .5,
-        'two_fga_for_team': .8,
-        'three_made_for_team': .4,
-        'three_missed_for_team': .4,
-        'three_fga_for_team': .8,
+        'two_fga_for_team': .7,
+        'three_made_for_team': .25,
+        'three_missed_for_team': .25,
+        'three_fga_for_team': .6,
         'fta_for_team': .6,
         'ftm_for_team': .4,
         'oreb_for_team': .65,        
@@ -1227,9 +1227,9 @@ def calculate_player_elo_ratings (OffensePlayerDataNEW1,DefensePlayerDataNEW1):
         'two_made_against_team': .5,
         'two_missed_against_team': .5,
         'two_fga_against_team': .5,
-        'three_made_against_team': .4,
-        'three_missed_against_team': .4,
-        'three_fga_against_team': .5,
+        'three_made_against_team': .25,
+        'three_missed_against_team': .25,
+        'three_fga_against_team': .4,
         'fta_against_team': .6,
         'ftm_against_team': .001,
         'oreb_against_team': .65,  
@@ -2413,7 +2413,7 @@ def get_team_code(team_name):
     }
     return team_codes.get(team_name, '')
 
-def get_euroleague_games_selenium():
+def get_euroleague_games_selenium(round_number):
     # Setup Chrome webdriver
     options = webdriver.ChromeOptions()
     # Uncomment the next line to run in background
@@ -2422,7 +2422,7 @@ def get_euroleague_games_selenium():
     
     try:
         # Navigate to the specific round page
-        driver.get("https://www.euroleaguebasketball.net/en/euroleague/game-center/?round=29&season=E2024")
+        driver.get(f"https://www.euroleaguebasketball.net/en/euroleague/game-center/?round={round_number}&season=E2024")
         
         # Wait for page to load
         time.sleep(5)  # Give time for dynamic content to load
@@ -2445,7 +2445,7 @@ def get_euroleague_games_selenium():
         
         # Try to find round information
         round_element = soup.find('span', text=lambda t: t and 'Round' in t)
-        round_text = round_element.text.strip() if round_element else 'Round 29'
+        round_text = round_element.text.strip() if round_element else f'Round {round_number}'
         
         # Find the season information (Regular Season)
         season_element = soup.select_one('div[class*="seasonFilters"] button:nth-child(2)')
@@ -2494,58 +2494,7 @@ def get_euroleague_games_selenium():
         # Always close the browser
         driver.quit()
 
-# Get and display games
-games = get_euroleague_games_selenium()
-
-# In[29]:
-
-
-all_simulations = []
-# Iterate through each game in the DataFrame
-for index, game in games.iterrows():
-    updated_players = []
-    
-    # Set HFA based on home team
-    home_team_hfa = 0.8 if game['Home_Code'] != 'TEL' else 0
-    
-    SimmedTeamStats, SimmedBoxScore, SimmedBoxScoreTeam1, SimmedBoxScoreTeam2 = run_full_simuluation(
-        home_team=game['Home_Code'],
-        away_team=game['Away_Code'], 
-        HFA=home_team_hfa, 
-        players_to_update=updated_players, 
-        number_of_simulations=30000, 
-        possession_adjust=0,
-        teamsDF=teamsDF,
-        homeusage_for=homeusage_for,
-        awayusage_for=awayusage_for,
-        homeusage_against=homeusage_against,
-        awayusage_against=awayusage_against,
-    )
-    
-    # Add print statement to show home and away teams after simulation
-    print(f"Simulation completed: {game['Home']} (Home) vs {game['Away']} (Away)")
-    
-    # Create a dictionary with simulation results and game details
-    simulation_result = {
-        'Matchup': game['Matchup'],
-        'Home_Team': game['Home'],
-        'Away_Team': game['Away'],
-        'Home_Code': game['Home_Code'],
-        'Away_Code': game['Away_Code'],
-        'Time': game['Time'],
-        'Arena': game['Arena'],
-        'Round': game['Round'],
-        'SimmedTeamStats': SimmedTeamStats,
-        'SimmedBoxScore': SimmedBoxScore,
-        'SimmedBoxScoreTeam1': SimmedBoxScoreTeam1,
-        'SimmedBoxScoreTeam2': SimmedBoxScoreTeam2
-    }
-    
-    # Append the simulation result to the list
-    all_simulations.append(simulation_result)
-# Convert the list of simulation results to a DataFrame if needed
-simulation_results_df = pd.DataFrame(all_simulations)
-
+# Team logo mapping
 team_logo_mapping_2024_2025 = {
     "ZAL": "https://media-cdn.incrowdsports.com/0aa09358-3847-4c4e-b228-3582ee4e536d.png?width=180&height=180&resizeType=fill&format=webp",
     "MAD": "https://media-cdn.incrowdsports.com/601c92bf-90e4-4b43-9023-bd6946e34143.png?crop=244:244:nowe:0:0",
@@ -2567,34 +2516,88 @@ team_logo_mapping_2024_2025 = {
     "MCO": "https://media-cdn.incrowdsports.com/89ed276a-2ba3-413f-8ea2-b3be209ca129.png?crop=512:512:nowe:0:0",
 }
 
-simulation_results_df['Home_Logo'] = simulation_results_df['Home_Code'].map(team_logo_mapping_2024_2025)
-simulation_results_df['Away_Logo'] = simulation_results_df['Away_Code'].map(team_logo_mapping_2024_2025)
-
-
-# In[ ]:
-
-
-
-
-
-# In[35]:
-
-
-# Get the directory of the current script
-script_dir = os.path.dirname(os.path.abspath(__file__))
-
-# Create a 'data' directory if it doesn't exist
-os.makedirs(os.path.join(script_dir, 'data'), exist_ok=True)
-
-# Full path to the pickle file
-pickle_path = os.path.join(script_dir, 'data', 'euroleague_simulations.pkl')
-
-# Save the DataFrame
-with open(pickle_path, 'wb') as f:
-    pickle.dump(simulation_results_df, f)
-
-print(f"Simulation results saved to {pickle_path}")
-
+# Process each round (29, 30, 31)
+for round_number in [29, 30, 31]:
+    print(f"\n--- Processing Round {round_number} ---\n")
+    
+    # Get games for the current round
+    games = get_euroleague_games_selenium(round_number)
+    
+    # Check if games were found
+    if games.empty:
+        print(f"No games found for Round {round_number}. Skipping to next round.")
+        continue
+    
+    # Process simulations for this round
+    all_simulations = []
+    
+    # Iterate through each game in the DataFrame
+    for index, game in games.iterrows():
+        updated_players = []
+        
+        # Set HFA based on home team
+        home_team_hfa = 0.8 if game['Home_Code'] != 'TEL' else 0
+        
+        print(f"Simulating: {game['Away']} @ {game['Home']}")
+        
+        SimmedTeamStats, SimmedBoxScore, SimmedBoxScoreTeam1, SimmedBoxScoreTeam2 = run_full_simuluation(
+            home_team=game['Home_Code'],
+            away_team=game['Away_Code'], 
+            HFA=home_team_hfa, 
+            players_to_update=updated_players, 
+            number_of_simulations=20000, 
+            possession_adjust=0,
+            teamsDF=teamsDF,
+            homeusage_for=homeusage_for,
+            awayusage_for=awayusage_for,
+            homeusage_against=homeusage_against,
+            awayusage_against=awayusage_against,
+        )
+        
+        # Add print statement to show home and away teams after simulation
+        print(f"Simulation completed: {game['Home']} (Home) vs {game['Away']} (Away)")
+        
+        # Create a dictionary with simulation results and game details
+        simulation_result = {
+            'Matchup': game['Matchup'],
+            'Home_Team': game['Home'],
+            'Away_Team': game['Away'],
+            'Home_Code': game['Home_Code'],
+            'Away_Code': game['Away_Code'],
+            'Time': game['Time'],
+            'Arena': game['Arena'],
+            'Round': game['Round'],
+            'SimmedTeamStats': SimmedTeamStats,
+            'SimmedBoxScore': SimmedBoxScore,
+            'SimmedBoxScoreTeam1': SimmedBoxScoreTeam1,
+            'SimmedBoxScoreTeam2': SimmedBoxScoreTeam2
+        }
+        
+        # Append the simulation result to the list
+        all_simulations.append(simulation_result)
+    
+    # Convert the list of simulation results to a DataFrame
+    simulation_results_df = pd.DataFrame(all_simulations)
+    
+    # Add logos
+    simulation_results_df['Home_Logo'] = simulation_results_df['Home_Code'].map(team_logo_mapping_2024_2025)
+    simulation_results_df['Away_Logo'] = simulation_results_df['Away_Code'].map(team_logo_mapping_2024_2025)
+    
+    # Get the directory of the current script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Create a 'data' directory if it doesn't exist
+    os.makedirs(os.path.join(script_dir, 'data'), exist_ok=True)
+    
+    # Full path to the pickle file
+    pickle_path = os.path.join(script_dir, 'data', f'euroleague_simulations_round_{round_number}.pkl')
+    
+    # Save the DataFrame
+    with open(pickle_path, 'wb') as f:
+        pickle.dump(simulation_results_df, f)
+    
+    print(f"Simulation results for Round {round_number} saved to {pickle_path}")
+    print(f"Found {len(simulation_results_df)} games for Round {round_number}")
 
 # In[ ]:
 
