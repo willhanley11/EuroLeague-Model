@@ -3,18 +3,30 @@ import pandas as pd
 import os
 import pickle
 
-def create_sample_data_euroleague():
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    pickle_path = os.path.join(script_dir, 'data', 'euroleague_simulations.pkl')
+def create_sample_data_euroleague(simulation_data=None):
+    """
+    Create sample data frames from simulation results.
     
-    with open(pickle_path, 'rb') as f:
-        simulation_results_df = pickle.load(f)
+    Parameters:
+    simulation_data (DataFrame, optional): Simulation results data to process.
+                                          If None, loads Round 29 data by default.
+    
+    Returns:
+    tuple: (team_stats_df, box_scores_team1_df, box_scores_team2_df)
+    """
+    # If no data provided, load default (Round 29) data
+    if simulation_data is None:
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        pickle_path = os.path.join(script_dir, 'data', 'euroleague_simulations_round_29.pkl')
+        
+        with open(pickle_path, 'rb') as f:
+            simulation_data = pickle.load(f)
     
     team_stats_list = []
     box_scores_team1_list = []  # Will store home team data
     box_scores_team2_list = []  # Will store away team data
     
-    for _, row in simulation_results_df.iterrows():
+    for _, row in simulation_data.iterrows():
         matchup = row['Matchup']
         home_code = row['Home_Code']
         away_code = row['Away_Code']
@@ -181,7 +193,7 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
 }
 
    
-   team_stats, player_statsTeam1, player_statsTeam2 = create_sample_data_euroleague()
+   team_stats, player_statsTeam1, player_statsTeam2 = create_sample_data_euroleague(simulation_results_df)
    filtered_team_stats = team_stats[team_stats['Matchup'] == selected_matchup]
    filtered_player_statsTeam1 = player_statsTeam1[player_statsTeam1['Matchup'] == selected_matchup]
    filtered_player_statsTeam2 = player_statsTeam2[player_statsTeam2['Matchup'] == selected_matchup]
@@ -807,17 +819,15 @@ div.stButton > button:focus {
       if 'selected_view' not in st.session_state:
           st.session_state.selected_view = 'All'
       
-      # Create the buttons
       with btn1:
-          if st.button('All', key='game_view_btn'):
+          if st.button('All', key=f'game_view_btn_{table_key_prefix}'):
               st.session_state.selected_view = 'All'
       with btn2:
-          if st.button(home_team, key='home_team_btn'):
+          if st.button(home_team, key=f'home_team_btn_{table_key_prefix}'):
               st.session_state.selected_view = 'Home'
       with btn3:
-          if st.button(away_team, key='away_team_btn'):
+          if st.button(away_team, key=f'away_team_btn_{table_key_prefix}'):
               st.session_state.selected_view = 'Away'
-      
       view_options = {
           'All': 'All',
           'Home': 'team1',
@@ -2338,7 +2348,7 @@ def render_round_summary(
             st.markdown(html_table, unsafe_allow_html=True)
         
         # Get player stats for the matchup
-        team_stats, player_statsTeam1, player_statsTeam2 = create_sample_data_euroleague()
+        team_stats, player_statsTeam1, player_statsTeam2 = create_sample_data_euroleague(simulation_results_df)
         filtered_player_statsTeam1 = player_statsTeam1[player_statsTeam1['Matchup'] == matchup]
         filtered_player_statsTeam2 = player_statsTeam2[player_statsTeam2['Matchup'] == matchup]
         
@@ -3424,11 +3434,21 @@ document.addEventListener('DOMContentLoaded', function() {
     # Start fixed-width container
     st.markdown('<div class="fixed-width-container">', unsafe_allow_html=True)
 
-    # Load data
+    # Load data for Round 29
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    pickle_path = os.path.join(script_dir, 'data', 'euroleague_simulations.pkl')
+    pickle_path = os.path.join(script_dir, 'data', 'euroleague_simulations_round_29.pkl')
     with open(pickle_path, 'rb') as f:
         simulation_results_df = pickle.load(f)
+    
+    # Load data for Round 30
+    pickle_path_round_30 = os.path.join(script_dir, 'data', 'euroleague_simulations_round_30.pkl')
+    with open(pickle_path_round_30, 'rb') as f:
+        simulation_results_df_round_30 = pickle.load(f)
+        
+    # Load data for Round 31
+    pickle_path_round_31 = os.path.join(script_dir, 'data', 'euroleague_simulations_round_31.pkl')
+    with open(pickle_path_round_31, 'rb') as f:
+        simulation_results_df_round_31 = pickle.load(f)
 
     st.markdown("""
        <style>
@@ -3624,6 +3644,13 @@ div[data-baseweb="select"]:hover {
     
     if 'simulation_results_df' not in st.session_state:
         st.session_state['simulation_results_df'] = simulation_results_df
+        
+    # Store Round 30 and 31 data in session state
+    if 'simulation_results_df_round_30' not in st.session_state:
+        st.session_state['simulation_results_df_round_30'] = simulation_results_df_round_30
+        
+    if 'simulation_results_df_round_31' not in st.session_state:
+        st.session_state['simulation_results_df_round_31'] = simulation_results_df_round_31
     
     # Load EuroCup simulation results
     script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -3651,24 +3678,39 @@ div[data-baseweb="select"]:hover {
     
 
 
-    # EUROLEAGUE TAB
+# EUROLEAGUE TAB
     with sport_tabs[0]:
         # Get the current round for Euroleague
         current_round_euroleague = simulation_results_df['Round'].max()
         
-        # Create round tabs - NEW LAYER OF TABS
-        euroleague_round_tab_labels = [f"{current_round_euroleague}"]
-        euroleague_round_tabs = st.tabs(euroleague_round_tab_labels)
+        # Parse the round string: "Regular Season Round 27"
+        # Split into parts and extract what we need
+        round_parts = current_round_euroleague.split('Round')
+        season_name = round_parts[0].strip()  # "Regular Season"
+        round_number = int(round_parts[1].strip())  # 29
         
-        # Inside the Round tab
-        with euroleague_round_tabs[0]:
-            # Create the third level tabs (Fixtures, Summary, Leaders)
+        # Create tabs for season name and rounds separately
+        # Use bold font for the season name tab
+        euroleague_round_tab_labels = [
+            f"****{season_name}****",
+            f"Round {round_number}",
+            f"Round {round_number + 1}",
+            f"Round {round_number + 2}"
+        ]
+        euroleague_round_tabs = st.tabs(euroleague_round_tab_labels)
+
+        # Define a function to create the round content for any dataset
+        def create_round_content(simulation_data, tab_suffix=""):
+    # Generate player stats for this round
+            team_stats, player_statsTeam1, player_statsTeam2 = create_sample_data_euroleague(simulation_data)
+    
+    # Create the third level tabs (Fixtures, Summary, Leaders)
             euroleague_section_tabs = st.tabs(["Fixtures", "Summary", "Leaders"])
             
             # Fixtures Summary tab (Summary)
             with euroleague_section_tabs[1]:
                 render_round_summary(
-                    simulation_results_df, 
+                    simulation_data, 
                     euroleague_team_colors, 
                     team_name_short, 
                     'Euroleague'
@@ -3683,16 +3725,19 @@ div[data-baseweb="select"]:hover {
 
                 col1, col2 = st.columns([1,.82])
                 
+                # Get matchups specific to this round's dataset
+                round_matchups = simulation_data['Matchup'].unique().tolist()
+                
                 with col1:
                     selected_matchup = st.selectbox(
                         'Select Matchup',
-                        matchups,
-                        key='simulate_matchup_select',
+                        round_matchups,
+                        key=f'simulate_matchup_select{tab_suffix}',
                         label_visibility='hidden'
                     )
                 
                 with col2:
-                    matchup_data = simulation_results_df[simulation_results_df['Matchup'] == selected_matchup].iloc[0]
+                    matchup_data = simulation_data[simulation_data['Matchup'] == selected_matchup].iloc[0]
                     time_value = matchup_data.get('Time', 'N/A')
                     arena_value = matchup_data.get('Arena', 'N/A')
                     
@@ -3729,7 +3774,14 @@ div[data-baseweb="select"]:hover {
                         unsafe_allow_html=True
                     )
                 
-                render_stats_tables_euroleague(selected_matchup, matchups, "simulate")
+                # Store the current data in session state temporarily for the render function
+                temp_current_data = st.session_state.get('simulation_results_df')
+                st.session_state['simulation_results_df'] = simulation_data
+                
+                render_stats_tables_euroleague(selected_matchup, round_matchups, f"simulate{tab_suffix}")
+                
+                # Restore original data
+                st.session_state['simulation_results_df'] = temp_current_data
             
             # Statistics tab
             with euroleague_section_tabs[2]:
@@ -3841,8 +3893,8 @@ div[data-baseweb="select"]:hover {
                 st.markdown('<div class="rs_game-separator"></div>', unsafe_allow_html=True)
                 
                 # Get current round
-                current_round = simulation_results_df['Round'].max()
-                round_games = simulation_results_df[simulation_results_df['Round'] == current_round]
+                current_round = simulation_data['Round'].max()
+                round_games = simulation_data[simulation_data['Round'] == current_round]
                 
                 # Create empty DataFrame to store all player stats for the round
                 all_player_stats = pd.DataFrame()
@@ -3853,9 +3905,8 @@ div[data-baseweb="select"]:hover {
                 # Iterate through each game to get player stats and combine them
                 for _, game in round_games.iterrows():
                         matchup = game['Matchup']
-                        
-                        # Get player stats for the matchup
-                        team_stats, player_statsTeam1, player_statsTeam2 = create_sample_data_euroleague()
+
+                        team_stats, player_statsTeam1, player_statsTeam2 = create_sample_data_euroleague(simulation_data)
                         filtered_player_statsTeam1 = player_statsTeam1[player_statsTeam1['Matchup'] == matchup].copy()
                         filtered_player_statsTeam2 = player_statsTeam2[player_statsTeam2['Matchup'] == matchup].copy()
                         
@@ -3904,7 +3955,7 @@ div[data-baseweb="select"]:hover {
                         "",
                         options=list(stat_options.keys()),
                         index=0,
-                        key="rl_stat_selector",
+                        key=f"rl_stat_selector{tab_suffix}",
                         label_visibility="hidden"
                     )
                 
@@ -3920,7 +3971,7 @@ div[data-baseweb="select"]:hover {
                 # Add title as table header with unique class name
                 st.markdown(f'''
                 <div class="rl_leaders_table_header" style="display: flex; justify-content: space-between;">
-                    <div>{simulation_results_df["Round"].max()}</div>
+                    <div>{current_round_euroleague}</div>
                     <div>{stat_label} LEADERS</div>
                 </div>
                 ''', unsafe_allow_html=True)
@@ -3959,6 +4010,24 @@ div[data-baseweb="select"]:hover {
                 
                 # Close table container
                 st.markdown('</div>', unsafe_allow_html=True)
+        
+        # Season Name tab - use the same content as the current round tab
+        with euroleague_round_tabs[0]:
+            # Call the same function to create identical content with a unique suffix
+            create_round_content(simulation_results_df, "_season_tab")
+            
+        # Inside the current Round tab 
+        with euroleague_round_tabs[1]:
+            # Call the function to create the content with a different suffix
+            create_round_content(simulation_results_df, "_round_29_tab")
+        
+        # Round +1 tab
+        with euroleague_round_tabs[2]:
+            create_round_content(simulation_results_df_round_30, "_round_30_tab")
+            
+        # Round +2 tab
+        with euroleague_round_tabs[3]:
+            create_round_content(simulation_results_df_round_31, "_round_31_tab")
 
     # EUROCUP TAB
     with sport_tabs[1]:
@@ -4434,7 +4503,7 @@ div[data-baseweb="select"]:hover {
             """, unsafe_allow_html=True)
         
         # Player Impact Analysis section
-        st.markdown('<h2 class="section-header">Player Impact Analysis</h2>', unsafe_allow_html=True)
+        st.markdown('<h2 class="section-header">Player Level Analysis</h2>', unsafe_allow_html=True)
         
         impact_points = [
             "Create Player Level Datasets",
@@ -4453,7 +4522,7 @@ div[data-baseweb="select"]:hover {
             """, unsafe_allow_html=True)
         
         # Advanced Metrics section
-        st.markdown('<h2 class="section-header">Game Simulations</h2>', unsafe_allow_html=True)
+        st.markdown('<h2 class="section-header">Player Driven Game Simulations</h2>', unsafe_allow_html=True)
         
         metrics_points = [
             "Develop 20+ Offensive and Defensive Player-level Elo ratings, inclusive of Pace ratings",
