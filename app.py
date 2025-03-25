@@ -4019,15 +4019,15 @@ div[data-baseweb="select"]:hover {
         # Inside the current Round tab 
         with euroleague_round_tabs[1]:
             # Call the function to create the content with a different suffix
-            create_round_content(simulation_results_df, "_round_29_tab")
+            create_round_content(simulation_results_df, "_round_32_tab")
         
         # Round +1 tab
         with euroleague_round_tabs[2]:
-            create_round_content(simulation_results_df_round_30, "_round_30_tab")
+            create_round_content(simulation_results_df_round_33, "_round_33_tab")
             
         # Round +2 tab
         with euroleague_round_tabs[3]:
-            create_round_content(simulation_results_df_round_31, "_round_31_tab")
+            create_round_content(simulation_results_df_round_34, "_round_34_tab")
 
     # EUROCUP TAB
     with sport_tabs[1]:
