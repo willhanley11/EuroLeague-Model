@@ -3647,10 +3647,10 @@ div[data-baseweb="select"]:hover {
         
     # Store Round 30 and 31 data in session state
     if 'simulation_results_df_round_30' not in st.session_state:
-        st.session_state['simulation_results_df_round_30'] = simulation_results_df_round_30
+        st.session_state['simulation_results_df_round_33'] = simulation_results_df_round_33
         
     if 'simulation_results_df_round_31' not in st.session_state:
-        st.session_state['simulation_results_df_round_31'] = simulation_results_df_round_31
+        st.session_state['simulation_results_df_round_34'] = simulation_results_df_round_34
     
     # Load EuroCup simulation results
     script_dir = os.path.dirname(os.path.abspath(__file__))
