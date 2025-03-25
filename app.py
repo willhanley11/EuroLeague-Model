@@ -17,7 +17,7 @@ def create_sample_data_euroleague(simulation_data=None):
     # If no data provided, load default (Round 29) data
     if simulation_data is None:
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        pickle_path = os.path.join(script_dir, 'data', 'euroleague_simulations_round_29.pkl')
+        pickle_path = os.path.join(script_dir, 'data', 'euroleague_simulations_round_32.pkl')
         
         with open(pickle_path, 'rb') as f:
             simulation_data = pickle.load(f)
@@ -3436,19 +3436,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     # Load data for Round 29
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    pickle_path = os.path.join(script_dir, 'data', 'euroleague_simulations_round_29.pkl')
+    pickle_path = os.path.join(script_dir, 'data', 'euroleague_simulations_round_32.pkl')
     with open(pickle_path, 'rb') as f:
         simulation_results_df = pickle.load(f)
     
     # Load data for Round 30
-    pickle_path_round_30 = os.path.join(script_dir, 'data', 'euroleague_simulations_round_30.pkl')
-    with open(pickle_path_round_30, 'rb') as f:
-        simulation_results_df_round_30 = pickle.load(f)
+    pickle_path_round_33 = os.path.join(script_dir, 'data', 'euroleague_simulations_round_33.pkl')
+    with open(pickle_path_round_33, 'rb') as f:
+        simulation_results_df_round_33 = pickle.load(f)
         
     # Load data for Round 31
-    pickle_path_round_31 = os.path.join(script_dir, 'data', 'euroleague_simulations_round_31.pkl')
-    with open(pickle_path_round_31, 'rb') as f:
-        simulation_results_df_round_31 = pickle.load(f)
+    pickle_path_round_34 = os.path.join(script_dir, 'data', 'euroleague_simulations_round_34.pkl')
+    with open(pickle_path_round_34, 'rb') as f:
+        simulation_results_df_round_34 = pickle.load(f)
 
     st.markdown("""
        <style>
