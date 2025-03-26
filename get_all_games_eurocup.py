@@ -2383,176 +2383,237 @@ def run_full_simuluation (home_team, away_team, HFA, players_to_update, number_o
 # In[28]:
 
 
-import requests
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 import pandas as pd
+import time
+import os
+import pickle
 
 def get_team_code(team_name):
     team_codes = {
         'Wolves Twinsbet Vilnius': 'WOL',
-        'U-BT Cluj-Napoca':'CLU',
-        'Turk Telekom Ankara':'TTK',
-        'Buducnost VOLI Podgorica':'BUD',
-        'Cedevita Olimpija Ljubljana':'LJU',	
-        'Besiktas Fibabanka Istanbul':'BES',
-        'Dreamland Gran Canaria':'CAN',
-        'Umana Reyer Venice':'VNC'
+        'U-BT Cluj-Napoca': 'CLU',
+        'Turk Telekom Ankara': 'TTK',
+        'Buducnost VOLI Podgorica': 'BUD',
+        'Cedevita Olimpija Ljubljana': 'LJU',    
+        'Besiktas Fibabanka Istanbul': 'BES',
+        'Dreamland Gran Canaria': 'CAN',
+        'Umana Reyer Venice': 'VNC',
+        'Valencia Basket': 'PAM',
+        'Hapoel Shlomo Tel Aviv': 'HTA',
+        'Bahcesehir College Istanbul': 'BAH'
     }
     return team_codes.get(team_name, '')
 
-def get_euroleague_games():
-    url = "https://www.euroleaguebasketball.net/en/eurocup/game-center/"
+def get_eurocup_games_selenium(round_number):
+    """
+    Get EuroCup playoff games where:
+    - round=21 is Semifinals Game 1
+    - round=22 is Semifinals Game 2
+    """
+    # Setup Chrome webdriver
+    options = webdriver.ChromeOptions()
+    # Uncomment the next line to run in background
+    # options.add_argument('--headless')  
+    driver = webdriver.Chrome(options=options)
     
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-    }
-    
-    response = requests.get(url, headers=headers)
-    soup = BeautifulSoup(response.text, 'html.parser')
-    
-    # Try different selectors for round information
-    round_element = None
-    
-    # Try finding by looking for text that contains "Round"
-    round_spans = soup.find_all('span')
-    for span in round_spans:
-        if span.text and 'Round' in span.text:
-            round_element = span
-            break
-            
-    # If still not found, try alternative class-based approach
-    if not round_element:
-        round_element = soup.select_one('span[class*="round"]')  # This will match any class containing "round"
-    
-    round_text = round_element.text.strip() if round_element else ''
-    
-    # Find all game articles
-    game_articles = soup.find_all('article')
-    
-    matches = []
-    for article in game_articles:
-        game_span = article.find('span', class_='visually-hidden_wrap__Ob8t3')
-        if game_span and game_span.text.strip().startswith('game '):
-            teams = game_span.text.strip()[5:].split(' vs ')
-            if len(teams) == 2:
-                home_team = teams[1].strip()
-                away_team = teams[0].strip()
-                
-                # Get info div containing time and arena
-                info_div = article.select_one('div[class*="gameCard"] > div > div')
-                if info_div:
-                    game_time = info_div.find('time').text.strip() if info_div.find('time') else ''
-                    arena_span = article.select_one('div[class*="gameCard"] > div > div > span')
-                    arena = arena_span.text.strip() if arena_span else ''
-                
-                matches.append({
-                    'Home': home_team,
-                    'Away': away_team,
-                    'Home_Code': get_team_code(home_team),
-                    'Away_Code': get_team_code(away_team),
-                    'Matchup': f"{away_team} @ {home_team}",
-                    'Time': game_time,
-                    'Arena': arena,
-                    'Round': round_text
-                })
-    
-    potential_round_containers = soup.find_all('div', class_=lambda x: x and ('round' in x.lower() or 'header' in x.lower()))
+    try:
+        # Navigate to the specific round page for EuroCup using round parameter
+        driver.get(f"https://www.euroleaguebasketball.net/eurocup/game-center/?round={round_number}&season=U2024")
         
-    return pd.DataFrame(matches)
-
-# Get and display games
-games = get_euroleague_games()
-
-
-
-# In[29]:
-
-
-all_simulations = []
-
-# Iterate through each game in the DataFrame
-for index, game in games.iterrows():
-    updated_players = []
-    SimmedTeamStats,SimmedBoxScore, SimmedBoxScoreTeam1, SimmedBoxScoreTeam2 = run_full_simuluation(
-        home_team=game['Home_Code'],
-        away_team=game['Away_Code'], 
-        HFA=0.8, 
-        players_to_update=updated_players, 
-        number_of_simulations=60000, 
-        possession_adjust=0,
-        teamsDF=teamsDF,
-        homeusage_for=homeusage_for,
-        awayusage_for=awayusage_for,
-        homeusage_against=homeusage_against,
-        awayusage_against=awayusage_against,
-    )
+        # Wait for page to load
+        time.sleep(5)  # Give time for dynamic content to load
+        
+        # Optional: Look for and click cookie consent
+        try:
+            cookie_button = WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Accept All')]"))
+            )
+            cookie_button.click()
+            time.sleep(2)  # Wait after clicking
+        except Exception as e:
+            print(f"No cookie consent found or unable to click: {e}")
+        
+        # Get page source
+        page_source = driver.page_source
+        
+        # Parse with BeautifulSoup
+        soup = BeautifulSoup(page_source, 'html.parser')
+        
+        # Determine game number based on round parameter
+        game_number = 1 if round_number == 21 else 2
+        
+        # Try to find playoff phase information
+        phase_element = soup.select_one('div[class*="seasonFilters"] button:nth-child(2)')
+        playoff_phase = phase_element.text.strip() if phase_element else "Semifinals"
+        
+        # Combine phase and game text
+        full_game_text = f"{playoff_phase} Game {game_number}"
+        
+        # Find all game articles
+        game_articles = soup.find_all('article')
+        
+        matches = []
+        for article in game_articles:
+            game_span = article.find('span', class_='visually-hidden_wrap__Ob8t3')
+            if game_span and game_span.text.strip().startswith('game '):
+                teams = game_span.text.strip()[5:].split(' vs ')
+                if len(teams) == 2:
+                    home_team = teams[1].strip()
+                    away_team = teams[0].strip()
+                    
+                    # Get info div containing time and arena
+                    info_div = article.select_one('div[class*="gameCard"] > div > div')
+                    if info_div:
+                        game_time = info_div.find('time').text.strip() if info_div.find('time') else ''
+                        arena_span = article.select_one('div[class*="gameCard"] > div > div > span')
+                        arena = arena_span.text.strip() if arena_span else ''
+                    
+                    matches.append({
+                        'Home': home_team,
+                        'Away': away_team,
+                        'Home_Code': get_team_code(home_team),
+                        'Away_Code': get_team_code(away_team),
+                        'Matchup': f"{away_team} @ {home_team}",
+                        'Time': game_time,
+                        'Arena': arena,
+                        'Round': full_game_text
+                    })
+        
+        return pd.DataFrame(matches)
     
-    # Create a dictionary with simulation results and game details
-    simulation_result = {
-        'Matchup': game['Matchup'],
-        'Home_Team': game['Home'],
-        'Away_Team': game['Away'],
-        'Home_Code': game['Home_Code'],
-        'Away_Code': game['Away_Code'],
-	'Time': game['Time'],
-        'Arena': game['Arena'],
-        'Round': game['Round'],
-        'SimmedTeamStats': SimmedTeamStats,
-	'SimmedBoxScore': SimmedBoxScore,
-        'SimmedBoxScoreTeam1': SimmedBoxScore,
-        'SimmedBoxScoreTeam2': SimmedBoxScoreTeam2
-       }
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return pd.DataFrame()
     
-    
-    # Append the simulation result to the list
-    all_simulations.append(simulation_result)
+    finally:
+        # Always close the browser
+        driver.quit()
 
-# Convert the list of simulation results to a DataFrame if needed
-simulation_results_df = pd.DataFrame(all_simulations)
-
+# Team logo mapping
 team_logo_mapping_2024_2025 = {
     "WOL": "https://media-cdn.incrowdsports.com/bab91c74-fc2e-4176-9db5-06f40e0e6759.png",
-    "CLU":"https://media-cdn.incrowdsports.com/ae3e2844-0615-41bb-a788-a4f0d54b8d5e.png",
-
+    "CLU": "https://media-cdn.incrowdsports.com/ae3e2844-0615-41bb-a788-a4f0d54b8d5e.png",
     "TTK": "https://media-cdn.incrowdsports.com/4ba35608-54ca-4800-a59c-f2571e6f8e13.png",
-    "BUD":"https://media-cdn.incrowdsports.com/47161285-94b3-4266-9d23-b722e8600945.png",
-
+    "BUD": "https://media-cdn.incrowdsports.com/47161285-94b3-4266-9d23-b722e8600945.png",
     "LJU": "https://media-cdn.incrowdsports.com/73b33d13-570e-4e49-a9cb-fe806831eaa7.png",
-    "BES":"https://media-cdn.incrowdsports.com/791d8d03-da9c-4243-8342-ed6937f54762.png",
-
+    "BES": "https://media-cdn.incrowdsports.com/791d8d03-da9c-4243-8342-ed6937f54762.png",
     "CAN": "https://media-cdn.incrowdsports.com/a074edc1-e180-4515-a876-447884b570b1.png",
-    "VNC":"https://media-cdn.incrowdsports.com/104f5074-9f23-47da-a21f-f2078db8244c.png"
+    "VNC": "https://media-cdn.incrowdsports.com/104f5074-9f23-47da-a21f-f2078db8244c.png",
+    "BAH": "https://media-cdn.incrowdsports.com/1d3274d8-da86-4d21-9e97-6810ab88babe.png",
+    "PAM": "https://media-cdn.incrowdsports.com/efd12730-f2ea-4830-9caa-7f2f676079c2.png",
+    "HTA": "https://media-cdn.incrowdsports.com/cbb1c3ad-03d5-426a-b5ef-2832a4eee484.png"
 }
 
-simulation_results_df['Home_Logo'] = simulation_results_df['Home_Code'].map(team_logo_mapping_2024_2025)
-simulation_results_df['Away_Logo'] = simulation_results_df['Away_Code'].map(team_logo_mapping_2024_2025)
+# Round numbers for Semifinals Game 1 and Game 2
+playoff_round_mapping = {
+    21: "Semifinals Game 1",  # Round 21 = Game 1
+    22: "Semifinals Game 2"   # Round 22 = Game 2
+}
 
+# Process each playoff game round
+all_simulations = []
 
-# In[ ]:
+for round_number in [21, 22]:  # Rounds 21 (Game 1) and 22 (Game 2)
+    print(f"\n--- Processing Round {round_number}: {playoff_round_mapping[round_number]} ---\n")
+    
+    # Get games for the current round
+    games = get_eurocup_games_selenium(round_number)
+    
+    # Check if games were found
+    if games.empty:
+        print(f"No games found for Round {round_number}. Skipping to next round.")
+        continue
+    
+    print(f"Found {len(games)} games for {playoff_round_mapping[round_number]}")
+    
+    # Iterate through each game in the DataFrame
+    for index, game in games.iterrows():
+        updated_players = []
+        
+        print(f"Simulating: {game['Away']} @ {game['Home']}")
+        
+        try:
+            SimmedTeamStats, SimmedBoxScore, SimmedBoxScoreTeam1, SimmedBoxScoreTeam2 = run_full_simuluation(
+                home_team=game['Home_Code'],
+                away_team=game['Away_Code'], 
+                HFA=1, 
+                players_to_update=updated_players, 
+                number_of_simulations=60000, 
+                possession_adjust=0,
+                teamsDF=teamsDF,
+                homeusage_for=homeusage_for,
+                awayusage_for=awayusage_for,
+                homeusage_against=homeusage_against,
+                awayusage_against=awayusage_against,
+            )
+            
+            # Add print statement to show home and away teams after simulation
+            print(f"Simulation completed: {game['Home']} (Home) vs {game['Away']} (Away)")
+            
+            # Create a dictionary with simulation results and game details
+            simulation_result = {
+                'Matchup': game['Matchup'],
+                'Home_Team': game['Home'],
+                'Away_Team': game['Away'],
+                'Home_Code': game['Home_Code'],
+                'Away_Code': game['Away_Code'],
+                'Time': game['Time'],
+                'Arena': game['Arena'],
+                'Round': game['Round'],
+                'SimmedTeamStats': SimmedTeamStats,
+                'SimmedBoxScore': SimmedBoxScore,
+                'SimmedBoxScoreTeam1': SimmedBoxScoreTeam1,
+                'SimmedBoxScoreTeam2': SimmedBoxScoreTeam2
+            }
+            
+            # Append the simulation result to the list
+            all_simulations.append(simulation_result)
+            
+        except Exception as e:
+            print(f"Error simulating {game['Matchup']}: {e}")
 
-
-
-
-
-# In[35]:
-
-
-# Get the directory of the current script
-script_dir = os.path.dirname(os.path.abspath(__file__))
-
-# Create a 'data' directory if it doesn't exist
-os.makedirs(os.path.join(script_dir, 'data'), exist_ok=True)
-
-# Full path to the pickle file
-pickle_path = os.path.join(script_dir, 'data', 'eurocup_simulations.pkl')
-
-# Save the DataFrame
-with open(pickle_path, 'wb') as f:
-    pickle.dump(simulation_results_df, f)
-
-print(f"Simulation results saved to {pickle_path}")
-
-
+# Convert the list of simulation results to a DataFrame
+if all_simulations:
+    simulation_results_df = pd.DataFrame(all_simulations)
+    
+    # Add logos
+    simulation_results_df['Home_Logo'] = simulation_results_df['Home_Code'].map(team_logo_mapping_2024_2025)
+    simulation_results_df['Away_Logo'] = simulation_results_df['Away_Code'].map(team_logo_mapping_2024_2025)
+    
+    # Get the directory of the current script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Create a 'data' directory if it doesn't exist
+    os.makedirs(os.path.join(script_dir, 'data'), exist_ok=True)
+    
+    # Save separate files for Game 1 and Game 2
+    for game_number in [1, 2]:
+        # Filter results for this game number
+        game_results = simulation_results_df[simulation_results_df['Round'] == f"Semifinals Game {game_number}"]
+        
+        if not game_results.empty:
+            # Full path to the pickle file
+            pickle_path = os.path.join(script_dir, 'data', f'eurocup_simulations_semifinals_game_{game_number}.pkl')
+            
+            # Save the DataFrame
+            with open(pickle_path, 'wb') as f:
+                pickle.dump(game_results, f)
+            
+            print(f"Simulation results for Semifinals Game {game_number} saved to {pickle_path}")
+            print(f"Successfully simulated {len(game_results)} games for Game {game_number}")
+    
+    # Also save the combined file
+    combined_pickle_path = os.path.join(script_dir, 'data', 'eurocup_simulations_semifinals_all.pkl')
+    with open(combined_pickle_path, 'wb') as f:
+        pickle.dump(simulation_results_df, f)
+    print(f"Combined simulation results saved to {combined_pickle_path}")
+else:
+    print("No simulations were completed successfully.")
 # In[ ]:
 
 

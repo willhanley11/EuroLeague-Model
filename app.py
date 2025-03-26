@@ -54,7 +54,7 @@ def create_sample_data_euroleague(simulation_data=None):
 
 def create_sample_data_eurocup():
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    pickle_path = os.path.join(script_dir, 'data', 'eurocup_simulations.pkl')
+    pickle_path = os.path.join(script_dir, 'data', 'eurocup_simulations_semifinals_game_2.pkl')
     
     with open(pickle_path, 'rb') as f:
         simulation_results_df = pickle.load(f)
@@ -1043,14 +1043,14 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
     'TRE': '#000000',  # Dolomiti Energia Trento
     'CAN': '#fdb927',  # Gran Canaria
     'HJE': '#c8102e',  # Hapoel Jerusalem
-    'HAP': '#ec1c24',  # Hapoel Tel Aviv
+    'HTA': '#ec1c24',  # Hapoel Tel Aviv
     'JOV': '#006241',  # Joventut
     'ULM': '#f47920',  # Ulm
     'SOP': '#ffd700',  # Sopot
     'TTK': '#00b4e3',  # Turk Telekom
     'CLU': '#000000',  # Cluj
     'VNC': '#7b2132',  # Venice
-    'VAL': '#f47a38',  # Valencia
+    'PAM': '#f47a38',  # Valencia
     'VEO': '#000000',  # Hamburg
     'WOL': '#00a79d'   # Wolves
 }
@@ -1067,14 +1067,14 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
     'TRE': '#e6e6e6',  # Light Gray (darker)
     'CAN': '#ffe4b3',  # Light Yellow (darker)
     'HJE': '#ffd0d4',  # Light Red (darker)
-    'HAP': '#ffd0d2',  # Light Red (darker)
+    'HTA': '#ffd0d2',  # Light Red (darker)
     'JOV': '#ccffe0',  # Light Green (darker)
     'ULM': '#ffe0cc',  # Light Orange (darker)
     'SOP': '#ffe4b3',  # Light Yellow (darker)
     'TTK': '#ccf2ff',  # Light Blue (darker)
     'CLU': '#e6e6e6',  # Light Gray (darker)
     'VNC': '#ffd6e0',  # Light Burgundy (darker)
-    'VAL': '#ffe0cc',  # Light Orange (darker)
+    'PAM': '#ffe0cc',  # Light Orange (darker)
     'VEO': '#e6e6e6',  # Light Gray (darker)
     'WOL': '#ccfff8'   # Light Turquoise (darker)
 }
@@ -1091,14 +1091,14 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
     'TRE': 'DOLOMITI',
     'CAN': 'GRAN CANARIA',
     'HJE': 'HAPOEL BANK',
-    'HAP': 'HAPOEL TEL AVIV',
+    'HTA': 'HAPOEL TEL AVIV',
     'JOV': 'JOVENTUT',
     'ULM': 'RATIOPHARM',
     'SOP': 'TREFL SOPOT',
     'TTK': 'TURK TELEKOM',
     'CLU': 'U-BT CLUJ',
     'VNC': 'REYER VENICE',
-    'VAL': 'VALENCIA',
+    'PAM': 'VALENCIA',
     'VEO': 'VEOLIA TOWERS',
     'WOL': 'WOLVES'
 }
@@ -3654,7 +3654,7 @@ div[data-baseweb="select"]:hover {
     
     # Load EuroCup simulation results
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    pickle_path_eurocup = os.path.join(script_dir, 'data', 'eurocup_simulations.pkl')
+    pickle_path_eurocup = os.path.join(script_dir, 'data', 'eurocup_simulations_semifinals_game_2.pkl')
     with open(pickle_path_eurocup, 'rb') as f:
         simulation_results_df_eurocup = pickle.load(f)
     
