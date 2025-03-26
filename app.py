@@ -4480,7 +4480,7 @@ div[data-baseweb="select"]:hover {
         st.markdown('<div class="about-separator"></div>', unsafe_allow_html=True)
         
         # Title
-        st.markdown('<h1 class="about-header">About Our Analytics</h1>', unsafe_allow_html=True)
+        st.markdown('<h1 class="about-header">About the Analytics</h1>', unsafe_allow_html=True)
         
         # Data Collection section
         st.markdown('<h2 class="section-header">Data Collection & Enhancement</h2>', unsafe_allow_html=True)
@@ -4490,7 +4490,7 @@ div[data-baseweb="select"]:hover {
             "Utilize the Euroleague API to collect play-by-play, boxscore and shot location data",
             "Identify players on the court at each moment of every game",
             "Find and address inconsistencies in the data to fix actual and potential errors",
-            "Break down the start and end of each possession",
+            "Break down methods to the start and end of each possession",
             "Eliminate garbage time possessions"
         ]
         
@@ -4503,14 +4503,11 @@ div[data-baseweb="select"]:hover {
             """, unsafe_allow_html=True)
         
         # Player Impact Analysis section
-        st.markdown('<h2 class="section-header">Player Level Analysis</h2>', unsafe_allow_html=True)
+        st.markdown('<h2 class="section-header">Player Elo Ratings</h2>', unsafe_allow_html=True)
         
         impact_points = [
-            "Create Player Level Datasets",
-            "Apply a unique weighting system to determine players' impact on each possession",
-            "Incorporate opponent offensive/defensive statistics for Elo rating calculations",
-            "Track how each possession begins to inform transition probability matrices",
-            "Calculate player impact ratings for offense/defense eFG%, offensive and defensive rebounding, turnovers, and free throw attempt rate"
+	    "Apply a unique weighting system to determine players' impact on each possession",
+            "Player Level Datasets to create 20+ Offensive and Defensive Player-level Elo ratings, inclusive of Pace ratings",
         ]
         
         for point in impact_points:
@@ -4522,12 +4519,12 @@ div[data-baseweb="select"]:hover {
             """, unsafe_allow_html=True)
         
         # Advanced Metrics section
-        st.markdown('<h2 class="section-header">Player Driven Game Simulations</h2>', unsafe_allow_html=True)
+        st.markdown('<h2 class="section-header">Game Simulations</h2>', unsafe_allow_html=True)
         
         metrics_points = [
-            "Develop 20+ Offensive and Defensive Player-level Elo ratings, inclusive of Pace ratings",
-            "Create player influenced team transition matrices to simulate games 30,000 times",
-            "Analyze Home Court Advantage to capture impact across all major statistical categories (shooting percentages, offensive rebounding, fouls, etc.)",
+            "Find lineups and apply minutes model to estimate player minutes, with ability to add/remove players at will",
+            "Use player elo ratings to derive team transition matrices, simulating games 50,000 times",
+            "Apply Home Court Advantage Factor to capture impact across all major statistical categories (shooting percentages, offensive rebounding, fouls, etc.)",
         ]
         
         for point in metrics_points:
