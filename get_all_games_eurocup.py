@@ -2536,14 +2536,14 @@ for round_number in [21, 22]:  # Rounds 21 (Game 1) and 22 (Game 2)
         updated_players = []
         
         print(f"Simulating: {game['Away']} @ {game['Home']}")
-        
+        home_team_hfa = 1 if game['Home_Code'] != 'HTA' else 0
         try:
             SimmedTeamStats, SimmedBoxScore, SimmedBoxScoreTeam1, SimmedBoxScoreTeam2 = run_full_simuluation(
                 home_team=game['Home_Code'],
                 away_team=game['Away_Code'], 
-                HFA=1, 
+                HFA=home_team_hfa, 
                 players_to_update=updated_players, 
-                number_of_simulations=60000, 
+                number_of_simulations=40000, 
                 possession_adjust=0,
                 teamsDF=teamsDF,
                 homeusage_for=homeusage_for,
