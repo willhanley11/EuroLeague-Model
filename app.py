@@ -3093,7 +3093,7 @@ team_name_short_eurocup = {
 
 
 def main():
-    st.set_page_config(layout="wide", page_icon="🏀", page_title="Eurolytics")
+    st.set_page_config(layout="wide", page_icon="🏀", page_title="Eurolytics: Euroleague and Eurocup Basketball Simulator")
     
     st.markdown("""
     <style>
@@ -3242,7 +3242,7 @@ def main():
     }
     </style>
 
-    <div class="logo-text">EUROLYTICS</div>
+    <div class="logo-text">EUROLYTICS :<span style="font-size: 13px; letter-spacing: normal;">    EUROLEAGUE & EUROCUP BASKETBALL SIMULATOR</span></div>
     """, unsafe_allow_html=True)
     
     # Add JavaScript for tab dropdown behavior
