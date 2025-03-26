@@ -1773,14 +1773,14 @@ div.stButton > button:focus {
     # Red shades
     'JLB': ['#ff99a3', '#ffb3ba', '#ffccd1', '#ffe6e8', '#fff0f1', '#fff5f6'],
     'HJE': ['#ff9999', '#ffb3b3', '#ffcccc', '#ffe6e6', '#fff0f0', '#fff5f5'],
-    'HAP': ['#ff9999', '#ffb3b3', '#ffcccc', '#ffe6e6', '#fff0f0', '#fff5f5'],
+    'HTA': ['#ff9999', '#ffb3b3', '#ffcccc', '#ffe6e6', '#fff0f0', '#fff5f5'],
     
     # Yellow/Gold shades
     'CAN': ['#ffd480', '#ffdb99', '#ffe6b3', '#fff0cc', '#fff5e6', '#fff9f0'],
     
     # Orange shades
     'ULM': ['#ffb380', '#ffc299', '#ffd1b3', '#ffe0cc', '#fff0e6', '#fff5f0'],
-    'VAL': ['#ffb380', '#ffc299', '#ffd1b3', '#ffe0cc', '#fff0e6', '#fff5f0'],
+    'PAM': ['#ffb380', '#ffc299', '#ffd1b3', '#ffe0cc', '#fff0e6', '#fff5f0'],
     
     # Burgundy shades (Venice)
     'VNC': ['#cc99a8', '#d6adb8', '#e0c1c8', '#ebd5d9', '#f5e9eb', '#ffeaef'],
@@ -3024,7 +3024,7 @@ eurocup_team_colors = {
     'TRE': '#000000',  # Dolomiti Energia Trento
     'CAN': '#fdb927',  # Gran Canaria
     'HJE': '#c8102e',  # Hapoel Jerusalem
-    'HAP': '#ec1c24',  # Hapoel Tel Aviv
+    'HTA': '#ec1c24',  # Hapoel Tel Aviv
     'JOV': '#006241',  # Joventut
     'ULM': '#f47920',  # Ulm
     'SOP': '#ffd700',  # Sopot
@@ -3048,7 +3048,7 @@ eurocup_team_colors_light = {
     'TRE': '#e6e6e6',  # Light Gray (darker)
     'CAN': '#ffe4b3',  # Light Yellow (darker)
     'HJE': '#ffd0d4',  # Light Red (darker)
-    'HAP': '#ffd0d2',  # Light Red (darker)
+    'HTA': '#ffd0d2',  # Light Red (darker)
     'JOV': '#ccffe0',  # Light Green (darker)
     'ULM': '#ffe0cc',  # Light Orange (darker)
     'SOP': '#ffe4b3',  # Light Yellow (darker)
@@ -3072,7 +3072,7 @@ team_name_short_eurocup = {
     'TRE': 'DOLOMITI',
     'CAN': 'GRAN CANARIA',
     'HJE': 'HAPOEL BANK',
-    'HAP': 'HAPOEL TEL AVIV',
+    'HTA': 'HAPOEL TEL AVIV',
     'JOV': 'JOVENTUT',
     'ULM': 'RATIOPHARM',
     'SOP': 'TREFL SOPOT',
