@@ -4035,7 +4035,7 @@ div[data-baseweb="select"]:hover {
         current_round_eurocup = simulation_results_df_eurocup['Round'].max()
         
         # Create round tabs - NEW LAYER OF TABS
-        eurocup_round_tab_labels = [f"{current_round_eurocup}"]
+        eurocup_round_tab_labels = [f"****Playoffs**** {current_round_eurocup}"]
         eurocup_round_tabs = st.tabs(eurocup_round_tab_labels)
         
         # Inside the Round tab
