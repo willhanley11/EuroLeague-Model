@@ -2231,7 +2231,7 @@ def run_full_simuluation (home_team, away_team, HFA, players_to_update, number_o
                                             ascending=[True, False, False, False]))
     
     # Create decay weights for each possession
-    def calculate_decay_weights(group, decay_factor=0.98):
+    def calculate_decay_weights(group, decay_factor=0.99):
         indices = np.arange(len(group))
         weights = np.power(decay_factor, indices)
         # Normalize weights to sum to 1
@@ -2266,9 +2266,9 @@ def run_full_simuluation (home_team, away_team, HFA, players_to_update, number_o
     
     averagesShooting = playerstats12[['fta', 'threefga', 'twofga', 'twofgm', 'threefgm', 'ftmade', 'assist', 'to', 'oreb','dreb']].mean()
     
-    weight_ft = .25  # Weight for free throw percentage
-    weight_two = .2  # Weight for two-point percentage
-    weight_three = .35 # Weight for three-point percentage
+    weight_ft = .27  # Weight for free throw percentage
+    weight_two = .23  # Weight for two-point percentage
+    weight_three = .37 # Weight for three-point percentage
     
     # Regressed shooting percentages
     playerstats12['ft%'] = ((playerstats12['ftmade'] / playerstats12['fta']) * playerstats12['fta'] +
@@ -2518,7 +2518,7 @@ playoff_round_mapping = {
 # Process each playoff game round
 all_simulations = []
 
-for round_number in [21, 22]:  # Rounds 21 (Game 1) and 22 (Game 2)
+for round_number in [22]:  # Rounds 21 (Game 1) and 22 (Game 2)
     print(f"\n--- Processing Round {round_number}: {playoff_round_mapping[round_number]} ---\n")
     
     # Get games for the current round
@@ -2536,7 +2536,7 @@ for round_number in [21, 22]:  # Rounds 21 (Game 1) and 22 (Game 2)
         updated_players = []
         
         print(f"Simulating: {game['Away']} @ {game['Home']}")
-        home_team_hfa = 1.1 if game['Home_Code'] != 'HTA' else .35
+        home_team_hfa = 1.2 if game['Home_Code'] != 'HTA' else .2
         pace_game_2 = -5 if game['Home_Code'] != 'HTA' else 0
         try:
             SimmedTeamStats, SimmedBoxScore, SimmedBoxScoreTeam1, SimmedBoxScoreTeam2 = run_full_simuluation(
@@ -2593,7 +2593,7 @@ if all_simulations:
     os.makedirs(os.path.join(script_dir, 'data'), exist_ok=True)
     
     # Save separate files for Game 1 and Game 2
-    for game_number in [1, 2]:
+    for game_number in [2]:
         # Filter results for this game number
         game_results = simulation_results_df[simulation_results_df['Round'] == f"Semifinals Game {game_number}"]
         
