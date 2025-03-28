@@ -2266,9 +2266,9 @@ def run_full_simuluation (home_team, away_team, HFA, players_to_update, number_o
     
     averagesShooting = playerstats12[['fta', 'threefga', 'twofga', 'twofgm', 'threefgm', 'ftmade', 'assist', 'to', 'oreb','dreb']].mean()
     
-    weight_ft = .3  # Weight for free throw percentage
-    weight_two = .25  # Weight for two-point percentage
-    weight_three = .4 # Weight for three-point percentage
+    weight_ft = .25  # Weight for free throw percentage
+    weight_two = .2  # Weight for two-point percentage
+    weight_three = .35 # Weight for three-point percentage
     
     # Regressed shooting percentages
     playerstats12['ft%'] = ((playerstats12['ftmade'] / playerstats12['fta']) * playerstats12['fta'] +
@@ -2536,15 +2536,16 @@ for round_number in [21, 22]:  # Rounds 21 (Game 1) and 22 (Game 2)
         updated_players = []
         
         print(f"Simulating: {game['Away']} @ {game['Home']}")
-        home_team_hfa = 1 if game['Home_Code'] != 'HTA' else 0
+        home_team_hfa = 1.1 if game['Home_Code'] != 'HTA' else .35
+        pace_game_2 = -5 if game['Home_Code'] != 'HTA' else 0
         try:
             SimmedTeamStats, SimmedBoxScore, SimmedBoxScoreTeam1, SimmedBoxScoreTeam2 = run_full_simuluation(
                 home_team=game['Home_Code'],
                 away_team=game['Away_Code'], 
                 HFA=home_team_hfa, 
                 players_to_update=updated_players, 
-                number_of_simulations=40000, 
-                possession_adjust=0,
+                number_of_simulations=50000, 
+                possession_adjust=pace_game_2,
                 teamsDF=teamsDF,
                 homeusage_for=homeusage_for,
                 awayusage_for=awayusage_for,
