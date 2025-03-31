@@ -3,6 +3,7 @@ import pandas as pd
 import os
 import pickle
 
+
 def create_sample_data_euroleague(simulation_data=None):
     """
     Create sample data frames from simulation results.

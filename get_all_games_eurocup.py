@@ -2512,13 +2512,13 @@ team_logo_mapping_2024_2025 = {
 # Round numbers for Semifinals Game 1 and Game 2
 playoff_round_mapping = {
     21: "Semifinals Game 1",  # Round 21 = Game 1
-    22: "Semifinals Game 2"   # Round 22 = Game 2
+    23: "Semifinals Game 3"   # Round 22 = Game 2
 }
 
 # Process each playoff game round
 all_simulations = []
 
-for round_number in [22]:  # Rounds 21 (Game 1) and 22 (Game 2)
+for round_number in [23]:  # Rounds 21 (Game 1) and 22 (Game 2)
     print(f"\n--- Processing Round {round_number}: {playoff_round_mapping[round_number]} ---\n")
     
     # Get games for the current round
@@ -2537,7 +2537,7 @@ for round_number in [22]:  # Rounds 21 (Game 1) and 22 (Game 2)
         
         print(f"Simulating: {game['Away']} @ {game['Home']}")
         home_team_hfa = 1.2 if game['Home_Code'] != 'HTA' else .2
-        pace_game_2 = -5 if game['Home_Code'] != 'HTA' else 0
+        pace_game_2 = -7 if game['Home_Code'] != 'HTA' else 0
         try:
             SimmedTeamStats, SimmedBoxScore, SimmedBoxScoreTeam1, SimmedBoxScoreTeam2 = run_full_simuluation(
                 home_team=game['Home_Code'],
@@ -2593,7 +2593,7 @@ if all_simulations:
     os.makedirs(os.path.join(script_dir, 'data'), exist_ok=True)
     
     # Save separate files for Game 1 and Game 2
-    for game_number in [2]:
+    for game_number in [3]:
         # Filter results for this game number
         game_results = simulation_results_df[simulation_results_df['Round'] == f"Semifinals Game {game_number}"]
         
