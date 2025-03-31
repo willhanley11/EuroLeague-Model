@@ -2445,7 +2445,7 @@ def get_eurocup_games_selenium(round_number):
         soup = BeautifulSoup(page_source, 'html.parser')
         
         # Determine game number based on round parameter
-        game_number = 1 if round_number == 21 else 2
+        game_number = 3
         
         # Try to find playoff phase information
         phase_element = soup.select_one('div[class*="seasonFilters"] button:nth-child(2)')

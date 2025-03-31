@@ -55,7 +55,7 @@ def create_sample_data_euroleague(simulation_data=None):
 
 def create_sample_data_eurocup():
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    pickle_path = os.path.join(script_dir, 'data', 'eurocup_simulations_semifinals_game_2.pkl')
+    pickle_path = os.path.join(script_dir, 'data', 'eurocup_simulations_semifinals_game_3.pkl')
     
     with open(pickle_path, 'rb') as f:
         simulation_results_df = pickle.load(f)
@@ -3655,7 +3655,7 @@ div[data-baseweb="select"]:hover {
     
     # Load EuroCup simulation results
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    pickle_path_eurocup = os.path.join(script_dir, 'data', 'eurocup_simulations_semifinals_game_2.pkl')
+    pickle_path_eurocup = os.path.join(script_dir, 'data', 'eurocup_simulations_semifinals_game_3.pkl')
     with open(pickle_path_eurocup, 'rb') as f:
         simulation_results_df_eurocup = pickle.load(f)
     
