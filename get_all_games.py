@@ -2230,7 +2230,7 @@ def run_full_simuluation (home_team, away_team, HFA, players_to_update, number_o
                                             ascending=[True, False, False, False]))
     
     # Create decay weights for each possession
-    def calculate_decay_weights(group, decay_factor=0.99):
+    def calculate_decay_weights(group, decay_factor=0.999):
         indices = np.arange(len(group))
         weights = np.power(decay_factor, indices)
         # Normalize weights to sum to 1
@@ -2265,9 +2265,9 @@ def run_full_simuluation (home_team, away_team, HFA, players_to_update, number_o
     
     averagesShooting = playerstats12[['fta', 'threefga', 'twofga', 'twofgm', 'threefgm', 'ftmade', 'assist', 'to', 'oreb','dreb']].mean()
     
-    weight_ft = .3  # Weight for free throw percentage
-    weight_two = .25  # Weight for two-point percentage
-    weight_three = .4 # Weight for three-point percentage
+    weight_ft = .25  # Weight for free throw percentage
+    weight_two = .2  # Weight for two-point percentage
+    weight_three = .35 # Weight for three-point percentage
     
     # Regressed shooting percentages
     playerstats12['ft%'] = ((playerstats12['ftmade'] / playerstats12['fta']) * playerstats12['fta'] +
@@ -2517,7 +2517,7 @@ team_logo_mapping_2024_2025 = {
 }
 
 # Process each round (29, 30, 31)
-for round_number in [32, 33, 34]:
+for round_number in [33, 34]:
     print(f"\n--- Processing Round {round_number} ---\n")
     
     # Get games for the current round
@@ -2536,7 +2536,13 @@ for round_number in [32, 33, 34]:
         updated_players = []
         
         # Set HFA based on home team
-        home_team_hfa = 0.8 if game['Home_Code'] != 'TEL' else 0
+        home_team_hfa = (1.1 if game['Home_Code'] in ['PAN', 'OLY'] else 
+                (-0.4 if game['Home_Code'] == 'BER' else 
+                (1.5 if game['Home_Code'] == 'MAD' else 
+                (0 if game['Home_Code'] == 'TEL' else 0.6)))) + \
+                ((-0.5) if game['Away_Code'] in ['PAN', 'OLY'] else 
+                (-1) if game['Away_Code'] == 'MAD' else 
+                0.5 if game['Away_Code'] == 'BER' else 0)
         
         print(f"Simulating: {game['Away']} @ {game['Home']}")
         
