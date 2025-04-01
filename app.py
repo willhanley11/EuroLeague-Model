@@ -348,10 +348,87 @@ def render_stats_tables_euroleague(selected_matchup, matchups, table_key_prefix=
     text-transform: uppercase;
     letter-spacing: 0.1px;
 }
+.team-stats-euroleague-container > table > tbody > tr::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: rgba(224, 224, 224, 0.8);
+    pointer-events: none;
+}
 
+/* Vertical column dividers using pseudo-elements */
+.team-stats-euroleague-container > table > tbody > tr > td {
+    position: relative !important;
+}
+
+.team-stats-euroleague-container > table > tbody > tr > td::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: rgba(224, 224, 224, 0.5);
+    pointer-events: none;
+}
+
+/* Don't add right border to the last column */
+.team-stats-euroleague-container > table > tbody > tr > td:last-child::after {
+    display: none;
+}
+
+/* Add vertical separators to header cells */
+.team-stats-euroleague-container > table > thead > tr > th {
+    position: relative !important;
+}
+
+.team-stats-euroleague-container > table > thead > tr > th::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: rgba(224, 224, 224, 0.5);
+    pointer-events: none;
+}
+
+/* Don't add right border to the last header */
+.team-stats-euroleague-container > table > thead > tr > th:last-child::after {
+    display: none;
+}
 
        </style>
    """, unsafe_allow_html=True)
+
+
+   st.markdown("""
+<style>
+/* Grid line override - Add this at the very end */
+.team-stats-euroleague-container table {
+    border: 2px solid #dfdfdf !important;
+    border-collapse: collapse !important;
+}
+
+.team-stats-euroleague-container th {
+    border: 2px solid #dfdfdf !important;
+}
+
+.team-stats-euroleague-container td {
+    border: 2px solid #dfdfdf !important;
+}
+
+/* Keep the gradient backgrounds for the header cells */
+.team-stats-euroleague-container th:nth-child(1),
+.team-stats-euroleague-container th:nth-child(2),
+.team-stats-euroleague-container th:nth-child(3) {
+    border: 2px solid #dfdfdf !important;
+}
+</style>
+""", unsafe_allow_html=True)
 
    
    first_row = simulation_results_df[simulation_results_df['Matchup'] == selected_matchup].iloc[0]
@@ -1260,10 +1337,85 @@ def render_stats_tables_eurocup(selected_matchup, matchups, simulation_results_d
     text-transform: uppercase;
     letter-spacing: 0.1px;
 }
+.team-stats-eurocup-container > table > tbody > tr::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: rgba(224, 224, 224, 0.8);
+    pointer-events: none;
+}
 
+/* Vertical column dividers using pseudo-elements */
+.team-stats-eurocup-container > table > tbody > tr > td {
+    position: relative !important;
+}
+
+.team-stats-eurocup-container > table > tbody > tr > td::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: rgba(224, 224, 224, 0.5);
+    pointer-events: none;
+}
+
+/* Don't add right border to the last column */
+.team-stats-eurocup-container > table > tbody > tr > td:last-child::after {
+    display: none;
+}
+
+/* Add vertical separators to header cells */
+.team-stats-eurocup-container > table > thead > tr > th {
+    position: relative !important;
+}
+
+.team-stats-eurocup-container > table > thead > tr > th::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: rgba(224, 224, 224, 0.5);
+    pointer-events: none;
+}
+
+/* Don't add right border to the last header */
+.team-stats-eurocup-container > table > thead > tr > th:last-child::after {
+    display: none;
+}
 
        </style>
    """, unsafe_allow_html=True)
+   st.markdown("""
+<style>
+/* Grid line override - Add this at the very end */
+.team-stats-eurocup-container table {
+    border: 2px solid #dfdfdf !important;
+    border-collapse: collapse !important;
+}
+
+.team-stats-eurocup-container th {
+    border: 2px solid #dfdfdf !important;
+}
+
+.team-stats-eurocup-container td {
+    border: 2px solid #dfdfdf !important;
+}
+
+/* Keep the gradient backgrounds for the header cells */
+.team-stats-eurocup-container th:nth-child(1),
+.team-stats-eurocup-container th:nth-child(2),
+.team-stats-eurocup-container th:nth-child(3) {
+    border: 2px solid #dfdfdf !important;
+}
+</style>
+""", unsafe_allow_html=True)
    
    first_row = simulation_results_df_eurocup[simulation_results_df_eurocup['Matchup'] == selected_matchup].iloc[0]
    st.markdown('<div class="eurocup_tab">', unsafe_allow_html=True)
@@ -1625,7 +1777,7 @@ div.stButton > button:focus {
 
 /* Add some subtle borders for better readability */
 .player-stats-table tr {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.05) !important;
 }
 
 /* All View Table Styles */
@@ -1717,6 +1869,7 @@ div.stButton > button:focus {
 }
           </style>
       """, unsafe_allow_html=True)
+      
       
       # Create three columns for the buttons
       btn1_eurocup, btn3_eurocup, btn2_eurocup = st.columns([0.01, 0.01, 0.01])
