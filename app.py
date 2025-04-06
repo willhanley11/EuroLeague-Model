@@ -18,7 +18,7 @@ def create_sample_data_euroleague(simulation_data=None):
     # If no data provided, load default (Round 29) data
     if simulation_data is None:
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        pickle_path = os.path.join(script_dir, 'data', 'euroleague_simulations_round_33.pkl')
+        pickle_path = os.path.join(script_dir, 'data', 'euroleague_simulations_round_34.pkl')
         
         with open(pickle_path, 'rb') as f:
             simulation_data = pickle.load(f)
@@ -55,7 +55,7 @@ def create_sample_data_euroleague(simulation_data=None):
 
 def create_sample_data_eurocup():
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    pickle_path = os.path.join(script_dir, 'data', 'eurocup_simulations_semifinals_game_3.pkl')
+    pickle_path = os.path.join(script_dir, 'data', 'eurocup_simulations_finals_game_1.pkl')
     
     with open(pickle_path, 'rb') as f:
         simulation_results_df = pickle.load(f)
@@ -3437,19 +3437,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     # Load data for Round 29
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    pickle_path = os.path.join(script_dir, 'data', 'euroleague_simulations_round_33.pkl')
+    pickle_path = os.path.join(script_dir, 'data', 'euroleague_simulations_round_34.pkl')
     with open(pickle_path, 'rb') as f:
         simulation_results_df = pickle.load(f)
     
     # Load data for Round 30
-    pickle_path_round_33 = os.path.join(script_dir, 'data', 'euroleague_simulations_round_33.pkl')
-    with open(pickle_path_round_33, 'rb') as f:
-        simulation_results_df_round_33 = pickle.load(f)
+#    pickle_path_round_33 = os.path.join(script_dir, 'data', 'euroleague_simulations_round_33.pkl')
+#    with open(pickle_path_round_33, 'rb') as f:
+#        simulation_results_df_round_33 = pickle.load(f)
         
     # Load data for Round 31
-    pickle_path_round_34 = os.path.join(script_dir, 'data', 'euroleague_simulations_round_34.pkl')
-    with open(pickle_path_round_34, 'rb') as f:
-        simulation_results_df_round_34 = pickle.load(f)
+#    pickle_path_round_34 = os.path.join(script_dir, 'data', 'euroleague_simulations_round_34.pkl')
+#    with open(pickle_path_round_34, 'rb') as f:
+#        simulation_results_df_round_34 = pickle.load(f)
 
     st.markdown("""
        <style>
@@ -3647,15 +3647,15 @@ div[data-baseweb="select"]:hover {
         st.session_state['simulation_results_df'] = simulation_results_df
         
     # Store Round 30 and 31 data in session state
-    if 'simulation_results_df_round_30' not in st.session_state:
-        st.session_state['simulation_results_df_round_33'] = simulation_results_df_round_33
+  #  if 'simulation_results_df_round_30' not in st.session_state:
+  #      st.session_state['simulation_results_df_round_33'] = simulation_results_df_round_33
         
-    if 'simulation_results_df_round_31' not in st.session_state:
-        st.session_state['simulation_results_df_round_34'] = simulation_results_df_round_34
+#    if 'simulation_results_df_round_31' not in st.session_state:
+ #       st.session_state['simulation_results_df_round_34'] = simulation_results_df_round_34
     
     # Load EuroCup simulation results
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    pickle_path_eurocup = os.path.join(script_dir, 'data', 'eurocup_simulations_semifinals_game_3.pkl')
+    pickle_path_eurocup = os.path.join(script_dir, 'data', 'eurocup_simulations_finals_game_1.pkl')
     with open(pickle_path_eurocup, 'rb') as f:
         simulation_results_df_eurocup = pickle.load(f)
     
@@ -3695,7 +3695,7 @@ div[data-baseweb="select"]:hover {
         euroleague_round_tab_labels = [
             f"****{season_name}****",
             f"Round {round_number}",
-            f"Round {round_number + 1}",
+   #         f"Round {round_number + 1}",
   #          f"Round {round_number + 2}"
         ]
         euroleague_round_tabs = st.tabs(euroleague_round_tab_labels)
@@ -4020,11 +4020,11 @@ div[data-baseweb="select"]:hover {
         # Inside the current Round tab 
         with euroleague_round_tabs[1]:
             # Call the function to create the content with a different suffix
-            create_round_content(simulation_results_df, "_round_33_tab")
+            create_round_content(simulation_results_df, "_round_34_tab")
         
         # Round +1 tab
-        with euroleague_round_tabs[2]:
-            create_round_content(simulation_results_df_round_34, "_round_34_tab")
+#        with euroleague_round_tabs[2]:
+#            create_round_content(simulation_results_df_round_34, "_round_34_tab")
             
         # Round +2 tab
     #    with euroleague_round_tabs[3]:

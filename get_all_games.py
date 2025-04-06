@@ -2517,7 +2517,7 @@ team_logo_mapping_2024_2025 = {
 }
 
 # Process each round (29, 30, 31)
-for round_number in [33, 34]:
+for round_number in [34]:
     print(f"\n--- Processing Round {round_number} ---\n")
     
     # Get games for the current round
@@ -2551,7 +2551,7 @@ for round_number in [33, 34]:
             away_team=game['Away_Code'], 
             HFA=home_team_hfa, 
             players_to_update=updated_players, 
-            number_of_simulations=20000, 
+            number_of_simulations=25000, 
             possession_adjust=0,
             teamsDF=teamsDF,
             homeusage_for=homeusage_for,

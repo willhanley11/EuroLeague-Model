@@ -2445,11 +2445,11 @@ def get_eurocup_games_selenium(round_number):
         soup = BeautifulSoup(page_source, 'html.parser')
         
         # Determine game number based on round parameter
-        game_number = 3
+        game_number = 1
         
         # Try to find playoff phase information
         phase_element = soup.select_one('div[class*="seasonFilters"] button:nth-child(2)')
-        playoff_phase = phase_element.text.strip() if phase_element else "Semifinals"
+        playoff_phase = phase_element.text.strip() if phase_element else "Finals"
         
         # Combine phase and game text
         full_game_text = f"{playoff_phase} Game {game_number}"
@@ -2512,13 +2512,13 @@ team_logo_mapping_2024_2025 = {
 # Round numbers for Semifinals Game 1 and Game 2
 playoff_round_mapping = {
     21: "Semifinals Game 1",  # Round 21 = Game 1
-    23: "Semifinals Game 3"   # Round 22 = Game 2
+    24: "Finals Game 1"   # Round 22 = Game 2
 }
 
 # Process each playoff game round
 all_simulations = []
 
-for round_number in [23]:  # Rounds 21 (Game 1) and 22 (Game 2)
+for round_number in [24]:  # Rounds 21 (Game 1) and 22 (Game 2)
     print(f"\n--- Processing Round {round_number}: {playoff_round_mapping[round_number]} ---\n")
     
     # Get games for the current round
@@ -2542,10 +2542,10 @@ for round_number in [23]:  # Rounds 21 (Game 1) and 22 (Game 2)
             SimmedTeamStats, SimmedBoxScore, SimmedBoxScoreTeam1, SimmedBoxScoreTeam2 = run_full_simuluation(
                 home_team=game['Home_Code'],
                 away_team=game['Away_Code'], 
-                HFA=home_team_hfa, 
+                HFA=1, 
                 players_to_update=updated_players, 
                 number_of_simulations=40000, 
-                possession_adjust=pace_game_2,
+                possession_adjust=-4,
                 teamsDF=teamsDF,
                 homeusage_for=homeusage_for,
                 awayusage_for=awayusage_for,
@@ -2593,23 +2593,23 @@ if all_simulations:
     os.makedirs(os.path.join(script_dir, 'data'), exist_ok=True)
     
     # Save separate files for Game 1 and Game 2
-    for game_number in [3]:
+    for game_number in [1]:
         # Filter results for this game number
-        game_results = simulation_results_df[simulation_results_df['Round'] == f"Semifinals Game {game_number}"]
+        game_results = simulation_results_df[simulation_results_df['Round'] == f"Finals Game {game_number}"]
         
         if not game_results.empty:
             # Full path to the pickle file
-            pickle_path = os.path.join(script_dir, 'data', f'eurocup_simulations_semifinals_game_{game_number}.pkl')
+            pickle_path = os.path.join(script_dir, 'data', f'eurocup_simulations_finals_game_{game_number}.pkl')
             
             # Save the DataFrame
             with open(pickle_path, 'wb') as f:
                 pickle.dump(game_results, f)
             
-            print(f"Simulation results for Semifinals Game {game_number} saved to {pickle_path}")
+            print(f"Simulation results for Finals Game {game_number} saved to {pickle_path}")
             print(f"Successfully simulated {len(game_results)} games for Game {game_number}")
     
     # Also save the combined file
-    combined_pickle_path = os.path.join(script_dir, 'data', 'eurocup_simulations_semifinals_all.pkl')
+    combined_pickle_path = os.path.join(script_dir, 'data', 'eurocup_simulations_finals_all.pkl')
     with open(combined_pickle_path, 'wb') as f:
         pickle.dump(simulation_results_df, f)
     print(f"Combined simulation results saved to {combined_pickle_path}")
